@@ -1,0 +1,74 @@
+@if (zooServices !== null) {
+  <main>
+    <h1 class="neucha-regular text-center m-5">Activités</h1>
+    <p class="m-5 text-center">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui, neque?
+      Sit doloremque, laborum officiis perspiciatis repellendus dolorum
+      excepturi eligendi commodi voluptatibus voluptates pariatur, dolorem
+      debitis aut natus porro accusamus a.
+    </p>
+
+
+    @for (zs of zooServices; track zs.id) {
+
+      @if (zs.id % 2 !== 0) {
+
+        <article
+          class="d-flex flex-column flex-md-row justify-content-center align-items-center"
+        >
+          <div class="col-10 col-md-5 p-4">
+            <img src="assets/SansTitre-1.jpg" class="img-fluid" alt=""/>
+          </div>
+          <div class="col-10 col-md-5 p-4">
+            <h3 class="neucha-regular">{{ zs.name }}</h3>
+            <p>{{ zs.description }}</p>
+
+            @if (zs.fullPrice !== null) {
+              @if (zs.fullPrice === 0) {
+                <p><strong>Tarif:</strong> gratuit</p>
+              } @else if (zs.fullPrice > 0) {
+                <p><strong>Tarif:</strong> {{ zs.fullPrice }} €</p>
+                <p><strong>Tarif enfant -12 ans:</strong> {{ zs.childPrice }} €</p>
+              }
+            }
+          </div>
+        </article>
+
+      } @else {
+
+        <article
+          class="d-flex flex-column flex-md-row justify-content-center align-items-center"
+        >
+          <div class="col-10 col-md-5 p-4">
+            <h3 class="neucha-regular">{{ zs.name }}</h3>
+            <p>{{ zs.description }}</p>
+
+            @if (zs.fullPrice !== null) {
+              @if (zs.fullPrice === 0) {
+                <p><strong>Tarif:</strong> gratuit</p>
+              } @else if (zs.fullPrice > 0) {
+                <p><strong>Tarif:</strong> {{ zs.fullPrice }} €</p>
+                <p><strong>Tarif enfant -12 ans:</strong> {{ zs.childPrice }} €</p>
+              }
+            }
+
+          </div>
+          <div class="col-10 col-md-5 p-4">
+            <img src="assets/SansTitre-1.jpg" class="img-fluid" alt=""/>
+          </div>
+        </article>
+      }
+
+      <div
+        class="separator d-flex flex-md-row justify-content-center align-items-center"
+      >
+        <img src="assets/left_leaf_separator.png" class="img-fluid"/>
+        <img src="assets/right_leaf_separator.png" class="img-fluid" alt=""/>
+      </div>
+
+    }
+
+  </main>
+} @else {
+  <p> Problème lors de la récupération des Activités</p>
+}

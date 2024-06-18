@@ -1,0 +1,39 @@
+<main>
+  <h1 class="text-center m-5 neucha-regular">Tous nos animaux</h1>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <p class="">Filtrer par habitat:</p>
+    <fieldset class="d-flex flex-row flex-wrap">
+      <div class="mx-2">
+        <input type="checkbox" id="savane" />
+        <label for="savane">Savane</label>
+      </div>
+      <div class="mx-2">
+        <input type="checkbox" id="jungle" />
+        <label for="jungle">Jungle</label>
+      </div>
+      <div class="mx-2">
+        <input type="checkbox" id="marais" />
+        <label for="marais">Marais</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <section class="d-flex flex-row flex-wrap my-5">
+    @for(a of animals; track a.id;){
+      <div
+        class="col-4 col-sm-3 mx-auto d-flex flex-column justify-content-center align-items-center clickable-div"
+      >
+        <div
+          class="circle-container"
+          onclick="window.location.href='animal-detail.html'"
+        >
+          <img [src]=" 'https://localhost:7015/' + a.pics[0].miniSlug "   class="img-fluid" alt="" />
+        </div>
+        <h5 class="neucha-regular">{{ a.name }}</h5>
+        <h6 class="neucha-regular">{{ a.speciesData.name }}</h6>
+      </div>
+    }
+
+
+  </section>
+</main>

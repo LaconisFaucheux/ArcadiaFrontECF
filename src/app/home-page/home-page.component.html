@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/ArcadiaLogo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Neucha&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Neucha&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+<!--  <link rel="stylesheet" href="styles.css" />-->
+  <script
+    src="https://kit.fontawesome.com/8c061cdc6a.js"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <title>Zoo Arcadia</title>
+</head>
+<body class="roboto-regular">
+<header id="index-header">
+  <nav
+    class="navbar navbar-expand-lg navbar-dark"
+    style="height: 25vh; align-items: flex-start"
+  >
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <img
+          src="assets/ArcadiaLogo.png"
+          style="height: 10vh; width: 10vh"
+          alt=""
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html"
+            >Accueil</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="animals.html">Animaux</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="habitats.html"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Habitats
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              aria-labelledby="navbarDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="habitats.html"
+                >Tous les habitats</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="habitat-detail.html"
+                >Savane</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="habitat-detail.html"
+                >Marais</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="habitat-detail.html"
+                >Jungle</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Activités
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              aria-labelledby="navbarDropdown"
+            >
+              <li>
+                <a class="dropdown-item" href="activites.html"
+                >Restauration</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="activites.html"
+                >Petit train</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="philosophie.html">Philosophie</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admin-connection-form.html"
+            >Connexion</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div
+    style="height: 50vh"
+    class="d-flex align-items-end justify-content-end mx-4 mb-3"
+  >
+    <p
+      class="text-white fs-2 fw-lighter fst-italic d-flex justify-content-end align-items-center col-5 text-end"
+    >
+      Un zoo familial au coeur de la forêt de Brocéliande, depuis 1959
+    </p>
+  </div>
+</header>
+
+<main>
+  <section class="d-flex flex-column flex-md-row">
+    <article
+      class="col-12 col-md-6 p-5 d-flex align-items-center flex-column justify-content-center"
+    >
+      <h2 class="mb-4 text-center neucha-regular">
+        Le Zoo ARCADIA, un lieu préservé pour s'émerveiller !
+      </h2>
+      <p class="text-center">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+        in quam a nisl pellentesque venenatis quis ultricies est. Integer
+        tempor justo in tellus consequat, et gravida nisi porttitor. Vivamus
+        eros nisl, fringilla at finibus a, tempor non tellus. Morbi ut
+        tempor neque. Pellentesque ut urna nec tellus convallis auctor. Nunc
+        et viverra dui. Nullam dapibus sit amet justo non congue. Vivamus eu
+        urna nec metus efficitur laoreet. Aenean ipsum est, aliquet vel mi
+        vel, hendrerit consequat mi. Nulla facilisi. Suspendisse enim risus,
+        pharetra at bibendum at, ultrices ac felis.
+      </p>
+    </article>
+    <article class="col-12 col-md-6 p-5">
+      <h2 class="text-center mb-4 neucha-regular">Pratique!</h2>
+      <div class="d-flex flex-column">
+        <div
+          class="d-flex flex-column flex-xl-row text-center my-2 align-items-center"
+        >
+          <div
+            class="col-12 col-md-6 d-flex flex-column align-items-center"
+          >
+            <h5>Où sommes-nous?</h5>
+            <div class="my-5">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2668.3576274383267!2d-2.1705188874993877!3d48.02611917111142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x480fad0272ced98d%3A0x4249fa03c2c84724!2sRue%20de%20l&#39;Enchanteur%20Merlin%2C%2035380%20Paimpont!5e0!3m2!1sfr!2sfr!4v1718042821150!5m2!1sfr!2sfr"
+                style="border: 0; margin: auto; border-radius: 10px"
+                height="290"
+                width="250"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+          <div
+            class="col-12 col-md-6 d-flex flex-column align-items-center"
+          >
+            <h5 class="text-center my">Horaires d'ouverture</h5>
+            <table class="table text-center">
+              <tbody>
+              <tr>
+                <th scope="row">Lundi</th>
+                <td>9h-12h</td>
+                <td>14h-19h</td>
+              </tr>
+              <tr>
+                <th scope="row">Mardi</th>
+                <td>9h-12h</td>
+                <td>14h-19h</td>
+              </tr>
+              <tr>
+                <th scope="row">Mercredi</th>
+                <td>9h-12h</td>
+                <td>14h-19h</td>
+              </tr>
+              <tr>
+                <th scope="row">Jeudi</th>
+                <td>9h-12h</td>
+                <td>14h-19h</td>
+              </tr>
+              <tr>
+                <th scope="row">Vendredi</th>
+                <td>9h-12h</td>
+                <td>14h-19h</td>
+              </tr>
+              <tr>
+                <th scope="row">Samedi</th>
+                <td>9h-12h</td>
+                <td>14h-19h</td>
+              </tr>
+              <tr>
+                <th scope="row">Dimanche</th>
+                <td>Fermé</td>
+                <td>Fermé</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-12 d-flex flex-column align-items-center my-5">
+          <h5>Actuellement ouvert</h5>
+          <p class="fs-1">✅</p>
+        </div>
+      </div>
+    </article>
+  </section>
+  <div id="otter-separator"></div>
+  <article>
+    <div
+      class="d-flex flex-column justify-content-center align-items-center m-5"
+    >
+      <h2>⭐⭐⭐⭐⭐</h2>
+      <p class="fs-2 text-center">
+        Super Zoo! Les animaux sont beaux et le personnel aimable, c'est un
+        vrai plaisir! Vivement notre prochaine visite!
+      </p>
+    </div>
+    <div class="d-flex flex-column flex-md-row justify-content-center">
+      <div class="col-10 col-md-3 mx-auto">
+        <h4 class="text-center">⭐⭐⭐⭐⭐</h4>
+        <p class="text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
+          magnam placeat harum tenetur molestias, provident facere sequi,
+          aut vitae ipsum quidem
+        </p>
+      </div>
+      <div class="col-10 col-md-3 mx-auto">
+        <h4 class="text-center">⭐⭐⭐⭐</h4>
+        <p class="text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
+          magnam placeat harum tenetur molestias, provident facere sequi,
+          aut vitae ipsum quidem
+        </p>
+      </div>
+      <div class="col-10 col-md-3 mx-auto">
+        <h4 class="text-center">⭐⭐⭐⭐⭐</h4>
+        <p class="text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
+          magnam placeat harum tenetur molestias, provident facere sequi,
+          aut vitae ipsum quidem
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="d-flex justify-content-center align-items-center col-6 mx-auto"
+    >
+      <button
+        class="btn btn-outline-success m-5"
+        onclick="window.location.href='review-form.html'"
+      >
+        Laissez le votre!
+      </button>
+    </div>
+  </article>
+
+  <article
+    id="last-homepage-article"
+    class="d-flex flex-column justify-content-center align-items-center p-5"
+  >
+    <h2 class="neucha-regular m-4">La star du jour!</h2>
+    <div class="card" style="width: 40vh">
+      <img
+        src="assets/pexels-linda-wong-1092081-2083277.jpg"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body">
+        <h5 class="card-title">Edgar</h5>
+        <h6 class="card-title">Orang-Outan de Borneo</h6>
+        <p class="card-text">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. In sunt
+          est dolores accusamus ipsum dicta libero provident, nesciunt illum
+          distinctio adipisci quaerat delectus eos reprehenderit, molestias
+          at magni a itaque.
+        </p>
+        <a href="#" class="btn btn-success">En savoir plus</a>
+      </div>
+    </div>
+  </article>
+</main>
+<app-footer></app-footer>
+
+
+</body>
+</html>

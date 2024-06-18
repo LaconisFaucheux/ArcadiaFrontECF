@@ -1,0 +1,52 @@
+<main class="d-flex flex-column align-items-center justify-content-center">
+  <h1 class="neucha-regular text-center m-4">Laissez-nous un avis!</h1>
+
+  <section
+    class="col-10 justify-content-center align-items-start d-flex flex-column flex-xl-row"
+  >
+    <form class="col-10 d-flex flex-column align-items m-5">
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label"
+        >Adresse Mail</label
+        >
+        <input
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+        <div id="emailHelp" class="form-text">
+          Nous ne partagerons pas votre email à d'autres partenaires.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="pseudo">Pseudo</label>
+        <input type="text" class="form-control" id="pseudo" />
+      </div>
+
+      <div class="mb-3">
+        <label for="Note" class="form-label">Note</label>
+        <input
+          type="number"
+          class="form-control"
+          id="Note"
+          max="5"
+          min="1"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="Avis" class="form-label">Votre avis</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="Avis"
+          rows="8"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-success">Envoyer</button>
+    </form>
+  </section>
+</main>

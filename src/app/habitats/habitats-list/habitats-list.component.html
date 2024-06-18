@@ -1,0 +1,28 @@
+@if(habitats !== null){
+
+<main>
+  <h1 class="text-center m-5 neucha-regular">Tous nos habitats</h1>
+
+  <section class="d-flex flex-row flex-wrap my-5">
+
+    @for (habitat of habitats; track habitat.id){
+      <div
+        class="col-4 col-sm-3 mx-auto d-flex flex-column justify-content-center align-items-center clickable-div"
+      >
+        <div
+          class="circle-container"
+          onclick="window.location.href='habitat-detail.html'"
+        >
+          <img [src]="'https://localhost:7015/' + habitat.pics[0].slug" class="img-fluid" alt="" />
+        </div>
+        <h3 class="neucha-regular">{{ habitat.name }}</h3>
+      </div>
+    }
+
+
+  </section>
+</main>
+}
+@else {
+  <p>Ya un soucis aves les habitats chef!</p>
+}
