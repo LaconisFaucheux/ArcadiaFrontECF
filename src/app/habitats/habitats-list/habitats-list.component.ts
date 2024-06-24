@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IHabitat} from "../../../shared/interfaces/habitat.interface";
 import {HabitatsDetailComponent} from "../habitats-detail/habitats-detail.component";
 
@@ -13,4 +13,9 @@ import {HabitatsDetailComponent} from "../habitats-detail/habitats-detail.compon
 })
 export class HabitatsListComponent {
   @Input() habitats: IHabitat[] | null = null;
+  @Output() habitatChanged = new EventEmitter<number>();
+
+  public selectHabitat(index: number): void {
+    this.habitatChanged.emit(index);
+  }
 }

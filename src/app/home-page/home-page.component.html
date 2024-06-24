@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="assets/ArcadiaLogo.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="assets/ArcadiaLogo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link
     href="https://fonts.googleapis.com/css2?family=Neucha&display=swap"
     rel="stylesheet"
   />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link
     href="https://fonts.googleapis.com/css2?family=Neucha&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet"
@@ -22,7 +22,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous"
   />
-<!--  <link rel="stylesheet" href="styles.css" />-->
+  <!--  <link rel="stylesheet" href="styles.css" />-->
   <script
     src="https://kit.fontawesome.com/8c061cdc6a.js"
     crossorigin="anonymous"
@@ -207,88 +207,127 @@
             <h5 class="text-center my">Horaires d'ouverture</h5>
             <table class="table text-center">
               <tbody>
-              <tr>
-                <th scope="row">Lundi</th>
-                <td>9h-12h</td>
-                <td>14h-19h</td>
-              </tr>
-              <tr>
-                <th scope="row">Mardi</th>
-                <td>9h-12h</td>
-                <td>14h-19h</td>
-              </tr>
-              <tr>
-                <th scope="row">Mercredi</th>
-                <td>9h-12h</td>
-                <td>14h-19h</td>
-              </tr>
-              <tr>
-                <th scope="row">Jeudi</th>
-                <td>9h-12h</td>
-                <td>14h-19h</td>
-              </tr>
-              <tr>
-                <th scope="row">Vendredi</th>
-                <td>9h-12h</td>
-                <td>14h-19h</td>
-              </tr>
-              <tr>
-                <th scope="row">Samedi</th>
-                <td>9h-12h</td>
-                <td>14h-19h</td>
-              </tr>
-              <tr>
-                <th scope="row">Dimanche</th>
-                <td>Fermé</td>
-                <td>Fermé</td>
-              </tr>
+
+                @for (h of horaires; track h.id) {
+                  <tr>
+                    <th scope="row">{{ h.dayOfWeek }}</th>
+
+                    @if (h.morningOpening === null) {
+                      <td>Fermé</td>
+                    } @else if (h.morningClosing?.getTime() == h.afternoonOpening?.getTime()) {
+                      <td>{{ h.morningOpening | date:'HH:mm':'':'fr-FR'}}</td>
+                    } @else {
+                      <td>{{ h.morningOpening | date:'HH:mm' :'' :'fr-FR' }} - {{ h.morningClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
+                    }
+
+                    @if (h.afternoonOpening === null) {
+                      <td>Fermé</td>
+                    } @else if (h.morningClosing?.getTime() == h.afternoonOpening?.getTime()) {
+                      <td>{{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
+                    } @else {
+                      <td>{{ h.afternoonOpening | date:'HH:mm' :'' :'fr-FR' }} - {{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
+                    }
+
+                  </tr>
+                }
               </tbody>
             </table>
           </div>
         </div>
         <div class="col-12 d-flex flex-column align-items-center my-5">
-          <h5>Actuellement ouvert</h5>
-          <p class="fs-1">✅</p>
+          @if(isOpen){
+            <h5>Actuellement ouvert</h5>
+            <p class="fs-1">✅</p>
+          } @else {
+            <h5>Actuellement fermé</h5>
+            <p class="fs-1">❌</p>
+          }
         </div>
       </div>
     </article>
   </section>
   <div id="otter-separator"></div>
-  <article>
+
+
+  @if (reviews.length > 0) {
+
+    <h2 class="text-center m-5 neucha-regular">Nos visiteurs témoignent:</h2>
+
+
     <div
-      class="d-flex flex-column justify-content-center align-items-center m-5"
+      id="carouselExampleIndicators"
+      class="carousel carousel-dark slide"
+      data-bs-ride="true"
+      style="min-height: 25vh;"
     >
-      <h2>⭐⭐⭐⭐⭐</h2>
-      <p class="fs-2 text-center">
-        Super Zoo! Les animaux sont beaux et le personnel aimable, c'est un
-        vrai plaisir! Vivement notre prochaine visite!
-      </p>
-    </div>
-    <div class="d-flex flex-column flex-md-row justify-content-center">
-      <div class="col-10 col-md-3 mx-auto">
-        <h4 class="text-center">⭐⭐⭐⭐⭐</h4>
-        <p class="text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-          magnam placeat harum tenetur molestias, provident facere sequi,
-          aut vitae ipsum quidem
-        </p>
+      <div class="carousel-indicators">
+
+        @for (r of reviews; track $index) {
+          @if ($first) {
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              [attr.data-bs-slide-to]="$index"
+              class="active"
+              aria-current="true"
+              [attr.aria-label]="'Slide ' + ($index + 1)"
+            ></button>
+          } @else {
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              [attr.data-bs-slide-to]="$index"
+              [attr.aria-label]="'Slide ' + ($index + 1)"
+            ></button>
+          }
+        }
+
       </div>
-      <div class="col-10 col-md-3 mx-auto">
-        <h4 class="text-center">⭐⭐⭐⭐</h4>
-        <p class="text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-          magnam placeat harum tenetur molestias, provident facere sequi,
-          aut vitae ipsum quidem
-        </p>
+
+
+      <div class="carousel-inner">
+
+        @for (r of reviews; track $index) {
+          <div [class]="$index === 0 ? ' carousel-item active' : 'carousel-item'">
+            <div class="d-flex flex-column col-12 justify-content-center align-items-center">
+
+              <h4 class="text-center">{{ r.pseudo }}</h4>
+              <p class="text-center col-8">{{ r.content }}</p>
+
+              <div class="d-flex flex-row mb-5">
+                @for (s of getStars(r.note); track $index) {
+                  <i class="fa-solid fa-leaf text-success mx-1"></i>
+                }
+                @for (us of getUnStars(r.note); track $index) {
+                  <i class="fa-solid fa-leaf text-warning mx-1"></i>
+                }
+              </div>
+
+
+            </div>
+
+          </div>
+        }
+
       </div>
-      <div class="col-10 col-md-3 mx-auto">
-        <h4 class="text-center">⭐⭐⭐⭐⭐</h4>
-        <p class="text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-          magnam placeat harum tenetur molestias, provident facere sequi,
-          aut vitae ipsum quidem
-        </p>
-      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
 
     <div
@@ -298,38 +337,35 @@
         class="btn btn-outline-success m-5"
         onclick="window.location.href='review-form.html'"
       >
-        Laissez le votre!
+        Donnez-nous votre avis!
       </button>
     </div>
-  </article>
 
-  <article
-    id="last-homepage-article"
-    class="d-flex flex-column justify-content-center align-items-center p-5"
-  >
-    <h2 class="neucha-regular m-4">La star du jour!</h2>
-    <div class="card" style="width: 40vh">
-      <img
-        src="assets/pexels-linda-wong-1092081-2083277.jpg"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h5 class="card-title">Edgar</h5>
-        <h6 class="card-title">Orang-Outan de Borneo</h6>
-        <p class="card-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. In sunt
-          est dolores accusamus ipsum dicta libero provident, nesciunt illum
-          distinctio adipisci quaerat delectus eos reprehenderit, molestias
-          at magni a itaque.
-        </p>
-        <a href="#" class="btn btn-success">En savoir plus</a>
+
+  }
+
+  @if (randomAnimal) {
+    <article
+      id="last-homepage-article"
+      class="d-flex flex-column justify-content-center align-items-center p-5"
+    >
+      <h2 class="neucha-regular m-4">Focus sur...</h2>
+      <div class="card" style="width: 40vh">
+        <img
+          [src]="'https://localhost:7015/' + randomAnimal.pics[0].slug"
+          class="card-img-top"
+          [alt]="randomAnimal.speciesData.name"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ randomAnimal.name }}</h5>
+          <h6 class="card-title">{{ randomAnimal.speciesData.name }}</h6>
+          <p class="card-text">{{ randomAnimal.speciesData.description }}
+          </p>
+          <a href="#" class="btn btn-success">En savoir plus</a>
+        </div>
       </div>
-    </div>
-  </article>
+    </article>
+  }
 </main>
-<app-footer></app-footer>
-
-
 </body>
 </html>

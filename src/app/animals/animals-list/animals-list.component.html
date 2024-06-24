@@ -25,7 +25,7 @@
       >
         <div
           class="circle-container"
-          onclick="window.location.href='animal-detail.html'"
+          (click)="selectAnimal(a.id)"
         >
           <img [src]=" 'https://localhost:7015/' + a.pics[0].miniSlug "   class="img-fluid" alt="" />
         </div>

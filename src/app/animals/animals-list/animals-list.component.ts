@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IAnimal} from "../../../shared/interfaces/animal.interface";
 import {NgOptimizedImage} from "@angular/common";
 
@@ -13,6 +13,11 @@ import {NgOptimizedImage} from "@angular/common";
 })
 export class AnimalsListComponent {
   @Input() animals: IAnimal[] | null = null;
+  @Output() animalChanged = new EventEmitter<number>();
   title = 'test';
+
+  public selectAnimal(index: number): void {
+    this.animalChanged.emit(index);
+  }
 
 }

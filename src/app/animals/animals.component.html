@@ -1,2 +1,2 @@
-<app-animals-list [animals]="animals"></app-animals-list>
-<app-animals-details [animal]="animals[0]"></app-animals-details>
+<app-animals-list (animalChanged)="selectAnimal($event)" [animals]="animals"></app-animals-list>
+<app-animals-details [animal]="animal"></app-animals-details>

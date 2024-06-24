@@ -21,8 +21,10 @@
 }
 
 #otter-separator {
-  height: 25vh;
-  background-image: url("/assets/pexels-silvia-heider-3149276-4754846.jpg");
+  height: 45vh;
+  background-image: url("/assets/otters.jpg");
   background-attachment: fixed;
   background-size: cover;
+  margin-top: 5vh;
+  margin-bottom: 15vh;
 }
