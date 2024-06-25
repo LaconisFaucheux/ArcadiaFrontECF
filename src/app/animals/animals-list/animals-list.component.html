@@ -26,6 +26,7 @@
         <div
           class="circle-container"
           (click)="selectAnimal(a.id)"
+          [routerLink]="[a.id]"
         >
           <img [src]=" 'https://localhost:7015/' + a.pics[0].miniSlug "   class="img-fluid" alt="" />
         </div>

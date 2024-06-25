@@ -194,9 +194,11 @@ export class AnimalService {
   public inhabitants$: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([]);
 
   constructor() {
+
   }
 
   public selectAnimal(index: number): void {
+    console.log('id from service = ' + index);
     let tmp: IAnimal | undefined = this.animals$.value.find(a => a.id === index);
     if (tmp) {
       this.animal$.next(tmp);

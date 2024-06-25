@@ -82,11 +82,6 @@ export class HoraireService {
 // if(this.horaires$ === undefined){return}//WTF???
     const todayHours = this.horaires$.value.find(h => h.dayOfWeek.toLowerCase() === today.toLowerCase());
 
-
-
-    console.log(today)
-    console.log(todayHours?.dayOfWeek)
-
     if (todayHours === null || todayHours === undefined) {
       this.isOpen$.next(false);
       return;
@@ -104,7 +99,11 @@ export class HoraireService {
       this.isOpen$.next(false);
       return;
     }
-    if (currentTime >= todayHours.morningOpening && currentTime <= todayHours.morningClosing || currentTime >= todayHours.afternoonOpening && currentTime <= todayHours.afternoonClosing) {
+
+    if (currentTime >= todayHours.morningOpening
+      && currentTime <= todayHours.morningClosing
+      || currentTime >= todayHours.afternoonOpening
+      && currentTime <= todayHours.afternoonClosing) {
       this.isOpen$.next(true);
       return;
     }
@@ -112,7 +111,6 @@ export class HoraireService {
 
   constructor() {
     this.isItOpen()
-    // Bind 'this' context to the isItOpen method
     setInterval(this.isItOpen.bind(this), 60000);
   }
 }

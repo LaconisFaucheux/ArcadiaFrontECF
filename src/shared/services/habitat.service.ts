@@ -52,6 +52,9 @@ export class HabitatService {
 
   public selectHabitat(id: number) {
     let tmp = this.habitats$.value.find((habitat) => habitat.id === id);
+
+    console.log('service ' + tmp)
+
     if (tmp) {
       this.habitat$.next(tmp);
     }

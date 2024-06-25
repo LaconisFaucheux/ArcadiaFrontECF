@@ -42,7 +42,7 @@
     style="height: 25vh; align-items: flex-start"
   >
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">
+      <a class="navbar-brand" routerLink="">
         <img
           src="assets/ArcadiaLogo.png"
           style="height: 10vh; width: 10vh"
@@ -63,17 +63,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.html"
+            <a class="nav-link active" aria-current="page" routerLink=""
             >Accueil</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="animals.html">Animaux</a>
+            <a class="nav-link" routerLink="animaux">Animaux</a>
           </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
-              href="habitats.html"
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
@@ -86,56 +85,22 @@
               aria-labelledby="navbarDropdown"
             >
               <li>
-                <a class="dropdown-item" href="habitats.html"
+                <a class="dropdown-item" routerLink="habitats"
                 >Tous les habitats</a
                 >
               </li>
-              <li>
-                <a class="dropdown-item" href="habitat-detail.html"
-                >Savane</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="habitat-detail.html"
-                >Marais</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="habitat-detail.html"
-                >Jungle</a
-                >
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Activités
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="navbarDropdown"
-            >
-              <li>
-                <a class="dropdown-item" href="activites.html"
-                >Restauration</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="activites.html"
-                >Petit train</a
-                >
-              </li>
+
+              @for (h of habitats; track h.id) {
+                <li><a class="dropdown-item" [routerLink]="['habitats', 'detail']">{{ h.name | titlecase}}</a></li>
+              }
+
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="philosophie.html">Philosophie</a>
+            <a class="nav-link" routerLink="activites">Activités</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="philosophie">Philosophie</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="admin-connection-form.html"
@@ -215,27 +180,32 @@
                     @if (h.morningOpening === null) {
                       <td>Fermé</td>
                     } @else if (h.morningClosing?.getTime() == h.afternoonOpening?.getTime()) {
-                      <td>{{ h.morningOpening | date:'HH:mm':'':'fr-FR'}}</td>
+                      <td>{{ h.morningOpening | date:'HH:mm':'':'fr-FR' }}</td>
                     } @else {
-                      <td>{{ h.morningOpening | date:'HH:mm' :'' :'fr-FR' }} - {{ h.morningClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
+                      <td>{{ h.morningOpening | date:'HH:mm' :'' :'fr-FR' }}
+                        - {{ h.morningClosing | date:'HH:mm' :'' :'fr-FR' }}
+                      </td>
                     }
 
                     @if (h.afternoonOpening === null) {
                       <td>Fermé</td>
-                    } @else if (h.morningClosing?.getTime() == h.afternoonOpening?.getTime()) {
+                    } @else if (h.morningClosing?.getTime() == h.afternoonOpening.getTime()) {
                       <td>{{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
                     } @else {
-                      <td>{{ h.afternoonOpening | date:'HH:mm' :'' :'fr-FR' }} - {{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
+                      <td>{{ h.afternoonOpening | date:'HH:mm' :'' :'fr-FR' }}
+                        - {{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}
+                      </td>
                     }
 
                   </tr>
                 }
+
               </tbody>
             </table>
           </div>
         </div>
         <div class="col-12 d-flex flex-column align-items-center my-5">
-          @if(isOpen){
+          @if (isOpen) {
             <h5>Actuellement ouvert</h5>
             <p class="fs-1">✅</p>
           } @else {

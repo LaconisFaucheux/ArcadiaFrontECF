@@ -1,11 +1,7 @@
-<!--<app-header></app-header>-->
+@if (!isHomePageActive) {
+  <app-header></app-header>
+}
 
-<!--<app-review-form></app-review-form>-->
-
-<!--<app-zoo-services></app-zoo-services>-->
-<!--<app-philosophie></app-philosophie>-->
-<!--<app-animals></app-animals>-->
-<!--<app-habitats></app-habitats>-->
-<app-home-page></app-home-page>
+<router-outlet></router-outlet>
 
 <app-footer></app-footer>

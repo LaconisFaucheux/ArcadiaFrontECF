@@ -6,53 +6,55 @@ import {IAnimal} from "../../shared/interfaces/animal.interface";
 import {HabitatService} from "../../shared/services/habitat.service";
 import {AnimalService} from "../../shared/services/animal.service";
 import {Subscription} from "rxjs";
+import {RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-habitats',
   standalone: true,
   imports: [
     HabitatsDetailComponent,
-    HabitatsListComponent
+    HabitatsListComponent,
+    RouterOutlet
   ],
   templateUrl: './habitats.component.html',
   styleUrl: './habitats.component.css'
 })
 export class HabitatsComponent {
-  habitats: IHabitat[] = []
-
-  habitat: IHabitat| null = null;
-
-  inhabitants: IAnimal[] = []
-
-  public sub: Subscription = new Subscription();
-
-  constructor(private habitatService: HabitatService, private animalService: AnimalService) {
-  }
-
-  ngOnInit() {
-    this.sub.add(this.habitatService.habitats$.subscribe(
-      h => this.habitats = h
-    ))
-
-    this.sub.add(this.habitatService.habitat$.subscribe(
-      h=> this.habitat = h
-    ))
-
-    this.animalService.getInhabitants(this.habitat!.id)
-
-    this.sub.add(this.animalService.inhabitants$.subscribe(
-      i => this.inhabitants = i
-    ))
-
-  }
-
-  public selectHabitat (index: number){
-    this.habitatService.selectHabitat(index)
-    this.animalService.getInhabitants(index)
-  }
-
-  ngOnDestroy(){
-    this.sub.unsubscribe();
-  }
+  // habitats: IHabitat[] = []
+  //
+  // habitat: IHabitat| null = null;
+  //
+  // inhabitants: IAnimal[] = []
+  //
+  // public sub: Subscription = new Subscription();
+  //
+  // constructor(private habitatService: HabitatService, private animalService: AnimalService) {
+  // }
+  //
+  // ngOnInit() {
+  //   this.sub.add(this.habitatService.habitats$.subscribe(
+  //     h => this.habitats = h
+  //   ))
+  //
+  //   this.sub.add(this.habitatService.habitat$.subscribe(
+  //     h=> this.habitat = h
+  //   ))
+  //
+  //   this.animalService.getInhabitants(this.habitat!.id)
+  //
+  //   this.sub.add(this.animalService.inhabitants$.subscribe(
+  //     i => this.inhabitants = i
+  //   ))
+  //
+  // }
+  //
+  // public selectHabitat (index: number){
+  //   this.habitatService.selectHabitat(index)
+  //   this.animalService.getInhabitants(index)
+  // }
+  //
+  // ngOnDestroy(){
+  //   this.sub.unsubscribe();
+  // }
 
 }

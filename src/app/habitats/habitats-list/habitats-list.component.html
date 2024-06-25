@@ -11,7 +11,7 @@
       >
         <div
           class="circle-container"
-          (click)="selectHabitat(habitat.id)"
+          [routerLink]="[habitat.id]"
         >
           <img [src]="'https://localhost:7015/' + habitat.pics[0].slug" class="img-fluid" alt="" />
         </div>

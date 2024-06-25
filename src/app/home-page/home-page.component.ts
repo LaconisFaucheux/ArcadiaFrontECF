@@ -5,16 +5,21 @@ import {IHoraires} from "../../shared/interfaces/horaires.interface";
 import {IReview} from "../../shared/interfaces/review.interface";
 import {HoraireService} from "../../shared/services/horaire.service";
 import {ReviewService} from "../../shared/services/review.service";
-import {DatePipe} from "@angular/common";
+import {DatePipe, TitleCasePipe} from "@angular/common";
 import {IAnimal} from "../../shared/interfaces/animal.interface";
 import {AnimalService} from "../../shared/services/animal.service";
+import {RouterLink} from "@angular/router";
+import {HabitatService} from "../../shared/services/habitat.service";
+import {IHabitat} from "../../shared/interfaces/habitat.interface";
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [
     FooterComponent,
-    DatePipe
+    DatePipe,
+    RouterLink,
+    TitleCasePipe
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
@@ -25,9 +30,13 @@ export class HomePageComponent {
   public reviews: IReview[] = [];
   public randomAnimal: IAnimal | null = null;
   public isOpen: boolean = false;
+  public habitats: IHabitat[] = [];
 
 
-  constructor(private horairesService: HoraireService, private reviewService: ReviewService, private animalService: AnimalService) {
+  constructor(private horairesService: HoraireService,
+              private reviewService: ReviewService,
+              private animalService: AnimalService,
+              private habitatService: HabitatService) {
   }
 
   ngOnInit(): void {
@@ -44,6 +53,10 @@ export class HomePageComponent {
 
     this.subscription.add(this.reviewService.reviews$.subscribe(reviews => {
       this.reviews = reviews
+    }));
+
+    this.subscription.add(this.habitatService.habitats$.subscribe(habitats => {
+      this.habitats = habitats;
     }));
 
     this.randomAnimal = this.animalService.getRandomAnimal()

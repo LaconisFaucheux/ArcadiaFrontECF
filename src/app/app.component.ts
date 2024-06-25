@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import {ActivatedRoute, RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {AnimalsListComponent} from "./animals/animals-list/animals-list.component";
@@ -19,4 +19,15 @@ import {ReviewFormComponent} from "./review-form/review-form.component";
 })
 export class AppComponent {
   title = 'test';
+  public isHomePageActive: boolean = false;
+
+  constructor(private activatedRoute: ActivatedRoute) {
+    console.log('ActivatedRoute', activatedRoute);
+  }
+
+  ngOnInit() {
+    // this.activatedRoute.url.subscribe((url) => {
+    //   this.isHomePageActive = url[0].path === '';
+    // })
+  }
 }
