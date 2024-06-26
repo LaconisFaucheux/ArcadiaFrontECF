@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {HabitatService} from "../../shared/services/habitat.service";
 import {IHabitat} from "../../shared/interfaces/habitat.interface";
-import {Subscription} from "rxjs";
+import {filter, Subscription} from "rxjs";
 import {TitleCasePipe} from "@angular/common";
 
 @Component({
@@ -19,14 +19,30 @@ import {TitleCasePipe} from "@angular/common";
 export class HeaderComponent {
   public habitats: IHabitat[] = [];
   public sub: Subscription = new Subscription();
+  public isHomePageActive: boolean = false;
 
-  constructor(private habitatService: HabitatService) {
+  constructor(private habitatService: HabitatService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
     this.sub.add(this.habitatService.habitats$.subscribe(habitats => {
       this.habitats = habitats;
     }));
+
+    // this.activatedRoute.url.subscribe((url) => {
+    //   console.log(this.activatedRoute.paramMap)
+    //   console.log('URL ======= ' + url);
+    //   this.isHomePageActive = url[0].path === '';
+    // })
+
+
+    this.sub.add(this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(event => {
+      const navEndEvent = event as NavigationEnd;
+      this.isHomePageActive = navEndEvent.urlAfterRedirects === '/';
+    }));
+
   }
 
   ngOnDestroy() {

@@ -19,15 +19,6 @@ import {ReviewFormComponent} from "./review-form/review-form.component";
 })
 export class AppComponent {
   title = 'test';
-  public isHomePageActive: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute) {
-    console.log('ActivatedRoute', activatedRoute);
-  }
-
-  ngOnInit() {
-    // this.activatedRoute.url.subscribe((url) => {
-    //   this.isHomePageActive = url[0].path === '';
-    // })
-  }
+  constructor() {}
 }

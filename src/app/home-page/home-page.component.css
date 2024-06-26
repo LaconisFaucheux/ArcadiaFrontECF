@@ -1,16 +1,3 @@
-#index-header {
-  background-image: url("/assets/SansTitre-1.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  height: 75vh;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: larger;
-  font-weight: bold;
-}
-
 #last-homepage-article {
   margin-top: 5vh;
   margin-bottom: 0;

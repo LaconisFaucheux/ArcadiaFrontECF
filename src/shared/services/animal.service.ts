@@ -192,6 +192,8 @@ export class AnimalService {
   ]);
   public animal$: BehaviorSubject<IAnimal> = new BehaviorSubject<IAnimal>(this.animals$.value[0]);
   public inhabitants$: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([]);
+  private rnd = Math.floor(Math.random() * (this.animals$.value.length + 1));
+  public randomAnimal$: BehaviorSubject<IAnimal> = new BehaviorSubject<IAnimal>(this.animals$.value[this.rnd]);
 
   constructor() {
 
@@ -212,8 +214,8 @@ export class AnimalService {
     );
   }
 
-  public getRandomAnimal(){
-    let randomIndex = Math.floor(Math.random() * (this.animals$.value.length + 1));
-    return this.animals$.value[randomIndex];
-  }
+  // public getRandomAnimal(){
+  //   let randomIndex = Math.floor(Math.random() * (this.animals$.value.length + 1));
+  //   this.randomAnimal$.next(this.animals$.value[randomIndex]);
+  // }
 }

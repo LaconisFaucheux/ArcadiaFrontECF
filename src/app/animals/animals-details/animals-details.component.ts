@@ -33,4 +33,8 @@ export class AnimalsDetailsComponent {
       }
     }))
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

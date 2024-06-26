@@ -44,9 +44,6 @@ export class HomePageComponent {
       this.horaires = horaires;
     }));
 
-    // setInterval(this.horairesService.isItOpen, 1000)
-    //console.log(this.isOpen)
-
     this.subscription.add(this.horairesService.isOpen$.subscribe(isOpen => {
       this.isOpen = isOpen
     }));
@@ -59,8 +56,9 @@ export class HomePageComponent {
       this.habitats = habitats;
     }));
 
-    this.randomAnimal = this.animalService.getRandomAnimal()
-
+    this.subscription.add(this.animalService.randomAnimal$.subscribe(randomAnimal => {
+      this.randomAnimal = randomAnimal
+    }));
   }
 
   public getStars(note: number): any[] {
