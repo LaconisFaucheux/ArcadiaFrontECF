@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {IAnimal} from "../interfaces/animal.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnimalService {
-  public animals$: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([
+
+  private animals: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([
     {
       id: 1,
       name: "Mufasa",
@@ -190,32 +191,49 @@ export class AnimalService {
       }
     }
   ]);
-  public animal$: BehaviorSubject<IAnimal> = new BehaviorSubject<IAnimal>(this.animals$.value[0]);
-  public inhabitants$: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([]);
-  private rnd = Math.floor(Math.random() * (this.animals$.value.length + 1));
-  public randomAnimal$: BehaviorSubject<IAnimal> = new BehaviorSubject<IAnimal>(this.animals$.value[this.rnd]);
+  public animals$ = this.animals.asObservable();
+
+  private animal: BehaviorSubject<IAnimal> = new BehaviorSubject<IAnimal>(this.animals.value[0]);
+  public animal$ = this.animal.asObservable();
+
+  private inhabitants: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([]);
+  public inhabitants$ = this.inhabitants.asObservable();
+
+  private rnd = Math.floor(Math.random() * (this.animals.value.length + 1));
+
+  private randomAnimal: BehaviorSubject<IAnimal> = new BehaviorSubject<IAnimal>(this.animals.value[this.rnd]);
+  public randomAnimal$ = this.randomAnimal.asObservable();
+
 
   constructor() {
 
   }
 
-  public selectAnimal(index: number): void {
-    console.log('id from service = ' + index);
-    let tmp: IAnimal | undefined = this.animals$.value.find(a => a.id === index);
-    if (tmp) {
-      this.animal$.next(tmp);
-    }
+  //GETTERS
+  getAnimals():Observable<IAnimal[]> {
+    return this.animals$;
+  }
+  getAnimal(): Observable<IAnimal> {
+    return this.animal$;
+  }
+  getInhabitants(): Observable<IAnimal[]> {
+    return this.inhabitants$;
   }
 
-  public getInhabitants(habitatId: number): void {
-    this.inhabitants$.next(
-      this.animals$.value.filter(a => a.speciesData.habitats.some(
+  //SETTERS
+  public setInhabitants(habitatId: number): void {
+    this.inhabitants.next(
+      this.animals.value.filter(a => a.speciesData.habitats.some(
         h => h.id === habitatId))
     );
   }
 
-  // public getRandomAnimal(){
-  //   let randomIndex = Math.floor(Math.random() * (this.animals$.value.length + 1));
-  //   this.randomAnimal$.next(this.animals$.value[randomIndex]);
-  // }
+  public setAnimal(index: number): void {
+    let tmp: IAnimal | undefined = this.animals.value.find(a => a.id === index);
+    if (tmp) {
+      this.animal.next(tmp);
+    }
+  }
+
+
 }

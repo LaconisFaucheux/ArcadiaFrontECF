@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {IHabitat} from "../interfaces/habitat.interface";
 import {IAnimal} from "../interfaces/animal.interface";
 
@@ -7,7 +7,8 @@ import {IAnimal} from "../interfaces/animal.interface";
   providedIn: 'root'
 })
 export class HabitatService {
-  public habitats$: BehaviorSubject<IHabitat[]> = new BehaviorSubject<IHabitat[]>([
+  //PROPS
+  private habitats: BehaviorSubject<IHabitat[]> = new BehaviorSubject<IHabitat[]>([
     {
       id: 1,
       name: "savane",
@@ -48,15 +49,24 @@ export class HabitatService {
       ]
     }
   ]);
-  public habitat$: BehaviorSubject<IHabitat> = new BehaviorSubject(this.habitats$.value[0]);
+  public habitats$ = this.habitats.asObservable();
 
+  private habitat: BehaviorSubject<IHabitat> = new BehaviorSubject(this.habitats.value[0]);
+  public habitat$ = this.habitat.asObservable();
+
+  //GETTERS
+  getHabitats(): Observable<IHabitat[]> {
+    return this.habitats$;
+  }
+  getHabitat(): Observable<IHabitat> {
+    return this.habitat$;
+  }
+
+  //METHODS
   public selectHabitat(id: number) {
-    let tmp = this.habitats$.value.find((habitat) => habitat.id === id);
-
-    console.log('service ' + tmp)
-
+    let tmp = this.habitats.value.find((habitat) => habitat.id === id);
     if (tmp) {
-      this.habitat$.next(tmp);
+      this.habitat.next(tmp);
     }
   }
 

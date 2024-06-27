@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {IHoraires} from "../interfaces/horaires.interface";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HoraireService {
-  public horaires$: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([
+  public horaires: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([
     {
       id: 1,
       dayOfWeek: "Lundi",
@@ -64,7 +64,10 @@ export class HoraireService {
       afternoonClosing: this.convertTimeToDate(null)
     }
   ])
-  public isOpen$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public horaires$: Observable<IHoraires[]> = this.horaires.asObservable();
+
+  public isOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isOpen$: Observable<boolean> = this.isOpen.asObservable();
 
   public convertTimeToDate(timeString: string | null): Date | null {
 
@@ -80,23 +83,23 @@ export class HoraireService {
     const today = now.toLocaleString('fr-FR', {weekday: 'long'});
 
 // if(this.horaires$ === undefined){return}//WTF???
-    const todayHours = this.horaires$.value.find(h => h.dayOfWeek.toLowerCase() === today.toLowerCase());
+    const todayHours = this.horaires.value.find(h => h.dayOfWeek.toLowerCase() === today.toLowerCase());
 
     if (todayHours === null || todayHours === undefined) {
-      this.isOpen$.next(false);
+      this.isOpen.next(false);
       return;
     }
     if (todayHours.morningOpening === null
       || todayHours.morningClosing === null
       || todayHours.afternoonOpening === null
       || todayHours.afternoonClosing === null) {
-      this.isOpen$.next(false);
+      this.isOpen.next(false);
       return;
     }
     const currentTime = this.convertTimeToDate(now.toTimeString().split(' ')[0]);
 
     if (currentTime === null || currentTime === undefined) {
-      this.isOpen$.next(false);
+      this.isOpen.next(false);
       return;
     }
 
@@ -104,13 +107,13 @@ export class HoraireService {
       && currentTime <= todayHours.morningClosing
       || currentTime >= todayHours.afternoonOpening
       && currentTime <= todayHours.afternoonClosing) {
-      this.isOpen$.next(true);
+      this.isOpen.next(true);
       return;
     }
   }
 
   constructor() {
     this.isItOpen()
-    setInterval(this.isItOpen.bind(this), 60000);
+    setInterval(this.isItOpen.bind(this), 30000);
   }
 }

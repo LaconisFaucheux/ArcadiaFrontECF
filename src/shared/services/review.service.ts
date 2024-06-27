@@ -6,7 +6,7 @@ import {IReview} from "../interfaces/review.interface";
   providedIn: 'root'
 })
 export class ReviewService {
-  public reviews$: BehaviorSubject<IReview[]> = new BehaviorSubject<IReview[]>([
+  private reviews: BehaviorSubject<IReview[]> = new BehaviorSubject<IReview[]>([
       {
         id: 1,
         pseudo: "Robert de Boron",
@@ -42,8 +42,8 @@ export class ReviewService {
         isValidated: true,
         note: 4
       }
-    ]
-  )
+    ])
+  public reviews$ = this.reviews.asObservable();
 
   constructor() { }
 }

@@ -1,4 +1,4 @@
-@if(habitats !== null){
+@if(habitats$ | async; as habitats){
 
 <main>
   <h1 class="text-center m-5 neucha-regular">Tous nos habitats</h1>
@@ -15,7 +15,7 @@
         >
           <img [src]="'https://localhost:7015/' + habitat.pics[0].slug" class="img-fluid" alt="" />
         </div>
-        <h3 class="neucha-regular">{{ habitat.name }}</h3>
+        <h3 class="neucha-regular">{{ habitat.name | titlecase }}</h3>
       </div>
     }
 

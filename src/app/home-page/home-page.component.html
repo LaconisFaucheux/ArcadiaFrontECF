@@ -1,4 +1,3 @@
-
 <body class="roboto-regular">
 
 
@@ -48,148 +47,159 @@
             class="col-12 col-md-6 d-flex flex-column align-items-center"
           >
             <h5 class="text-center my">Horaires d'ouverture</h5>
+
+<!--            horaires-->
             <table class="table text-center">
               <tbody>
+                @if (horaires$ | async; as horaires) {
+                  @for (h of horaires; track h.id) {
+                    <tr>
+                      <th scope="row">{{ h.dayOfWeek }}</th>
 
-                @for (h of horaires; track h.id) {
-                  <tr>
-                    <th scope="row">{{ h.dayOfWeek }}</th>
+                      @if (h.morningOpening === null) {
+                        <td>Fermé</td>
+                      } @else if (h.morningClosing?.getTime() == h.afternoonOpening?.getTime()) {
+                        <td>{{ h.morningOpening | date:'HH:mm':'':'fr-FR' }}</td>
+                      } @else {
+                        <td>{{ h.morningOpening | date:'HH:mm' :'' :'fr-FR' }}
+                          - {{ h.morningClosing | date:'HH:mm' :'' :'fr-FR' }}
+                        </td>
+                      }
 
-                    @if (h.morningOpening === null) {
-                      <td>Fermé</td>
-                    } @else if (h.morningClosing?.getTime() == h.afternoonOpening?.getTime()) {
-                      <td>{{ h.morningOpening | date:'HH:mm':'':'fr-FR' }}</td>
-                    } @else {
-                      <td>{{ h.morningOpening | date:'HH:mm' :'' :'fr-FR' }}
-                        - {{ h.morningClosing | date:'HH:mm' :'' :'fr-FR' }}
-                      </td>
-                    }
+                      @if (h.afternoonOpening === null) {
+                        <td>Fermé</td>
+                      } @else if (h.morningClosing?.getTime() == h.afternoonOpening.getTime()) {
+                        <td>{{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
+                      } @else {
+                        <td>{{ h.afternoonOpening | date:'HH:mm' :'' :'fr-FR' }}
+                          - {{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}
+                        </td>
+                      }
 
-                    @if (h.afternoonOpening === null) {
-                      <td>Fermé</td>
-                    } @else if (h.morningClosing?.getTime() == h.afternoonOpening.getTime()) {
-                      <td>{{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}</td>
-                    } @else {
-                      <td>{{ h.afternoonOpening | date:'HH:mm' :'' :'fr-FR' }}
-                        - {{ h.afternoonClosing | date:'HH:mm' :'' :'fr-FR' }}
-                      </td>
-                    }
-
-                  </tr>
+                    </tr>
+                  }
                 }
 
               </tbody>
             </table>
+
           </div>
         </div>
-        <div class="col-12 d-flex flex-column align-items-center my-5">
-          @if (isOpen) {
-            <h5>Actuellement ouvert</h5>
-            <p class="fs-1">✅</p>
-          } @else {
-            <h5>Actuellement fermé</h5>
-            <p class="fs-1">❌</p>
-          }
-        </div>
+
+        @if (isOpen$ | async; as isOpen) {
+          <div class="col-12 d-flex flex-column align-items-center my-5">
+            @if (isOpen) {
+              <h5>Actuellement ouvert</h5>
+              <p class="fs-1">✅</p>
+            } @else {
+              <h5>Actuellement fermé</h5>
+              <p class="fs-1">❌</p>
+            }
+          </div>
+        }
       </div>
     </article>
   </section>
 
   <div id="otter-separator"></div>
 
-  @if (reviews.length > 0) {
-    <h2 class="text-center m-5 neucha-regular">Nos visiteurs témoignent:</h2>
-    <div
-      id="carouselExampleIndicators"
-      class="carousel carousel-dark slide"
-      data-bs-ride="true"
-      style="min-height: 25vh;"
-    >
-      <div class="carousel-indicators">
+  <!--reviews-->
+  @if (reviews$ | async; as reviews) {
+    @if (reviews.length > 0) {
+      <h2 class="text-center m-5 neucha-regular">Nos visiteurs témoignent:</h2>
+      <div
+        id="carouselExampleIndicators"
+        class="carousel carousel-dark slide"
+        data-bs-ride="true"
+        style="min-height: 25vh;"
+      >
+        <div class="carousel-indicators">
 
-        @for (r of reviews; track $index) {
-          @if ($first) {
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              [attr.data-bs-slide-to]="$index"
-              class="active"
-              aria-current="true"
-              [attr.aria-label]="'Slide ' + ($index + 1)"
-            ></button>
-          } @else {
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              [attr.data-bs-slide-to]="$index"
-              [attr.aria-label]="'Slide ' + ($index + 1)"
-            ></button>
+          @for (r of reviews; track $index) {
+            @if ($first) {
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                [attr.data-bs-slide-to]="$index"
+                class="active"
+                aria-current="true"
+                [attr.aria-label]="'Slide ' + ($index + 1)"
+              ></button>
+            } @else {
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                [attr.data-bs-slide-to]="$index"
+                [attr.aria-label]="'Slide ' + ($index + 1)"
+              ></button>
+            }
           }
-        }
 
-      </div>
+        </div>
 
 
-      <div class="carousel-inner">
+        <div class="carousel-inner">
 
-        @for (r of reviews; track $index) {
-          <div [class]="$index === 0 ? ' carousel-item active' : 'carousel-item'">
-            <div class="d-flex flex-column col-12 justify-content-center align-items-center">
+          @for (r of reviews; track $index) {
+            <div [class]="$index === 0 ? ' carousel-item active' : 'carousel-item'">
+              <div class="d-flex flex-column col-12 justify-content-center align-items-center">
 
-              <h4 class="text-center">{{ r.pseudo }}</h4>
-              <p class="text-center col-8">{{ r.content }}</p>
+                <h4 class="text-center">{{ r.pseudo }}</h4>
+                <p class="text-center col-8">{{ r.content }}</p>
 
-              <div class="d-flex flex-row mb-5">
-                @for (s of getStars(r.note); track $index) {
-                  <i class="fa-solid fa-leaf text-success mx-1"></i>
-                }
-                @for (us of getUnStars(r.note); track $index) {
-                  <i class="fa-solid fa-leaf text-warning mx-1"></i>
-                }
+                <div class="d-flex flex-row mb-5">
+                  @for (s of getStars(r.note); track $index) {
+                    <i class="fa-solid fa-leaf text-success mx-1"></i>
+                  }
+                  @for (us of getUnStars(r.note); track $index) {
+                    <i class="fa-solid fa-leaf text-warning mx-1"></i>
+                  }
+                </div>
+
+
               </div>
 
-
             </div>
+          }
 
-          </div>
-        }
 
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-
-    <div
-      class="d-flex justify-content-center align-items-center col-6 mx-auto"
-    >
-      <button
-        class="btn btn-outline-success m-5"
-        onclick="window.location.href='review-form.html'"
-      >
-        Donnez-nous votre avis!
-      </button>
-    </div>
 
 
+      <div
+        class="d-flex justify-content-center align-items-center col-6 mx-auto"
+      >
+        <button
+          class="btn btn-outline-success m-5"
+          onclick="window.location.href='review-form.html'"
+        >
+          Donnez-nous votre avis!
+        </button>
+      </div>
+    }
   }
 
-  @if (randomAnimal) {
+  <!--  randomAnimal-->
+  @if (randomAnimal$ | async; as randomAnimal) {
     <article
       id="last-homepage-article"
       class="d-flex flex-column justify-content-center align-items-center p-5"
@@ -212,5 +222,6 @@
       </div>
     </article>
   }
+
 </main>
 </body>

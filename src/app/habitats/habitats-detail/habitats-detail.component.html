@@ -1,9 +1,8 @@
-@if (habitat !== null) {
+@if (habitat$ | async; as habitat) {
 
   <main>
     <section>
-      <h1 class="neucha-regular text-center m-5">{{ habitat.name }}</h1>
-
+      <h1 class="neucha-regular text-center m-5">{{ habitat.name | titlecase }}</h1>
       <article
         class="d-flex flex-column flex-xl-row justify-content-center align-items-center"
       >
@@ -39,7 +38,6 @@
                 <img [src]="'https://localhost:7015/' + habitat.pics[0].slug" class="d-block" alt="..."/>
               </div>
             </div>
-
 
             <button
               class="carousel-control-prev"
@@ -80,22 +78,24 @@
             <div
               class="d-flex flex-row flex-wrap align-items-center justify-content-around"
             >
-              @for (a of inhabitants; track a.id; ) {
+              @if (inhabitants$ | async; as inhabitants) {
+                @for (a of inhabitants; track a.id; ) {
 
-                <div
-                  class="d-flex flex-column align-items-center clickable-div"
-                >
                   <div
-                    class="circle-container-detail"
-                    onclick="window.location.href='animal-detail.html'"
+                    class="d-flex flex-column align-items-center clickable-div"
                   >
-                    <img [src]="'https://localhost:7015/' + a.pics[0].miniSlug" class="img-fluid" alt=""/>
+                    <div
+                      class="circle-container-detail"
+                      onclick="window.location.href='animal-detail.html'"
+                    >
+                      <img [src]="'https://localhost:7015/' + a.pics[0].miniSlug" class="img-fluid" alt=""/>
+                    </div>
+                    <p class="neucha-regular text-center">
+                      {{ a.name }}<br/>{{ a.speciesData.name }}
+                    </p>
                   </div>
-                  <p class="neucha-regular text-center">
-                    {{ a.name }}<br/>{{a.speciesData.name}}
-                  </p>
-                </div>
 
+                }
               }
             </div>
           </div>

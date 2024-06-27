@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {FooterComponent} from "../footer/footer.component";
-import {BehaviorSubject, of, Subscription} from "rxjs";
+import {BehaviorSubject, Observable, of, Subscription} from "rxjs";
 import {IHoraires} from "../../shared/interfaces/horaires.interface";
 import {IReview} from "../../shared/interfaces/review.interface";
 import {HoraireService} from "../../shared/services/horaire.service";
 import {ReviewService} from "../../shared/services/review.service";
-import {DatePipe, TitleCasePipe} from "@angular/common";
+import {AsyncPipe, DatePipe, TitleCasePipe} from "@angular/common";
 import {IAnimal} from "../../shared/interfaces/animal.interface";
 import {AnimalService} from "../../shared/services/animal.service";
 import {RouterLink} from "@angular/router";
@@ -19,46 +19,50 @@ import {IHabitat} from "../../shared/interfaces/habitat.interface";
     FooterComponent,
     DatePipe,
     RouterLink,
-    TitleCasePipe
+    TitleCasePipe,
+    AsyncPipe
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
-  public subscription: Subscription = new Subscription();
-  public horaires: IHoraires[] = [];
-  public reviews: IReview[] = [];
-  public randomAnimal: IAnimal | null = null;
-  public isOpen: boolean = false;
-  public habitats: IHabitat[] = [];
+  //public subscription: Subscription = new Subscription();
+  //public isOpen: boolean = false;
+  public horaires$: Observable<IHoraires[]>;
+  public isOpen$: Observable<boolean>;
+
+
+  public reviews$: Observable<IReview[]>;
+  public randomAnimal$: Observable<IAnimal>;
+
+  //public habitats: IHabitat[] = [];
 
 
   constructor(private horairesService: HoraireService,
               private reviewService: ReviewService,
-              private animalService: AnimalService,
-              private habitatService: HabitatService) {
+              private animalService: AnimalService) {
+    this.horaires$ = this.horairesService.horaires$;
+    this.isOpen$ = this.horairesService.isOpen$;
+    this.randomAnimal$ = this.animalService.randomAnimal$;
+    this.reviews$ = this.reviewService.reviews$;
   }
 
   ngOnInit(): void {
-    this.subscription.add(this.horairesService.horaires$.subscribe(horaires => {
-      this.horaires = horaires;
-    }));
+    // this.subscription.add(this.horairesService.horaires$.subscribe(horaires => {
+    //   this.horaires = horaires;
+    // }));
+    //
+    // this.subscription.add(this.horairesService.isOpen$.subscribe(isOpen => {
+    //   this.isOpen = isOpen
+    // }));
 
-    this.subscription.add(this.horairesService.isOpen$.subscribe(isOpen => {
-      this.isOpen = isOpen
-    }));
+    // this.subscription.add(this.reviewService.reviews$.subscribe(reviews => {
+    //   this.reviews = reviews
+    // }));
 
-    this.subscription.add(this.reviewService.reviews$.subscribe(reviews => {
-      this.reviews = reviews
-    }));
-
-    this.subscription.add(this.habitatService.habitats$.subscribe(habitats => {
-      this.habitats = habitats;
-    }));
-
-    this.subscription.add(this.animalService.randomAnimal$.subscribe(randomAnimal => {
-      this.randomAnimal = randomAnimal
-    }));
+    // this.subscription.add(this.animalService.randomAnimal$.subscribe(randomAnimal => {
+    //   this.randomAnimal = randomAnimal
+    // }));
   }
 
   public getStars(note: number): any[] {
@@ -70,6 +74,6 @@ export class HomePageComponent {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 }

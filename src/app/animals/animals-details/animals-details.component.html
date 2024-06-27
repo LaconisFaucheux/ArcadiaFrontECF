@@ -1,4 +1,4 @@
-@if (animal !== null){
+@if (animal$ | async; as animal){
 <main>
   <section>
     <h1 class="neucha-regular text-center m-5">{{ animal.name }}</h1>
@@ -55,7 +55,6 @@
                             alt="..."
                           />
                       </div>
-
           </div>
           <button
             class="carousel-control-prev"
@@ -108,8 +107,6 @@
             >
             : {{ animal.healthData.state }}
           </p>
-
-
       </div>
     </article>
   </section>
