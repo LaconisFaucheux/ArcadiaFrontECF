@@ -33,32 +33,11 @@
             <li class="nav-item">
               <a class="nav-link" routerLink="animaux">Animaux</a>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Habitats
-              </a>
-              <ul
-                class="dropdown-menu dropdown-menu-dark"
-                aria-labelledby="navbarDropdown"
-              >
-                <li>
-                  <a class="dropdown-item" routerLink="habitats"
-                  >Tous les habitats</a
-                  >
-                </li>
 
-                @for (h of habitats; track h.id) {
-                  <li><a class="dropdown-item" [routerLink]="['habitats', h.id]">{{ h.name | titlecase }}</a></li>
-                }
-
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="habitats">Habitats</a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" routerLink="activites">Activités</a>
             </li>
@@ -122,33 +101,11 @@
             <li class="nav-item">
               <a class="nav-link" routerLink="animaux" routerLinkActive="active">Animaux</a>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Habitats
-              </a>
-              <ul
-                class="dropdown-menu dropdown-menu-dark"
-                aria-labelledby="navbarDropdown"
-              >
-                <li>
-                  <a class="dropdown-item" routerLink="habitats" routerLinkActive="active"
-                  >Tous les habitats</a
-                  >
-                </li>
 
-                @for (h of habitats; track h.id) {
-                  <li><a class="dropdown-item" [routerLink]="['habitats', h.id]">{{ h.name | titlecase }}</a></li>
-                }
-
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="habitats" routerLinkActive="active">Habitats</a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" routerLink="activites" routerLinkActive="active">Activités</a>
             </li>
@@ -157,8 +114,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="admin-connection-form.html"
-              >Connexion</a
-              >
+              >Connexion</a>
             </li>
           </ul>
         </div>

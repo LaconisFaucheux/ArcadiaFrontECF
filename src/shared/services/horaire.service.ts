@@ -66,7 +66,7 @@ export class HoraireService {
   ])
   public horaires$: Observable<IHoraires[]> = this.horaires.asObservable();
 
-  public isOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isOpen$: Observable<boolean> = this.isOpen.asObservable();
 
   public convertTimeToDate(timeString: string | null): Date | null {

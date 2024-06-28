@@ -2,29 +2,36 @@
   <h1 class="text-center m-5 neucha-regular">Tous nos animaux</h1>
   <div class="d-flex flex-column justify-content-center align-items-center">
     <p class="">Filtrer par habitat:</p>
+
     <fieldset class="d-flex flex-row flex-wrap">
 
       @if(habitats$ | async; as habitats){
         @for(h of habitats; track h.id){
       <div class="mx-2">
-        <input type="checkbox" id="{{h.name}}"/>
+        <input type="checkbox" id="{{h.name}}" (change)="addOrRemoveFilters($event, h.id)" [checked]="isItChecked(h.id)"/>
         <label for="{{h.name}}" class="mx-1">{{h.name | titlecase}}</label>
       </div>
         }
       }
-
     </fieldset>
+    <div class="flex-row mt-4">
+      @if(!(filters.length === habitatService.getHabitatsIds().length)){
+        <button class="btn btn-outline-success mx-2" (click)="allFiltersActive()">Tout cocher</button>
+      }
+      @if(filters.length > 0){
+      <button class="btn btn-outline-success mx-2" (click)="noFilterActive()">Tout décocher</button>
+      }
+    </div>
   </div>
 
   <section class="d-flex flex-row flex-wrap my-5">
     @if (animals$ | async; as animals) {
-      @for (a of animals; track a.id; ) {
+      @for (a of animals | animalFilter : filters; track a.id; ) {
         <div
           class="col-4 col-sm-3 mx-auto d-flex flex-column justify-content-center align-items-center clickable-div"
         >
           <div
             class="circle-container"
-            (click)="selectAnimal(a.id)"
             [routerLink]="[a.id]"
           >
             <img [src]=" 'https://localhost:7015/' + a.pics[0].miniSlug " class="img-fluid" alt=""/>
@@ -32,9 +39,7 @@
           <h5 class="neucha-regular">{{ a.name }}</h5>
           <h6 class="neucha-regular">{{ a.speciesData.name }}</h6>
         </div>
-
       }
     }
   </section>
 </main>
-

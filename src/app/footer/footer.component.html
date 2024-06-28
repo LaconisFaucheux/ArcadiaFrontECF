@@ -14,22 +14,22 @@
     <div class="col-md-3 mx-auto">
       <h4 class="text-center mb-3">Contact</h4>
       <p class="text-center">
-        <span class="me-3">Adresse:</span> 666 rue de l'Enchanteur Merlin<br />
+        <span class="me-3">Adresse:</span><br> 666 rue de l'Enchanteur Merlin<br />
         35380 PAIMPONT
       </p>
       <p class="text-center">
-        <span class="me-3">Mail:</span> contact&#64;arcadia.fr
+        <span class="me-3">Nous Ecrire: </span> <a href="mailto:{{mail}}">Mail</a>
       </p>
       <p class="text-center">
         <span class="me-3">Tel.:</span> 01.23.45.67.89
       </p>
     </div>
-    <div class="col-md-3 mx-auto text-center">
+    <div class="col-md-3 mx-auto text-center d-flex flex-column">
       <h4 class="text-center mb-3">Explorer</h4>
-      <p>Animaux</p>
-      <p>Habitats</p>
-      <p>Activités</p>
-      <p>Philosophie</p>
+      <a class="m-2" [routerLink]="['/', 'animaux']">Animaux</a>
+      <a class="m-2" [routerLink]="['/','habitats']">Habitats</a>
+      <a class="m-2" [routerLink]="['/','activites']">Activités</a>
+      <a class="m-2" [routerLink]="['/','philosophie']">Philosophie</a>
     </div>
     <div class="col-md-3">
       <h4 class="text-center mb-3">Réseaux Sociaux</h4>
@@ -37,11 +37,13 @@
         <div
           class="d-flex flex-row justify-content-center align-items-center"
         >
-          <a class="mx-2 fs-1 text-white col-1" title="Compte X" href="#"
+          <a class="mx-3 fs-1 text-white col-1 text-center"
+             title="Compte X"
+             href="#"
           ><i class="fa-brands fa-x-twitter"></i
           ></a>
           <a
-            class="mx-2 fs-1 text-white col-1 text-center"
+            class="mx-3 fs-1 text-white col-1 text-center"
             title="Page Instagram"
             href="#"
           ><i class="fab fa-instagram"></i
@@ -51,13 +53,13 @@
           class="d-flex flex-row justify-content-center align-items-center"
         >
           <a
-            class="mx-2 fs-1 text-white col-1 text-center"
+            class="mx-3 fs-1 text-white col-1 text-center"
             title="Page Facebook"
             href="#"
           ><i class="fab fa-facebook-f"></i
           ></a>
           <a
-            class="mx-2 fs-1 text-white col-1 text-center"
+            class="mx-3 fs-1 text-white col-1 text-center"
             title="Whatsapp"
             href=""
           ><i class="fa-brands fa-whatsapp"></i

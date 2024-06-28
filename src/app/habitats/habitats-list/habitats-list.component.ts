@@ -20,20 +20,8 @@ import {AsyncPipe, TitleCasePipe} from "@angular/common";
 })
 export class HabitatsListComponent {
   public habitats$: Observable<IHabitat[]>;
-  //public habitats: IHabitat[] | null = null;
-  //public subscription: Subscription = new Subscription();
 
   constructor(private habitatService: HabitatService) {
     this.habitats$ = this.habitatService.getHabitats();
-  }
-
-  ngOnInit() {
-    // this.subscription.add(this.habitatService.habitats$.subscribe(habitats => {
-    //   this.habitats = habitats;
-    // }))
-  }
-
-  ngOnDestroy() {
-    //this.subscription.unsubscribe();
   }
 }

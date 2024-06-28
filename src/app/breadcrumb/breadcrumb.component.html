@@ -1,0 +1,35 @@
+@if (!isHomePageActive) {
+  <nav
+    style="--bs-breadcrumb-divider: '>'"
+    class="ms-3 mt-2"
+    aria-label="breadcrumb"
+  >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/']">Accueil</a></li>
+
+      @for (r of currentRoute; track $index) {
+
+        @if (routesDictionary.has(r)) {
+          <li class="breadcrumb-item active">
+            <a [routerLink]="[r]">{{ routesDictionary.get(r) }}</a>
+          </li>
+        } @else {
+
+          @if (isAnimal) {
+            @if (selectedAnimal$ | async; as a) {
+              <li class="breadcrumb-item active">
+                <a [routerLink]="['animals', r]">{{ a.name | titlecase}}</a>
+              </li>
+            }
+          } @else {
+            @if (selectedHabitat$ | async; as h) {
+              <li class="breadcrumb-item active">
+                <a [routerLink]="['habitats', r]">{{ h.name | titlecase}}</a>
+              </li>
+            }
+          }
+        }
+      }
+    </ol>
+  </nav>
+}

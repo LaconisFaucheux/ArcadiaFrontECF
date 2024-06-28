@@ -86,17 +86,18 @@
           </div>
         </div>
 
-        @if (isOpen$ | async; as isOpen) {
           <div class="col-12 d-flex flex-column align-items-center my-5">
-            @if (isOpen) {
+
+            @if (isOpen$ | async; as isOpen) {
               <h5>Actuellement ouvert</h5>
               <p class="fs-1">✅</p>
             } @else {
               <h5>Actuellement fermé</h5>
               <p class="fs-1">❌</p>
             }
+
           </div>
-        }
+
       </div>
     </article>
   </section>
@@ -214,10 +215,11 @@
         <div class="card-body">
           <h5 class="card-title">{{ randomAnimal.name }}</h5>
           <h6 class="card-title">{{ randomAnimal.speciesData.name }}</h6>
-          <h6>Créer un pipe spécifique pour limiter l'affichage de la description à un certain nombre de caractères</h6>
-          <p class="card-text">{{ randomAnimal.speciesData.description }}
+          <p class="card-text">{{ randomAnimal.speciesData.description | charLimiter : 300}}
           </p>
-          <a href="#" class="btn btn-success">En savoir plus</a>
+          <a [routerLink]="['animaux', randomAnimal.id]"
+             (click)="animalService.setAnimal(randomAnimal.id)"
+             class="btn btn-success">En savoir plus!</a>
         </div>
       </div>
     </article>

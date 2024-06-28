@@ -58,6 +58,14 @@ export class HabitatService {
   getHabitats(): Observable<IHabitat[]> {
     return this.habitats$;
   }
+  getHabitatsIds(): number[] {
+    const hab = this.habitats.value;
+    const arr: number[] = []
+    for(let h of hab){
+      arr.push(h.id);
+    }
+    return arr;
+  }
   getHabitat(): Observable<IHabitat> {
     return this.habitat$;
   }

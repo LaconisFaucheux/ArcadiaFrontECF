@@ -11,6 +11,7 @@ import {AnimalService} from "../../shared/services/animal.service";
 import {RouterLink} from "@angular/router";
 import {HabitatService} from "../../shared/services/habitat.service";
 import {IHabitat} from "../../shared/interfaces/habitat.interface";
+import {CharLimiterPipe} from "../../shared/pipes/char-limiter.pipe";
 
 @Component({
   selector: 'app-home-page',
@@ -20,7 +21,8 @@ import {IHabitat} from "../../shared/interfaces/habitat.interface";
     DatePipe,
     RouterLink,
     TitleCasePipe,
-    AsyncPipe
+    AsyncPipe,
+    CharLimiterPipe
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
@@ -40,9 +42,10 @@ export class HomePageComponent {
 
   constructor(private horairesService: HoraireService,
               private reviewService: ReviewService,
-              private animalService: AnimalService) {
+              protected animalService: AnimalService) {
     this.horaires$ = this.horairesService.horaires$;
     this.isOpen$ = this.horairesService.isOpen$;
+    console.log(this.isOpen$);
     this.randomAnimal$ = this.animalService.randomAnimal$;
     this.reviews$ = this.reviewService.reviews$;
   }

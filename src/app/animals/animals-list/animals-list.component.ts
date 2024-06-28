@@ -6,6 +6,7 @@ import {AnimalService} from "../../../shared/services/animal.service";
 import {Observable, Subscription} from "rxjs";
 import {HabitatService} from "../../../shared/services/habitat.service";
 import {IHabitat} from "../../../shared/interfaces/habitat.interface";
+import {AnimalFilterPipe} from "../../../shared/pipes/animal-filter.pipe";
 
 @Component({
   selector: 'app-animals-list',
@@ -15,37 +16,47 @@ import {IHabitat} from "../../../shared/interfaces/habitat.interface";
     RouterLink,
     AsyncPipe,
     NgIf,
-    TitleCasePipe
+    TitleCasePipe,
+    AnimalFilterPipe
   ],
   templateUrl: './animals-list.component.html',
   styleUrl: './animals-list.component.css'
 })
 
 export class AnimalsListComponent {
-  //public animals: IAnimal[] = [];
-  //public subscription: Subscription = new Subscription();
   public animals$: Observable<IAnimal[]>;
   public habitats$: Observable<IHabitat[]>;
+  public filters: number[] = this.habitatService.getHabitatsIds();
+
   title = 'test';
 
   constructor(private animalService: AnimalService,
-              private habitatService: HabitatService) {
+              protected habitatService: HabitatService) {
     this.animals$ = this.animalService.getAnimals();
     this.habitats$ = this.habitatService.getHabitats();
-  }
-
-  ngOnInit(): void {
-    // this.subscription.add(this.animalService.animals$.subscribe(animals => {
-    //   this.animals = animals;
-    // }));
   }
 
   public selectAnimal(index: number): void {
     this.animalService.setAnimal(index);
   }
 
-  ngOnDestroy(): void {
-    //this.subscription.unsubscribe();
+  public addOrRemoveFilters(event: any,habitatsID: number){
+    if(event.target.checked){
+      this.filters.push(habitatsID)
+    } else {
+      this.filters.splice(this.filters.indexOf(habitatsID), 1);
+    }
   }
 
+  public allFiltersActive(){
+    this.filters = this.habitatService.getHabitatsIds();
+  }
+
+  public noFilterActive() {
+    this.filters = [];
+  }
+
+  public isItChecked(habitatId: number): boolean{
+    return this.filters.includes(habitatId);
+  }
 }

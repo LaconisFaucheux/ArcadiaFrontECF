@@ -9,11 +9,12 @@ import {HomePageComponent} from "./home-page/home-page.component";
 import {PhilosophieComponent} from "./philosophie/philosophie.component";
 import {ZooServicesComponent} from "./zoo-services/zoo-services.component";
 import {ReviewFormComponent} from "./review-form/review-form.component";
+import {BreadcrumbComponent} from "./breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, AnimalsListComponent, AnimalsComponent, HabitatsComponent, HomePageComponent, PhilosophieComponent, ZooServicesComponent, ReviewFormComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, AnimalsListComponent, AnimalsComponent, HabitatsComponent, HomePageComponent, PhilosophieComponent, ZooServicesComponent, ReviewFormComponent, BreadcrumbComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

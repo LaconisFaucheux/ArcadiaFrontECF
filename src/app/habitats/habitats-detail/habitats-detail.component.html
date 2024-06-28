@@ -4,9 +4,9 @@
     <section>
       <h1 class="neucha-regular text-center m-5">{{ habitat.name | titlecase }}</h1>
       <article
-        class="d-flex flex-column flex-xl-row justify-content-center align-items-center"
+        class="d-flex flex-column justify-content-center align-items-center"
       >
-        <div class="col-10 col-xl-5 p-3">
+        <div class="col-10 p-3">
           <div
             id="carouselExampleIndicators"
             class="carousel slide"
@@ -66,7 +66,7 @@
           </div>
         </div>
 
-        <div class="col-10 col-xl-5 p-3">
+        <div class="col-10 p-3">
           <div>
             <p>
               {{ habitat.description }}
@@ -86,7 +86,8 @@
                   >
                     <div
                       class="circle-container-detail"
-                      onclick="window.location.href='animal-detail.html'"
+                      [routerLink]="['/','animaux', a.id]"
+                      (click)="animalService.setAnimal(a.id)"
                     >
                       <img [src]="'https://localhost:7015/' + a.pics[0].miniSlug" class="img-fluid" alt=""/>
                     </div>
@@ -94,7 +95,6 @@
                       {{ a.name }}<br/>{{ a.speciesData.name }}
                     </p>
                   </div>
-
                 }
               }
             </div>

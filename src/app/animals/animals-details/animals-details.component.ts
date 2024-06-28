@@ -15,10 +15,8 @@ import {AsyncPipe} from "@angular/common";
   styleUrl: './animals-details.component.css'
 })
 export class AnimalsDetailsComponent {
-  //public animal: IAnimal | null = null;
   private id: string | null = null;
   public animal$: Observable<IAnimal>;
-  //public subscription: Subscription = new Subscription();
 
   constructor(private activatedRoute: ActivatedRoute,
               private animalService: AnimalService) {
@@ -28,19 +26,7 @@ export class AnimalsDetailsComponent {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.id = paramMap.get('id');
-      console.log(this.id);
     })
-
-    // this.subscription.add(this.animalService.animal$.subscribe(animal => {
-    //   if (animal.id === parseInt(String(this.id))) {
-    //     this.animal = animal;
-    //   } else {
-    //     this.animal = null;
-    //   }
-    // }))
-  }
-
-  ngOnDestroy(): void {
-    //this.subscription.unsubscribe();
+    this.animalService.setAnimal(parseInt(String(this.id)));
   }
 }
