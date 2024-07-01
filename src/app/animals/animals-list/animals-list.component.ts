@@ -7,6 +7,7 @@ import {Observable, Subscription} from "rxjs";
 import {HabitatService} from "../../../shared/services/habitat.service";
 import {IHabitat} from "../../../shared/interfaces/habitat.interface";
 import {AnimalFilterPipe} from "../../../shared/pipes/animal-filter.pipe";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-animals-list',
@@ -34,6 +35,9 @@ export class AnimalsListComponent {
               protected habitatService: HabitatService) {
     this.animals$ = this.animalService.getAnimals();
     this.habitats$ = this.habitatService.getHabitats();
+  }
+
+  ngOnInit() {
   }
 
   public selectAnimal(index: number): void {

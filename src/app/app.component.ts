@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, RouterOutlet} from '@angular/router';
+import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {AnimalsListComponent} from "./animals/animals-list/animals-list.component";
@@ -10,6 +10,7 @@ import {PhilosophieComponent} from "./philosophie/philosophie.component";
 import {ZooServicesComponent} from "./zoo-services/zoo-services.component";
 import {ReviewFormComponent} from "./review-form/review-form.component";
 import {BreadcrumbComponent} from "./breadcrumb/breadcrumb.component";
+import {AnimalService} from "../shared/services/animal.service";
 
 @Component({
   selector: 'app-root',
@@ -22,4 +23,9 @@ export class AppComponent {
   title = 'test';
 
   constructor() {}
+
+  ngOnInit() {
+
+  }
+
 }

@@ -1,73 +1,40 @@
 import {Injectable} from '@angular/core';
 import {IHoraires} from "../interfaces/horaires.interface";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HoraireService {
-  public horaires: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([
-    {
-      id: 1,
-      dayOfWeek: "Lundi",
-      morningOpening: this.convertTimeToDate("09:00:00"),
-      morningClosing: this.convertTimeToDate("12:00:00"),
-      afternoonOpening: this.convertTimeToDate("12:00:00"),
-      afternoonClosing: this.convertTimeToDate("19:00:00")
-    },
-    {
-      id: 2,
-      dayOfWeek: "Mardi",
-      morningOpening: this.convertTimeToDate("09:00:00"),
-      morningClosing: this.convertTimeToDate("14:00:00"),
-      afternoonOpening: this.convertTimeToDate("14:00:00"),
-      afternoonClosing: this.convertTimeToDate("19:00:00")
-    },
-    {
-      id: 3,
-      dayOfWeek: "Mercredi",
-      morningOpening: this.convertTimeToDate("09:00:00"),
-      morningClosing: this.convertTimeToDate("12:00:00"),
-      afternoonOpening: this.convertTimeToDate("14:00:00"),
-      afternoonClosing: this.convertTimeToDate("19:00:00")
-    },
-    {
-      id: 4,
-      dayOfWeek: "Jeudi",
-      morningOpening: this.convertTimeToDate("09:00:00"),
-      morningClosing: this.convertTimeToDate("12:00:00"),
-      afternoonOpening: this.convertTimeToDate("14:00:00"),
-      afternoonClosing: this.convertTimeToDate("19:00:00")
-    },
-    {
-      id: 5,
-      dayOfWeek: "Vendredi",
-      morningOpening: this.convertTimeToDate("09:00:00"),
-      morningClosing: this.convertTimeToDate("12:00:00"),
-      afternoonOpening: this.convertTimeToDate("14:00:00"),
-      afternoonClosing: this.convertTimeToDate("19:00:00")
-    },
-    {
-      id: 6,
-      dayOfWeek: "Samedi",
-      morningOpening: this.convertTimeToDate("09:00:00"),
-      morningClosing: this.convertTimeToDate("12:00:00"),
-      afternoonOpening: this.convertTimeToDate("14:00:00"),
-      afternoonClosing: this.convertTimeToDate("19:00:00")
-    },
-    {
-      id: 7,
-      dayOfWeek: "Dimanche",
-      morningOpening: this.convertTimeToDate(null),
-      morningClosing: this.convertTimeToDate(null),
-      afternoonOpening: this.convertTimeToDate(null),
-      afternoonClosing: this.convertTimeToDate(null)
-    }
-  ])
+  //PROPS
+  public horaires: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([])
   public horaires$: Observable<IHoraires[]> = this.horaires.asObservable();
 
   private isOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isOpen$: Observable<boolean> = this.isOpen.asObservable();
+
+//CTOR
+  constructor(private http: HttpClient) {
+    this.fetchdata();
+
+    this.isItOpen()
+    setInterval(this.isItOpen.bind(this), 30000);
+  }
+
+//METHODS
+  public fetchdata() {
+    this.http.get<any[]>('https://localhost:7015/api/OpeningHours').pipe(
+      map(hours => hours.map(hour => ({
+        id: hour.id,
+        dayOfWeek: hour.dayOfWeek,
+        morningOpening: this.convertTimeToDate(hour.morningOpening),
+        morningClosing: this.convertTimeToDate(hour.morningClosing),
+        afternoonOpening: this.convertTimeToDate(hour.afternoonOpening),
+        afternoonClosing: this.convertTimeToDate(hour.afternoonClosing)
+      })))
+    ).subscribe(transformedHours => this.horaires.next(transformedHours));
+  }
 
   public convertTimeToDate(timeString: string | null): Date | null {
 
@@ -110,10 +77,5 @@ export class HoraireService {
       this.isOpen.next(true);
       return;
     }
-  }
-
-  constructor() {
-    this.isItOpen()
-    setInterval(this.isItOpen.bind(this), 30000);
   }
 }

@@ -28,17 +28,11 @@ import {CharLimiterPipe} from "../../shared/pipes/char-limiter.pipe";
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
-  //public subscription: Subscription = new Subscription();
-  //public isOpen: boolean = false;
   public horaires$: Observable<IHoraires[]>;
   public isOpen$: Observable<boolean>;
 
-
   public reviews$: Observable<IReview[]>;
-  public randomAnimal$: Observable<IAnimal>;
-
-  //public habitats: IHabitat[] = [];
-
+  public randomAnimal$: Observable<IAnimal | null>;
 
   constructor(private horairesService: HoraireService,
               private reviewService: ReviewService,
@@ -50,33 +44,11 @@ export class HomePageComponent {
     this.reviews$ = this.reviewService.reviews$;
   }
 
-  ngOnInit(): void {
-    // this.subscription.add(this.horairesService.horaires$.subscribe(horaires => {
-    //   this.horaires = horaires;
-    // }));
-    //
-    // this.subscription.add(this.horairesService.isOpen$.subscribe(isOpen => {
-    //   this.isOpen = isOpen
-    // }));
-
-    // this.subscription.add(this.reviewService.reviews$.subscribe(reviews => {
-    //   this.reviews = reviews
-    // }));
-
-    // this.subscription.add(this.animalService.randomAnimal$.subscribe(randomAnimal => {
-    //   this.randomAnimal = randomAnimal
-    // }));
-  }
-
   public getStars(note: number): any[] {
     return new Array(note);
   }
 
   public getUnStars(note: number): any[] {
     return new Array(5 - note);
-  }
-
-  ngOnDestroy() {
-    //this.subscription.unsubscribe();
   }
 }
