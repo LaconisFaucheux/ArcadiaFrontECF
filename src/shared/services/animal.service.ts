@@ -24,14 +24,28 @@ export class AnimalService {
 
 
   constructor(private http: HttpClient) {
-    this.fetchdata();
+    this.fetchAllData();
   }
 
-  fetchdata() {
+  fetchAllData() {
     this.http.get<IAnimal[]>('https://localhost:7015/api/Animals')
       .subscribe(animals => {
         this.animals.next(animals)
         this.updateRandomAnimal()
+      });
+  }
+
+  fetchUniqueAnimal(id: number){
+    this.http.get<IAnimal>(`https://localhost:7015/api/Animals/${id}`)
+      .subscribe(animal => {
+        this.animal.next(animal)
+      });
+  }
+
+  fetchInhabitantsByHabitatId(habitatId: number){
+    this.http.get<IAnimal[]>(`https://localhost:7015/api/Animals/byHabitat/${habitatId}`)
+      .subscribe(animals => {
+        this.inhabitants.next(animals)
       });
   }
 
@@ -49,19 +63,19 @@ export class AnimalService {
   }
 
   //SETTERS
-  public setInhabitants(habitatId: number): void {
-    this.inhabitants.next(
-      this.animals.value.filter(a => a.speciesData.habitats.some(
-        h => h.id === habitatId))
-    );
-  }
+  // public setInhabitants(habitatId: number): void {
+  //   this.inhabitants.next(
+  //     this.animals.value.filter(a => a.speciesData.habitats.some(
+  //       h => h.id === habitatId))
+  //   );
+  // }
 
-  public setAnimal(index: number): void {
-    let tmp: IAnimal | undefined = this.animals.value.find(a => a.id === index);
-    if (tmp) {
-      this.animal.next(tmp);
-    }
-  }
+  // public setAnimal(index: number): void {
+  //   let tmp: IAnimal | undefined = this.animals.value.find(a => a.id === index);
+  //   if (tmp) {
+  //     this.animal.next(tmp);
+  //   }
+  // }
 
   private updateRandomAnimal() {
     const animals = this.animals.value;

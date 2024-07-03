@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {IHabitat} from "../interfaces/habitat.interface";
-import {IAnimal} from "../interfaces/animal.interface";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
@@ -24,6 +23,11 @@ export class HabitatService {
       .subscribe(habitats => this.habitats.next(habitats));
   }
 
+  fetchUniqueHabitat(id: number){
+    this.http.get<IHabitat>(`https://localhost:7015/api/Habitats/${id}`)
+      .subscribe(habitat => this.habitat.next(habitat));
+  }
+
   //GETTERS
   getHabitats(): Observable<IHabitat[]> {
     return this.habitats$;
@@ -41,10 +45,10 @@ export class HabitatService {
   }
 
   //METHODS
-  public selectHabitat(id: number) {
-    let tmp = this.habitats.value.find((habitat) => habitat.id === id);
-    if (tmp) {
-      this.habitat.next(tmp);
-    }
-  }
+  // public selectHabitat(id: number) {
+  //   let tmp = this.habitats.value.find((habitat) => habitat.id === id);
+  //   if (tmp) {
+  //     this.habitat.next(tmp);
+  //   }
+  // }
 }

@@ -87,7 +87,6 @@
                     <div
                       class="circle-container-detail"
                       [routerLink]="['/','animaux', a.id]"
-                      (click)="animalService.setAnimal(a.id)"
                     >
                       <img [src]="'https://localhost:7015/' + a.pics[0].miniSlug" class="img-fluid" alt=""/>
                     </div>
@@ -104,5 +103,9 @@
     </section>
   </main>
 } @else {
-  <p>Soucis avec habitats détails</p>
+  <main class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border text-success text-center" style="width: 5rem; height: 5rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </main>
 }

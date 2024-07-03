@@ -39,7 +39,6 @@ export class HomePageComponent {
               protected animalService: AnimalService) {
     this.horaires$ = this.horairesService.horaires$;
     this.isOpen$ = this.horairesService.isOpen$;
-    console.log(this.isOpen$);
     this.randomAnimal$ = this.animalService.randomAnimal$;
     this.reviews$ = this.reviewService.reviews$;
   }

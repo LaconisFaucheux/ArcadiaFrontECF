@@ -37,8 +37,11 @@ export class HabitatsDetailComponent {
     })
 
     if(this.id){
-      this.habitatService.selectHabitat(parseInt(this.id));
-      this.animalService.setInhabitants(parseInt(this.id));
+      // this.habitatService.selectHabitat(parseInt(this.id));
+      // this.animalService.setInhabitants(parseInt(this.id));
+
+      this.habitatService.fetchUniqueHabitat(parseInt(this.id));
+      this.animalService.fetchInhabitantsByHabitatId(parseInt(this.id));
     }
   }
 }

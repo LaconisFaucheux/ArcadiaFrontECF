@@ -10,10 +10,13 @@ import { IHabitat } from '../interfaces/habitat.interface';
 export class AnimalFilterPipe implements PipeTransform {
 
   transform(animals: IAnimal[], filters: number[]): IAnimal[] {
+    console.log(animals)
+    console.log(filters)
     let tmp = animals.filter(animal =>
       animal.speciesData.habitats.some(habitat =>
         filters.includes(habitat.id))
     )
+    console.log(tmp)
     return tmp;
   }
 

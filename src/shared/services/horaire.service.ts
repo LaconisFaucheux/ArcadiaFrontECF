@@ -11,7 +11,7 @@ export class HoraireService {
   public horaires: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([])
   public horaires$: Observable<IHoraires[]> = this.horaires.asObservable();
 
-  private isOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public isOpen$: Observable<boolean> = this.isOpen.asObservable();
 
 //CTOR
@@ -19,7 +19,7 @@ export class HoraireService {
     this.fetchdata();
 
     this.isItOpen()
-    setInterval(this.isItOpen.bind(this), 30000);
+    setInterval(this.isItOpen.bind(this), 1000);
   }
 
 //METHODS
@@ -48,8 +48,6 @@ export class HoraireService {
   public isItOpen() {
     const now = new Date();
     const today = now.toLocaleString('fr-FR', {weekday: 'long'});
-
-// if(this.horaires$ === undefined){return}//WTF???
     const todayHours = this.horaires.value.find(h => h.dayOfWeek.toLowerCase() === today.toLowerCase());
 
     if (todayHours === null || todayHours === undefined) {

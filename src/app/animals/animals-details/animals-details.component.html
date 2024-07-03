@@ -1,89 +1,88 @@
-@if (animal$ | async; as animal){
-<main>
-  <section>
-    <h1 class="neucha-regular text-center m-5">{{ animal.name }}</h1>
+@if (animal$ | async; as animal) {
+  <main>
+    <section>
+      <h1 class="neucha-regular text-center m-5">{{ animal.name }}</h1>
 
-    <article
-      class="d-flex flex-column justify-content-center align-items-center"
-    >
-      <div class="col-10 p-3">
-        <div
-          id="carouselExampleIndicators"
-          class="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="0"
-              class="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-
-          </div>
-          <div class="carousel-inner">
-
-<!--            @if (animal !== null) {-->
-<!--              @for (pic of animal.pics; track pic.id; ) {-->
-<!--                <div class="carousel-item">-->
-<!--                  <img [src]="'https://localhost:7015/' + pic.slug" class="d-block" alt="..."/>-->
-<!--                </div>-->
-<!--              }-->
-<!--            }-->
-
-
-
-                        <div class="carousel-item active">
-                          <img
-                            [src]="'https://localhost:7015/' + animal.pics[0].slug"
-                            class="d-block"
-                            alt="..."
-                          />
-                        </div>
-                        <div class="carousel-item">
-                          <img
-                            [src]="'https://localhost:7015/' + animal.pics[0].slug"
-                            class="d-block"
-                            alt="..."
-                          />
-                      </div>
-          </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev"
+      <article
+        class="d-flex flex-column justify-content-center align-items-center"
+      >
+        <div class="col-10 p-3">
+          <div
+            id="carouselExampleIndicators"
+            class="carousel slide"
+            data-bs-ride="carousel"
           >
+            <div class="carousel-indicators">
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="0"
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="1"
+                aria-label="Slide 2"
+              ></button>
+
+            </div>
+            <div class="carousel-inner">
+
+              <!--            @if (animal !== null) {-->
+              <!--              @for (pic of animal.pics; track pic.id; ) {-->
+              <!--                <div class="carousel-item">-->
+              <!--                  <img [src]="'https://localhost:7015/' + pic.slug" class="d-block" alt="..."/>-->
+              <!--                </div>-->
+              <!--              }-->
+              <!--            }-->
+
+
+              <div class="carousel-item active">
+                <img
+                  [src]="'https://localhost:7015/' + animal.pics[0].slug"
+                  class="d-block"
+                  alt="..."
+                />
+              </div>
+              <div class="carousel-item">
+                <img
+                  [src]="'https://localhost:7015/' + animal.pics[0].slug"
+                  class="d-block"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev"
+            >
                 <span
                   class="carousel-control-prev-icon"
                   aria-hidden="true"
                 ></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next"
-          >
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next"
+            >
                 <span
                   class="carousel-control-next-icon"
                   aria-hidden="true"
                 ></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="col-10 p-3">
+        <div class="col-10 p-3">
 
 
           <h2>{{ animal.speciesData.name }}</h2>
@@ -91,15 +90,29 @@
           <p>{{ animal.speciesData.description }}</p>
           <p><strong>Habitat</strong> :
             @for (habitat of animal.speciesData.habitats; track habitat.id; ) {
-              <span>{{ habitat.name }}, </span>
+              <span>{{ habitat.name | titlecase }}</span>
+              @if (!$last) {
+                <span>, </span>
+              }
             }
           </p>
           <p><strong>Régime Alimentaire</strong> : {{ animal.speciesData.diet.name }}</p>
-          <p><strong>Sexe</strong> : {{ animal.isMale ? 'Mâle' : 'Femelle' }}</p>
-          <p><strong>Taille</strong> : jusqu'à {{ animal.speciesData.maleMaxSize + animal.speciesData.sizeUnit.abbr }}
-          </p>
-          <p><strong>Poids</strong> :
-            jusqu'à {{ animal.speciesData.maleMaxWeight + animal.speciesData.weightUnit.abbr }}</p>
+
+          @if (animal.isMale) {
+            <p><strong>Sexe</strong> : Mâle </p>
+            <p><strong>Taille</strong> : jusqu'à {{ animal.speciesData.maleMaxSize }}
+              <span>{{ animal.speciesData.sizeUnit.abbr }}</span></p>
+            <p><strong>Poids</strong> : jusqu'à {{ animal.speciesData.maleMaxWeight }}
+              <span>{{ animal.speciesData.weightUnit.abbr }}</span></p>
+          } @else {
+            <p><strong>Sexe</strong> : Femelle </p>
+            <p><strong>Taille</strong> :
+              jusqu'à {{ animal.speciesData.femaleMaxSize ? animal.speciesData.femaleMaxSize : animal.speciesData.maleMaxSize }}
+              <span>{{ animal.speciesData.sizeUnit.abbr }}</span></p>
+            <p><strong>Poids</strong> :
+              jusqu'à {{ animal.speciesData.femaleMaxWeight ? animal.speciesData.femaleMaxWeight : animal.speciesData.maleMaxWeight }}
+              <span>{{ animal.speciesData.weightUnit.abbr }}</span></p>
+          }
           <p><strong>Esperance de vie</strong> : {{ animal.speciesData.lifespan }} ans</p>
           <p>
             <strong
@@ -107,11 +120,14 @@
             >
             : {{ animal.healthData.state }}
           </p>
-      </div>
-    </article>
-  </section>
-</main>
-}
-@else{
-  <p>Problème lors de la récupération du Zanimo</p>
+        </div>
+      </article>
+    </section>
+  </main>
+} @else {
+  <main class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border text-success text-center" style="width: 5rem; height: 5rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </main>
 }
