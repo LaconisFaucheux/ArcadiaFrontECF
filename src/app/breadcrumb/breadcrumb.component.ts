@@ -41,6 +41,7 @@ export class BreadcrumbComponent {
       this.routesDictionary.set('activites', 'Activités');
       this.routesDictionary.set('philosophie', 'Philosophie');
       this.routesDictionary.set('review-creation', 'Rédiger un avis');
+    this.routesDictionary.set('auth', 'Connexion');
   }
 
   ngOnInit() {

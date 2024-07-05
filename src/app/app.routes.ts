@@ -9,6 +9,7 @@ import {AnimalsListComponent} from "./animals/animals-list/animals-list.componen
 import {AnimalsDetailsComponent} from "./animals/animals-details/animals-details.component";
 import {HabitatsDetailComponent} from "./habitats/habitats-detail/habitats-detail.component";
 import {HabitatsListComponent} from "./habitats/habitats-list/habitats-list.component";
+import {AuthComponent} from "./auth/auth.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -30,4 +31,5 @@ export const routes: Routes = [
   {path: "activites", component: ZooServicesComponent},
   {path: "philosophie", component: PhilosophieComponent},
   {path: "review-creation", component: ReviewFormComponent},
+  {path: "auth", component: AuthComponent},
 ];

@@ -1,4 +1,4 @@
-@if (zooServices !== null) {
+@if (zooServices$ | async; as zooServices) {
   <main>
     <h1 class="neucha-regular text-center m-5">Activités</h1>
     <p class="m-5 text-center">
@@ -17,7 +17,7 @@
           class="d-flex flex-column flex-md-row justify-content-center align-items-center"
         >
           <div class="col-10 col-md-5 p-4">
-            <img src="assets/SansTitre-1.jpg" class="img-fluid" alt=""/>
+            <img [src]=" 'https://localhost:7015/' + zs.pic" class="img-fluid" alt=""/>
           </div>
           <div class="col-10 col-md-5 p-4">
             <h3 class="neucha-regular">{{ zs.name }}</h3>
@@ -54,21 +54,20 @@
 
           </div>
           <div class="col-10 col-md-5 p-4">
-            <img src="assets/SansTitre-1.jpg" class="img-fluid" alt=""/>
+            <img [src]=" 'https://localhost:7015/' + zs.pic" class="img-fluid" alt=""/>
           </div>
         </article>
       }
 
-      <div
-        class="separator d-flex flex-md-row justify-content-center align-items-center"
-      >
-        <img src="assets/left_leaf_separator.png" class="img-fluid"/>
-        <img src="assets/right_leaf_separator.png" class="img-fluid" alt=""/>
+      @if (!$last){
+      <div class="separator d-flex flex-md-row justify-content-center align-items-center">
+        <img src="assets/left_leaf_separator2.png" class="img-fluid"/>
+        <img src="assets/right_leaf_separator2.png" class="img-fluid" alt=""/>
       </div>
-
+      }
     }
 
   </main>
 } @else {
-  <p> Problème lors de la récupération des Activités</p>
+  <app-loading-spinner></app-loading-spinner>
 }

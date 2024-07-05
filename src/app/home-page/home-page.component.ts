@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FooterComponent} from "../footer/footer.component";
-import {BehaviorSubject, Observable, of, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {IHoraires} from "../../shared/interfaces/horaires.interface";
 import {IReview} from "../../shared/interfaces/review.interface";
 import {HoraireService} from "../../shared/services/horaire.service";
@@ -9,8 +9,6 @@ import {AsyncPipe, DatePipe, TitleCasePipe} from "@angular/common";
 import {IAnimal} from "../../shared/interfaces/animal.interface";
 import {AnimalService} from "../../shared/services/animal.service";
 import {RouterLink} from "@angular/router";
-import {HabitatService} from "../../shared/services/habitat.service";
-import {IHabitat} from "../../shared/interfaces/habitat.interface";
 import {CharLimiterPipe} from "../../shared/pipes/char-limiter.pipe";
 
 @Component({
@@ -41,6 +39,12 @@ export class HomePageComponent {
     this.isOpen$ = this.horairesService.isOpen$;
     this.randomAnimal$ = this.animalService.randomAnimal$;
     this.reviews$ = this.reviewService.reviews$;
+  }
+
+  ngOnInit() {
+    this.animalService.fetchRandomAnimal();
+    this.horairesService.fetchData()
+    this.reviewService.fetchData()
   }
 
   public getStars(note: number): any[] {

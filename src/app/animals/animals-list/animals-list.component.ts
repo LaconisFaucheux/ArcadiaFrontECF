@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import {HabitatService} from "../../../shared/services/habitat.service";
 import {IHabitat} from "../../../shared/interfaces/habitat.interface";
 import {AnimalFilterPipe} from "../../../shared/pipes/animal-filter.pipe";
+import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-animals-list',
@@ -17,7 +18,8 @@ import {AnimalFilterPipe} from "../../../shared/pipes/animal-filter.pipe";
     AsyncPipe,
     NgIf,
     TitleCasePipe,
-    AnimalFilterPipe
+    AnimalFilterPipe,
+    LoadingSpinnerComponent
   ],
   templateUrl: './animals-list.component.html',
   styleUrl: './animals-list.component.css'
@@ -26,27 +28,33 @@ import {AnimalFilterPipe} from "../../../shared/pipes/animal-filter.pipe";
 export class AnimalsListComponent {
   public animals$: Observable<IAnimal[]>;
   public habitats$: Observable<IHabitat[]>;
-  public filters: number[] = this.habitatService.getHabitatsIds();
+  public filters: number[] = [];
 
   constructor(private animalService: AnimalService,
               protected habitatService: HabitatService) {
     this.animals$ = this.animalService.getAnimals();
     this.habitats$ = this.habitatService.getHabitats();
+    this.habitats$.subscribe((habitats) => {
+      for (let h of habitats) {
+        this.filters.push(h.id)
+      }
+    })
   }
 
-  // public selectAnimal(index: number): void {
-  //   this.animalService.setAnimal(index);
-  // }
+  ngOnInit() {
+    this.animalService.fetchAllData();
+    this.habitatService.fetchAllData();
+  }
 
-  public addOrRemoveFilters(event: any,habitatsID: number){
-    if(event.target.checked){
+  public addOrRemoveFilters(event: any, habitatsID: number) {
+    if (event.target.checked) {
       this.filters.push(habitatsID)
     } else {
       this.filters.splice(this.filters.indexOf(habitatsID), 1);
     }
   }
 
-  public allFiltersActive(){
+  public allFiltersActive() {
     this.filters = this.habitatService.getHabitatsIds();
   }
 
@@ -54,7 +62,7 @@ export class AnimalsListComponent {
     this.filters = [];
   }
 
-  public isItChecked(habitatId: number): boolean{
+  public isItChecked(habitatId: number): boolean {
     return this.filters.includes(habitatId);
   }
 }

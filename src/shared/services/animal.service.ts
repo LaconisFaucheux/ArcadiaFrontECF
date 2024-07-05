@@ -17,21 +17,18 @@ export class AnimalService {
   private inhabitants: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([]);
   public inhabitants$ = this.inhabitants.asObservable();
 
-  private rnd = Math.floor(Math.random() * (this.animals.value.length + 1));
+  private animalsListLength: number = 0;
 
   private randomAnimal: BehaviorSubject<IAnimal | null> = new BehaviorSubject<IAnimal | null>(null);
   public randomAnimal$ = this.randomAnimal.asObservable();
 
 
-  constructor(private http: HttpClient) {
-    this.fetchAllData();
-  }
+  constructor(private http: HttpClient) {}
 
   fetchAllData() {
     this.http.get<IAnimal[]>('https://localhost:7015/api/Animals')
       .subscribe(animals => {
         this.animals.next(animals)
-        this.updateRandomAnimal()
       });
   }
 
@@ -40,6 +37,19 @@ export class AnimalService {
       .subscribe(animal => {
         this.animal.next(animal)
       });
+  }
+
+  fetchRandomAnimal(){
+    let rnd
+    this.http.get<number>(`https://localhost:7015/api/Animals/length`)
+      .subscribe(length => {
+        this.animalsListLength = length
+        rnd = Math.floor(Math.random() * (this.animalsListLength + 1));
+        this.http.get<IAnimal>(`https://localhost:7015/api/Animals/${rnd}`)
+          .subscribe(animal => {
+            this.randomAnimal.next(animal)
+          });
+      })
   }
 
   fetchInhabitantsByHabitatId(habitatId: number){
@@ -61,29 +71,4 @@ export class AnimalService {
   getInhabitants(): Observable<IAnimal[]> {
     return this.inhabitants$;
   }
-
-  //SETTERS
-  // public setInhabitants(habitatId: number): void {
-  //   this.inhabitants.next(
-  //     this.animals.value.filter(a => a.speciesData.habitats.some(
-  //       h => h.id === habitatId))
-  //   );
-  // }
-
-  // public setAnimal(index: number): void {
-  //   let tmp: IAnimal | undefined = this.animals.value.find(a => a.id === index);
-  //   if (tmp) {
-  //     this.animal.next(tmp);
-  //   }
-  // }
-
-  private updateRandomAnimal() {
-    const animals = this.animals.value;
-    if (animals.length > 0) {
-      const rnd = Math.floor(Math.random() * animals.length);
-      this.randomAnimal.next(animals[rnd]);
-    }
-  }
-
-
 }

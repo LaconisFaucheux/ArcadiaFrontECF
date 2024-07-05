@@ -5,6 +5,7 @@ import {HabitatService} from "../../../shared/services/habitat.service";
 import {Observable, Subscription} from "rxjs";
 import {RouterLink} from "@angular/router";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
+import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-habitats-list',
@@ -13,7 +14,8 @@ import {AsyncPipe, TitleCasePipe} from "@angular/common";
     HabitatsDetailComponent,
     RouterLink,
     AsyncPipe,
-    TitleCasePipe
+    TitleCasePipe,
+    LoadingSpinnerComponent
   ],
   templateUrl: './habitats-list.component.html',
   styleUrl: './habitats-list.component.css'
@@ -23,5 +25,9 @@ export class HabitatsListComponent {
 
   constructor(private habitatService: HabitatService) {
     this.habitats$ = this.habitatService.getHabitats();
+  }
+
+  ngOnInit() {
+    this.habitatService.fetchAllData()
   }
 }

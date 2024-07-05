@@ -6,6 +6,7 @@ import {HabitatService} from "../../../shared/services/habitat.service";
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, ParamMap, RouterLink} from "@angular/router";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
+import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-habitats-detail',
@@ -13,7 +14,8 @@ import {AsyncPipe, TitleCasePipe} from "@angular/common";
   imports: [
     AsyncPipe,
     TitleCasePipe,
-    RouterLink
+    RouterLink,
+    LoadingSpinnerComponent
   ],
   templateUrl: './habitats-detail.component.html',
   styleUrl: './habitats-detail.component.css'

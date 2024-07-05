@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {ReviewService} from "../../shared/services/review.service";
 
 @Component({
   selector: 'app-review-form',
@@ -15,11 +16,16 @@ export class ReviewFormComponent {
     Email: new FormControl(''),
     Pseudo: new FormControl(''),
     Note: new FormControl(''),
-    Avis: new FormControl(''),
+    Content: new FormControl(''),
   });
+
+  constructor(private reviewService: ReviewService) {
+
+  }
 
   public submit(): void {
     console.log(this.reviewForm)
+    this.reviewService.postReview(this.reviewForm.value)
   }
 
 }

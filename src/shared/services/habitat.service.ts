@@ -14,11 +14,9 @@ export class HabitatService {
   private habitat: BehaviorSubject<IHabitat> = new BehaviorSubject(this.habitats.value[0]);
   public habitat$ = this.habitat.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.fetchdata();
-  }
+  constructor(private http: HttpClient) {}
 
-  fetchdata() {
+  fetchAllData() {
     this.http.get<IHabitat[]>('https://localhost:7015/api/Habitats')
       .subscribe(habitats => this.habitats.next(habitats));
   }
@@ -43,12 +41,4 @@ export class HabitatService {
   getHabitat(): Observable<IHabitat> {
     return this.habitat$;
   }
-
-  //METHODS
-  // public selectHabitat(id: number) {
-  //   let tmp = this.habitats.value.find((habitat) => habitat.id === id);
-  //   if (tmp) {
-  //     this.habitat.next(tmp);
-  //   }
-  // }
 }

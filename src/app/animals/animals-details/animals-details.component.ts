@@ -4,13 +4,15 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 import {AnimalService} from "../../../shared/services/animal.service";
 import {isEmpty, Observable, Subscription} from "rxjs";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
+import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-animals-details',
   standalone: true,
   imports: [
     AsyncPipe,
-    TitleCasePipe
+    TitleCasePipe,
+    LoadingSpinnerComponent
   ],
   templateUrl: './animals-details.component.html',
   styleUrl: './animals-details.component.css'

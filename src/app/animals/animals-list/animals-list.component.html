@@ -14,14 +14,16 @@
         }
       }
     </fieldset>
+
     <div class="flex-row mt-4">
-      @if(!(filters.length === habitatService.getHabitatsIds().length)){
+      @if(filters.length !== habitatService.getHabitatsIds().length){
         <button class="btn btn-outline-success mx-2" (click)="allFiltersActive()">Tout cocher</button>
       }
       @if(filters.length > 0){
       <button class="btn btn-outline-success mx-2" (click)="noFilterActive()">Tout décocher</button>
       }
     </div>
+
   </div>
 
   <section class="d-flex flex-row flex-wrap my-5">
@@ -40,6 +42,12 @@
           <h6 class="neucha-regular">{{ a.speciesData.name }}</h6>
         </div>
       }
+    } @else {
+
+      <div class="d-flex justify-content-center align-items-center">
+      <app-loading-spinner></app-loading-spinner>
+      </div>
+
     }
   </section>
 </main>

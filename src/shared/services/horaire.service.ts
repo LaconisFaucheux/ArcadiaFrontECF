@@ -16,14 +16,11 @@ export class HoraireService {
 
 //CTOR
   constructor(private http: HttpClient) {
-    this.fetchdata();
-
-    this.isItOpen()
     setInterval(this.isItOpen.bind(this), 1000);
   }
 
 //METHODS
-  public fetchdata() {
+  public fetchData() {
     this.http.get<any[]>('https://localhost:7015/api/OpeningHours').pipe(
       map(hours => hours.map(hour => ({
         id: hour.id,

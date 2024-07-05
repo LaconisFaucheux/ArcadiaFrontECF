@@ -1,0 +1,8 @@
+.separator {
+  width: 100vw;
+  max-height: 10vh;
+}
+
+.separator > img {
+  max-height: 5vh;
+}

@@ -229,11 +229,3 @@ hr {
   opacity: 0.25;
 }
 
-.separator {
-  width: 100vw;
-  height: 20vh;
-}
-
-.separator > img {
-  height: 20vh;
-}
