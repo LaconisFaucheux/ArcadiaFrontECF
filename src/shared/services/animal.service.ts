@@ -40,7 +40,7 @@ export class AnimalService {
   }
 
   fetchRandomAnimal(){
-    let rnd
+    let rnd;
     this.http.get<number>(`https://localhost:7015/api/Animals/length`)
       .subscribe(length => {
         this.animalsListLength = length

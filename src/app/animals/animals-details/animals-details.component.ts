@@ -30,7 +30,6 @@ export class AnimalsDetailsComponent {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.id = paramMap.get('id');
     })
-    //this.animalService.setAnimal(parseInt(String(this.id)));
     this.animalService.fetchUniqueAnimal(parseInt(String(this.id)));
   }
 }
