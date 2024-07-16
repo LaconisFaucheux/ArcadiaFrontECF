@@ -1,30 +1,33 @@
 <main class="d-flex flex-column align-items-center justify-content-center pb-5">
   <h1 class="neucha-regular text-center mb-4">
-    Connexion à l'espace d'administration
+    Connexion à l'espace ArcAdmin
   </h1>
 
-  <form>
+  <form (ngSubmit)="OnFormSubmit()">
     <div
       class="mb-3 d-flex flex-column justify-content-center align-items-center"
     >
-      <label for="exampleInputEmail1" class="form-label"
+      <label for="Email1" class="form-label"
       >Identifiant</label
       >
       <input
+        name="email"
         type="email"
         class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
+        id="Email1"
+        [(ngModel)]="model.email"
       />
     </div>
     <div
       class="mb-3 d-flex flex-column justify-content-center align-items-center"
     >
-      <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+      <label for="Password1" class="form-label">Mot de passe</label>
       <input
+        name="password"
         type="password"
         class="form-control"
-        id="exampleInputPassword1"
+        id="Password1"
+        [(ngModel)]="model.password"
       />
     </div>
     <div

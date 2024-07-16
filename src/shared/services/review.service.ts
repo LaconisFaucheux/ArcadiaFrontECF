@@ -15,7 +15,7 @@ export class ReviewService {
 
   public fetchData() {
     //retirer le /unfiltered à la mise en prod
-    this.http.get<IReview[]>('https://localhost:7015/api/Reviews/unfiltered').subscribe(r => this.reviews.next(r))
+    this.http.get<IReview[]>('https://localhost:7015/api/Reviews').subscribe(r => this.reviews.next(r))
   }
 
   public postReview(review: IReview) {
