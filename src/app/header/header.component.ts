@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {HabitatService} from "../../shared/services/habitat.service";
 import {IHabitat} from "../../shared/interfaces/habitat.interface";
-import {filter, Subscription} from "rxjs";
-import {TitleCasePipe} from "@angular/common";
+import {filter, Observable, Subscription} from "rxjs";
+import {AsyncPipe, TitleCasePipe} from "@angular/common";
 import {AuthService} from "../../shared/services/auth.service";
+import {User} from "../../shared/interfaces/user.interface";
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ import {AuthService} from "../../shared/services/auth.service";
   imports: [
     RouterLink,
     TitleCasePipe,
-    RouterLinkActive
+    RouterLinkActive,
+    AsyncPipe
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -21,16 +23,16 @@ export class HeaderComponent {
   public habitats: IHabitat[] = [];
   public sub: Subscription = new Subscription();
   public isHomePageActive: boolean = false;
+  public user$: Observable<User | undefined> = new Observable(undefined);
 
   constructor(private habitatService: HabitatService,
               private router: Router,
-              private authService: AuthService,) {
+              private authService: AuthService) {
   }
 
   ngOnInit() {
     this.sub.add(this.habitatService.habitats$.subscribe(habitats => {
       this.habitats = habitats;
-      this.authService.user$.subscribe(user => {console.log(user)});
     }));
 
     this.sub.add(this.router.events.pipe(
@@ -39,6 +41,8 @@ export class HeaderComponent {
       const navEndEvent = event as NavigationEnd;
       this.isHomePageActive = navEndEvent.urlAfterRedirects === '/';
     }));
+
+    this.user$ = this.authService.user$;
 
   }
 

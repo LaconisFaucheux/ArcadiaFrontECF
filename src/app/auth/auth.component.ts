@@ -33,7 +33,7 @@ export class AuthComponent {
           //Set user
           this.authService.setUser({email: res.email, roles: res.roles});
           //Redirection:
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/admin/dashboard');
         }
       })
   }

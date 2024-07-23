@@ -11,6 +11,7 @@ import {HabitatsDetailComponent} from "./habitats/habitats-detail/habitats-detai
 import {HabitatsListComponent} from "./habitats/habitats-list/habitats-list.component";
 import {AuthComponent} from "./auth/auth.component";
 import {AdminComponent} from "./admin/admin.component";
+import {DashboardComponent} from "./admin/dashboard/dashboard.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -33,5 +34,11 @@ export const routes: Routes = [
   {path: "philosophie", component: PhilosophieComponent},
   {path: "review-creation", component: ReviewFormComponent},
   {path: "auth", component: AuthComponent},
-  {path: "admin", component: AdminComponent}
+  {
+    path: "admin",
+    component: AdminComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+    ]
+  }
 ];
