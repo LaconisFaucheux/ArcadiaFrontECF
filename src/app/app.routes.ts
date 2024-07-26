@@ -12,6 +12,7 @@ import {HabitatsListComponent} from "./habitats/habitats-list/habitats-list.comp
 import {AuthComponent} from "./auth/auth.component";
 import {AdminComponent} from "./admin/admin.component";
 import {DashboardComponent} from "./admin/dashboard/dashboard.component";
+import {AdminHomepageComponent} from "./admin/admin-homepage/admin-homepage.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -38,6 +39,7 @@ export const routes: Routes = [
     path: "admin",
     component: AdminComponent,
     children: [
+      { path: '', component: AdminHomepageComponent },
       { path: 'dashboard', component: DashboardComponent },
     ]
   }
