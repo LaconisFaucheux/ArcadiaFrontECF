@@ -18,6 +18,7 @@ export class AuthComponent {
   model: LoginRequest
 
   constructor(private authService: AuthService, private cookieService: CookieService, private router: Router) {
+    this.authService.logout();
     this.model = {
       email:'',
       password: ''
@@ -31,13 +32,12 @@ export class AuthComponent {
           //Set auth cookie with ngx cookie service
           this.cookieService.set('Authorization', `Bearer ${res.token}`, undefined, '/', undefined, true, 'Strict');
           //Set user
-          this.authService.setUser({email: res.email, roles: res.roles});
+          this.authService.setUser({id: undefined, email: res.email, roles: res.roles});
           //Redirection:
-          this.router.navigateByUrl('/admin/dashboard');
+          this.router.navigateByUrl('/admin');
         }
       })
   }
-
 }
 
 

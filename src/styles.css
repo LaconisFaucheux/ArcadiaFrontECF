@@ -229,3 +229,10 @@ hr {
   opacity: 0.25;
 }
 
+.custom-form{
+  border: black solid 1px;
+  padding: 1rem;
+  box-shadow: 5px 10px 10px gray;
+}
+
+

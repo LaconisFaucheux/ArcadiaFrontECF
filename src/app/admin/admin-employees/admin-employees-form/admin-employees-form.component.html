@@ -1,0 +1,82 @@
+<main class="d-flex justify-content-center align-items-center">
+  <div class="col-11 col-xl-5 d-flex flex-column justify-content-center align-self-center mb-5 custom-form">
+
+    @if (user$ | async; as user) {
+      <h1 class="fw-bold flex-wrap">{{ user.email | uppercase }}</h1>
+      <h6 class="fst-italic mb-3">{{ user.id }}</h6>
+    } @else {
+      <h1 class="fw-bold">Nouvel Utilisateur</h1>
+    }
+    <form [formGroup]="employeeForm" (ngSubmit)="submit()">
+      <div class="mb-3">
+        <label for="Email" class="form-label"
+        >Adresse Mail</label
+        >
+        <input
+          type="email"
+          class="form-control"
+          id="Email"
+          formControlName="email"
+          aria-describedby="emailHelp"
+        />
+      </div>
+
+      @if (user$ | async;) {}
+      @else {
+        <div class="mb-3">
+          <label for="Password" class="form-label"
+          >Mot de Passe</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            id="Password"
+            formControlName="password"
+            aria-describedby="emailHelp"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="Password" class="form-label"
+          >Vérification Mot de Passe</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            id="PasswordChecking"
+            aria-describedby="emailHelp"
+          />
+        </div>
+      }
+
+      <div>
+        <label class="form-check-label mx-2">Roles</label>
+
+        <div class="d-flex flex-row form-group form-check justify-content-between flex-wrap">
+          <div class="d-flex flex-row">
+            <input type="checkbox" class="form-check-label mx-1" id="Admin" formControlName="Admin"/>
+            <label for="Admin" class="form-check-label mx-1">Administrateur</label>
+          </div>
+
+          <div class="d-flex flex-row">
+            <input type="checkbox" class="form-check-label mx-1" id="Vet" formControlName="Vet"/>
+            <label for="Vet" class="form-check-label mx-1">Vétérinaire</label>
+          </div>
+
+          <div class="d-flex flex-row">
+            <input type="checkbox" class="form-check-label mx-1" id="Employee" formControlName="Employee"/>
+            <label for="Employee" class="form-check-label mx-1">Employé</label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mt-5">
+        @if (user$ | async) {
+          <button class="btn btn-warning mx-1">Réinitialiser le mot de passe</button>
+        }
+        <button class="btn btn-success mx-1">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</main>

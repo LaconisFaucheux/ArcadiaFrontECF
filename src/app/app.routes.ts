@@ -13,6 +13,9 @@ import {AuthComponent} from "./auth/auth.component";
 import {AdminComponent} from "./admin/admin.component";
 import {DashboardComponent} from "./admin/dashboard/dashboard.component";
 import {AdminHomepageComponent} from "./admin/admin-homepage/admin-homepage.component";
+import {AdminEmployeesComponent} from "./admin/admin-employees/admin-employees.component";
+import {AdminEmployeesListComponent} from "./admin/admin-employees/admin-employees-list/admin-employees-list.component";
+import {AdminEmployeesFormComponent} from "./admin/admin-employees/admin-employees-form/admin-employees-form.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -41,6 +44,15 @@ export const routes: Routes = [
     children: [
       { path: '', component: AdminHomepageComponent },
       { path: 'dashboard', component: DashboardComponent },
+      {
+        path: 'employees',
+        component: AdminEmployeesComponent,
+        children: [
+          { path: '', component: AdminEmployeesListComponent },
+          { path: 'detailed/:id', component: AdminEmployeesFormComponent },
+          { path: 'register', component: AdminEmployeesFormComponent, pathMatch: "full"}
+        ]
+      }
     ]
   }
 ];

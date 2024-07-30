@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
+import {Component, HostListener} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./header/header.component";
 import {FooterComponent} from "./footer/footer.component";
 import {AnimalsListComponent} from "./animals/animals-list/animals-list.component";
@@ -10,7 +10,8 @@ import {PhilosophieComponent} from "./philosophie/philosophie.component";
 import {ZooServicesComponent} from "./zoo-services/zoo-services.component";
 import {ReviewFormComponent} from "./review-form/review-form.component";
 import {BreadcrumbComponent} from "./breadcrumb/breadcrumb.component";
-import {AnimalService} from "../shared/services/animal.service";
+import {AuthService} from "../shared/services/auth.service";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-root',
@@ -22,10 +23,12 @@ import {AnimalService} from "../shared/services/animal.service";
 export class AppComponent {
   title = 'test';
 
-  constructor() {}
+  constructor(private cookieService: CookieService) {}
 
-  ngOnInit() {
-
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event) {
+    this.cookieService.deleteAll();
   }
+
 
 }

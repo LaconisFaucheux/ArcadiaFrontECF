@@ -1,39 +1,41 @@
-<main class="d-flex flex-column align-items-center justify-content-center pb-5">
-  <h1 class="neucha-regular text-center mb-4">
-    Connexion à l'espace ArcAdmin
-  </h1>
+<main class="d-flex flex-column align-items-center justify-content-center" >
+  <div class="d-flex flex-column align-items-center justify-content-center pb-5 custom-form col-4">
+    <h1 class="neucha-regular text-center mb-4">
+      Connexion à l'espace ArcAdmin
+    </h1>
 
-  <form (ngSubmit)="OnFormSubmit()">
-    <div
-      class="mb-3 d-flex flex-column justify-content-center align-items-center"
-    >
-      <label for="Email1" class="form-label"
-      >Identifiant</label
+    <form (ngSubmit)="OnFormSubmit()">
+      <div
+        class="mb-3 d-flex flex-column justify-content-center align-items-center"
       >
-      <input
-        name="email"
-        type="email"
-        class="form-control"
-        id="Email1"
-        [(ngModel)]="model.email"
-      />
-    </div>
-    <div
-      class="mb-3 d-flex flex-column justify-content-center align-items-center"
-    >
-      <label for="Password1" class="form-label">Mot de passe</label>
-      <input
-        name="password"
-        type="password"
-        class="form-control"
-        id="Password1"
-        [(ngModel)]="model.password"
-      />
-    </div>
-    <div
-      class="d-flex flex-column justify-content-center align-items-center"
-    >
-      <button type="submit" class="btn btn-success">Connexion</button>
-    </div>
-  </form>
+        <label for="Email1" class="form-label"
+        >Identifiant</label
+        >
+        <input
+          name="email"
+          type="email"
+          class="form-control"
+          id="Email1"
+          [(ngModel)]="model.email"
+        />
+      </div>
+      <div
+        class="mb-3 d-flex flex-column justify-content-center align-items-center"
+      >
+        <label for="Password1" class="form-label">Mot de passe</label>
+        <input
+          name="password"
+          type="password"
+          class="form-control"
+          id="Password1"
+          [(ngModel)]="model.password"
+        />
+      </div>
+      <div
+        class="d-flex flex-column justify-content-center align-items-center"
+      >
+        <button type="submit" class="btn btn-success">Connexion</button>
+      </div>
+    </form>
+  </div>
 </main>

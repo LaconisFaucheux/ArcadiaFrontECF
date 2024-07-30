@@ -1,0 +1,46 @@
+<main>
+  <div class="d-flex justify-content-center align-items-center">
+    <a class="btn btn-outline-success" routerLink="register">Créer un nouvel employé</a>
+  </div>
+
+  @if (employees$ | async; as users) {
+
+    <div class="d-flex flex-row justify-content-center">
+      <div class="col-12 m-5 d-flex justify-content-center table-responsive">
+        <table class="table mx-5">
+          <thead>
+          <tr class="table-dark">
+            <th scope="col">Id</th>
+            <th scope="col">Email</th>
+            <th scope="col">Roles</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (user of users; track user.id) {
+              <tr [class]="roleAsBg(user.roles)">
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  @for (role of user.roles; track role) {
+                    <span class="card-text">{{ role }}</span>
+                    @if (!$last) {
+                      <span>, </span>
+                    }
+                  }</td>
+                <td>
+                  <a href="#" class="btn btn-success m-1" [routerLink]="getPath(user.id)">Modifier</a>
+                  <a href="#" class="btn btn-danger m-1">Supprimer</a></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  } @else {
+    <app-loading-spinner></app-loading-spinner>
+  }
+
+</main>
+

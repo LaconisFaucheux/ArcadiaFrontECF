@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, tap} from "rxjs";
 import {IAnimal} from "../interfaces/animal.interface";
 import {HttpClient} from "@angular/common/http";
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,23 +24,25 @@ export class AnimalService {
   public randomAnimal$ = this.randomAnimal.asObservable();
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+  }
 
   fetchAllData() {
-    this.http.get<IAnimal[]>('https://localhost:7015/api/Animals')
+    this.http.get<IAnimal[]>(
+      'https://localhost:7015/api/Animals')
       .subscribe(animals => {
         this.animals.next(animals)
       });
   }
 
-  fetchUniqueAnimal(id: number){
+  fetchUniqueAnimal(id: number) {
     this.http.get<IAnimal>(`https://localhost:7015/api/Animals/${id}`)
       .subscribe(animal => {
         this.animal.next(animal)
       });
   }
 
-  fetchRandomAnimal(){
+  fetchRandomAnimal() {
     let rnd;
     this.http.get<number>(`https://localhost:7015/api/Animals/length`)
       .subscribe(length => {
@@ -52,7 +55,7 @@ export class AnimalService {
       })
   }
 
-  fetchInhabitantsByHabitatId(habitatId: number){
+  fetchInhabitantsByHabitatId(habitatId: number) {
     this.http.get<IAnimal[]>(`https://localhost:7015/api/Animals/byHabitat/${habitatId}`)
       .subscribe(animals => {
         this.inhabitants.next(animals)
