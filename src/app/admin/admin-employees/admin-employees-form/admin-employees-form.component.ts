@@ -85,7 +85,6 @@ export class AdminEmployeesFormComponent {
         email: this.employeeForm.value.email,
         roles: this.formToStringArrayRoles(this.employeeForm)
       }
-      console.log(user)
       this.usersService.putUser(user);
     } else {
       const user: INewUser ={
@@ -93,7 +92,6 @@ export class AdminEmployeesFormComponent {
         password: this.employeeForm.value.password,
         roles: this.formToStringArrayRoles(this.employeeForm)
       }
-      console.log(user)
       this.usersService.registerUser(user);
     }
   }
