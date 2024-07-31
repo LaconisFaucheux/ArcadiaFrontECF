@@ -14,6 +14,7 @@ import {
 } from "@angular/forms";
 import {AsyncPipe, UpperCasePipe} from "@angular/common";
 import {IRole} from "../../../../shared/interfaces/role.interface";
+import {INewUser} from "../../../../shared/interfaces/new-user.interface";
 
 @Component({
   selector: 'app-admin-employees-form',
@@ -86,6 +87,14 @@ export class AdminEmployeesFormComponent {
       }
       console.log(user)
       this.usersService.putUser(user);
+    } else {
+      const user: INewUser ={
+        email: this.employeeForm.value.email,
+        password: this.employeeForm.value.password,
+        roles: this.formToStringArrayRoles(this.employeeForm)
+      }
+      console.log(user)
+      this.usersService.registerUser(user);
     }
   }
 

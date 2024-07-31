@@ -4,6 +4,7 @@ import {BehaviorSubject} from "rxjs";
 import {IUser} from "../interfaces/user.interface";
 import {IAnimal} from "../interfaces/animal.interface";
 import {IRole} from "../interfaces/role.interface";
+import {INewUser} from "../interfaces/new-user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class UsersService {
 
   putUser(user: IUser){
     this.http.put(`https://localhost:7015/api/Auth/${user.id}`, user).subscribe();
+  }
+
+  registerUser(user: INewUser){
+    this.http.post(`https://localhost:7015/api/Auth/register`, user).subscribe();
   }
 
   resetUser(){
