@@ -3,6 +3,20 @@
     <a class="btn btn-outline-success" routerLink="register">Créer un nouvel employé</a>
   </div>
 
+  <div>
+    <h5>Filtrer par rôle:</h5>
+    <fieldset class="d-flex flex-row">
+      @if (roles$ | async; as roles) {
+        @for (role of roles; track role.id) {
+          <div class="mx-2">
+            <label [for]="role.name">{{ role.name }}</label>
+            <input type="checkbox" [id]="role.name" (change)="addOrRemoveFilters($event, role.name)">
+          </div>
+        }
+      }
+    </fieldset>
+  </div>
+
   @if (employees$ | async; as users) {
 
     <div class="d-flex flex-row justify-content-center">
@@ -17,7 +31,7 @@
           </tr>
           </thead>
           <tbody>
-            @for (user of users; track user.id) {
+            @for (user of users | employeeFilter : filters; track user.id) {
               <tr [class]="roleAsBg(user.roles)">
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>

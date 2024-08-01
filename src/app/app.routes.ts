@@ -16,6 +16,7 @@ import {AdminHomepageComponent} from "./admin/admin-homepage/admin-homepage.comp
 import {AdminEmployeesComponent} from "./admin/admin-employees/admin-employees.component";
 import {AdminEmployeesListComponent} from "./admin/admin-employees/admin-employees-list/admin-employees-list.component";
 import {AdminEmployeesFormComponent} from "./admin/admin-employees/admin-employees-form/admin-employees-form.component";
+import {AdminZooManagementComponent} from "./admin/admin-zoo-management/admin-zoo-management.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -52,7 +53,8 @@ export const routes: Routes = [
           { path: 'detailed/:id', component: AdminEmployeesFormComponent },
           { path: 'register', component: AdminEmployeesFormComponent, pathMatch: "full"}
         ]
-      }
+      },
+      {path: 'zoo-management', component: AdminZooManagementComponent }
     ]
   }
 ];

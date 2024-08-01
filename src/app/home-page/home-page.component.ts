@@ -10,6 +10,8 @@ import {IAnimal} from "../../shared/interfaces/animal.interface";
 import {AnimalService} from "../../shared/services/animal.service";
 import {RouterLink} from "@angular/router";
 import {CharLimiterPipe} from "../../shared/pipes/char-limiter.pipe";
+import {IMeteo} from "../../shared/interfaces/meteo.interface";
+import {MeteoService} from "../../shared/services/meteo.service";
 
 @Component({
   selector: 'app-home-page',
@@ -28,23 +30,27 @@ import {CharLimiterPipe} from "../../shared/pipes/char-limiter.pipe";
 export class HomePageComponent {
   public horaires$: Observable<IHoraires[]>;
   public isOpen$: Observable<boolean>;
-
   public reviews$: Observable<IReview[]>;
   public randomAnimal$: Observable<IAnimal | null>;
+  public meteo$: Observable<IMeteo | null>;
 
   constructor(private horairesService: HoraireService,
               private reviewService: ReviewService,
-              protected animalService: AnimalService) {
+              protected animalService: AnimalService,
+              private meteoService: MeteoService,) {
     this.horaires$ = this.horairesService.horaires$;
     this.isOpen$ = this.horairesService.isOpen$;
     this.randomAnimal$ = this.animalService.randomAnimal$;
     this.reviews$ = this.reviewService.reviews$;
+    this.meteo$ = this.meteoService.meteo$;
   }
 
   ngOnInit() {
     this.animalService.fetchRandomAnimal();
     this.horairesService.fetchData()
     this.reviewService.fetchData()
+    this.meteoService.fetchMeteo()
+    console.log(this.meteo$)
   }
 
   public getStars(note: number): any[] {
@@ -53,5 +59,9 @@ export class HomePageComponent {
 
   public getUnStars(note: number): any[] {
     return new Array(5 - note);
+  }
+
+  public getMeteoPic(code: number): string {
+    return `assets/meteo/${this.meteoService.weatherCodes[code]}.png`;
   }
 }
