@@ -12,6 +12,7 @@ import {RouterLink} from "@angular/router";
 import {CharLimiterPipe} from "../../shared/pipes/char-limiter.pipe";
 import {IMeteo} from "../../shared/interfaces/meteo.interface";
 import {MeteoService} from "../../shared/services/meteo.service";
+import {LoadingSpinnerComponent} from "../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-home-page',
@@ -22,7 +23,8 @@ import {MeteoService} from "../../shared/services/meteo.service";
     RouterLink,
     TitleCasePipe,
     AsyncPipe,
-    CharLimiterPipe
+    CharLimiterPipe,
+    LoadingSpinnerComponent
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'

@@ -7,7 +7,7 @@
 
       @if(habitats$ | async; as habitats){
         @for(h of habitats; track h.id){
-      <div class="mx-2">
+      <div class="m-2">
         <input type="checkbox" id="{{h.name}}" (change)="addOrRemoveFilters($event, h.id)" [checked]="isItChecked(h.id)"/>
         <label for="{{h.name}}" class="mx-1">{{h.name | titlecase}}</label>
       </div>

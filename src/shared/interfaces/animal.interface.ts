@@ -3,12 +3,12 @@ import {ISpecies} from "./species.interface";
 import {IHealth} from "./health.interface";
 
 export interface IAnimal {
-  id: number;
+  id: number | undefined;
   name: string;
   isMale: boolean;
   idSpecies: number;
-  idHealth: number;
+  idHealth: number | undefined;
   pics: IAnimalImage[];
   speciesData: ISpecies;
-  healthData: IHealth;
+  healthData: IHealth | undefined;
 }

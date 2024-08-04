@@ -3,14 +3,14 @@
     <a class="btn btn-outline-success" routerLink="register">Créer un nouvel employé</a>
   </div>
 
-  <div>
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
     <h5>Filtrer par rôle:</h5>
     <fieldset class="d-flex flex-row">
       @if (roles$ | async; as roles) {
         @for (role of roles; track role.id) {
           <div class="mx-2">
             <label [for]="role.name">{{ role.name }}</label>
-            <input type="checkbox" [id]="role.name" (change)="addOrRemoveFilters($event, role.name)">
+            <input class="mx-1" type="checkbox" [id]="role.name" (change)="addOrRemoveFilters($event, role.name)" checked>
           </div>
         }
       }

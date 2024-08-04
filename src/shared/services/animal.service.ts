@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable, tap} from "rxjs";
 import {IAnimal} from "../interfaces/animal.interface";
 import {HttpClient} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import {ISpecies} from "../interfaces/species.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,20 @@ export class AnimalService {
   private randomAnimal: BehaviorSubject<IAnimal | null> = new BehaviorSubject<IAnimal | null>(null);
   public randomAnimal$ = this.randomAnimal.asObservable();
 
+  private species: BehaviorSubject<ISpecies[]> = new BehaviorSubject<ISpecies[]>([]);
+  public species$ = this.species.asObservable();
+
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
+  }
+
+  fetchSpecies() {
+    this.http.get<ISpecies[]>(
+      'https://localhost:7015/api/Species')
+      .subscribe(species => {
+        this.species.next(species)
+    });
+
   }
 
   fetchAllData() {

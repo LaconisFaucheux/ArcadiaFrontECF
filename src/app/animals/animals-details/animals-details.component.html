@@ -114,12 +114,14 @@
               <span>{{ animal.speciesData.weightUnit.abbr }}</span></p>
           }
           <p><strong>Esperance de vie</strong> : {{ animal.speciesData.lifespan }} ans</p>
-          <p>
-            <strong
-            >Etat de santé selon le dernier passage du vétérinaire</strong
-            >
-            : {{ animal.healthData.state }}
-          </p>
+          @if (animal.healthData) {
+            <p>
+              <strong
+              >Etat de santé selon le dernier passage du vétérinaire</strong
+              >
+              : {{ animal.healthData.state }}
+            </p>
+          }
         </div>
       </article>
     </section>

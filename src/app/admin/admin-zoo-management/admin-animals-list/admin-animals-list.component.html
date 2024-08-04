@@ -1,0 +1,75 @@
+<main>
+  <h1 class="text-center">Gestion des animaux</h1>
+  <div class="d-flex justify-content-center align-items-center">
+    <a class="btn btn-outline-success m-5" routerLink="new">Créer un nouvel animal</a>
+  </div>
+
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <p class="">Filtrer par habitat:</p>
+
+    <fieldset class="d-flex flex-row flex-wrap">
+
+      @if(habitats$ | async; as habitats){
+        @for(h of habitats; track h.id){
+          <div class="m-2">
+            <input type="checkbox" id="{{h.name}}" (change)="addOrRemoveFilters($event, h.id)" [checked]="isItChecked(h.id)"/>
+            <label for="{{h.name}}" class="mx-1">{{h.name | titlecase}}</label>
+          </div>
+        }
+      }
+    </fieldset>
+
+    <div class="flex-row mt-4">
+      @if(filters.length !== habitatService.getHabitatsIds().length){
+        <button class="btn btn-outline-success mx-2" (click)="allFiltersActive()">Tout cocher</button>
+      }
+      @if(filters.length > 0){
+        <button class="btn btn-outline-success mx-2" (click)="noFilterActive()">Tout décocher</button>
+      }
+    </div>
+
+  </div>
+
+  @if (animals$ | async; as animals) {
+
+    <div class="d-flex flex-row justify-content-center">
+      <div class="col-12 m-5 d-flex justify-content-center table-responsive">
+        <table class="table mx-5 table-striped">
+          <thead>
+          <tr class="table-dark">
+            <th scope="col">Id</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Espèce</th>
+            <th scope="col">Habitat</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (animal of animals | animalFilter : filters; track animal.id) {
+              <tr>
+                <td>{{ animal.id }}</td>
+                <td>{{ animal.name }}</td>
+                <td>{{ animal.speciesData.name}}</td>
+                <td>
+                  @for (habitat of animal.speciesData.habitats; track habitat.id) {
+                    <span>{{ habitat.name | titlecase }}</span>
+                    @if (!$last) {
+                      <span>, </span>
+                    }
+                  }</td>
+                <td>
+                  <a href="#" class="btn btn-success m-1" [routerLink]="getPath(animal.id)">Modifier</a>
+                  <a href="#" class="btn btn-danger m-1">Supprimer</a></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  } @else {
+    <app-loading-spinner></app-loading-spinner>
+  }
+
+</main>
+

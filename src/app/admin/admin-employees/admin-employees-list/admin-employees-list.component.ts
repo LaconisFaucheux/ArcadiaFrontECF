@@ -45,6 +45,11 @@ export class AdminEmployeesListComponent {
     this.usersService.fetchRoles();
     this.employees$ = this.usersService.users$;
     this.roles$ = this.usersService.roles$;
+    this.roles$.subscribe(roles => {
+      for (let role of roles) {
+        this.filters.push(role.name);
+      }
+    });
   }
 
   public getPath(id: string | undefined): string {
@@ -52,7 +57,7 @@ export class AdminEmployeesListComponent {
   }
 
   public addOrRemoveFilters(event: any, roleName: string){
-    if(event.target.checked){
+    if(event.target.checked && !this.filters.includes(roleName)){
       this.filters.push(roleName);
     } else {
       this.filters.splice(this.filters.indexOf(roleName), 1);

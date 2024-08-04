@@ -3,7 +3,8 @@ import {IUser} from "../interfaces/user.interface";
 
 @Pipe({
   name: 'employeeFilter',
-  standalone: true
+  standalone: true,
+  pure: false
 })
 export class EmployeeFilterPipe implements PipeTransform {
 

@@ -3,7 +3,7 @@
     <div class="col-12 d-flex flex-lg-row flex-column align-items-center justify-content-around m-5">
       <article class="m-3 col-12 col-md-5">
         <h2 class="mb-4 text-center neucha-regular">
-          Le Zoo ARCADIA, un lieu préservé pour s'émerveiller !
+          Le Zoo ARCADIA, un lieu préservé pour s'émerveiller
         </h2>
         <p class="text-center">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
@@ -27,6 +27,8 @@
               <p class="fs-3 text-center fw-bold"><span class="text-info">{{meteo.forecast.tmin}}°</span> - <span class="text-danger">{{meteo.forecast.tmax}}°</span></p>
             </div>
           </div>
+        } @else {
+          <app-loading-spinner></app-loading-spinner>
         }
 
       </article>
