@@ -1,16 +1,20 @@
 <main class="d-flex justify-content-center align-items-center">
-  <div class="col-11 col-xl-5 d-flex flex-column justify-content-center align-self-center mb-5 custom-form">
+  <div class="col-11 col-xl-8 d-flex flex-column justify-content-center align-self-center mb-5 custom-form">
 
     @if (animal$ | async; as animal) {
       <h1 class="fw-bold flex-wrap">{{ animal.name | uppercase }}</h1>
       <h6 class="fst-italic mb-3">{{ animal.speciesData.name }}</h6>
-      <h6 class="fst-italic mb-3">Id : {{ animal.id }}</h6>
+<!--      <h6 class="fst-italic mb-3">Id : {{ animal.id }}</h6>-->
     } @else {
       <h1 class="fw-bold">Nouvel Animal</h1>
     }
-    <form [formGroup]="animalForm" (ngSubmit)="submit()">
+    <form (ngSubmit)="submit()">
 
       <div class="mb-3">
+
+        <label for="id" class="form-label">Id</label>
+        <input type="text" class="form-control" id="id" [formControl]="Id" aria-describedby="IdHelp" [disabled]="true"/>
+
         <label for="Name" class="form-label"
         >Nom</label
         >
@@ -18,7 +22,7 @@
           type="text"
           class="form-control"
           id="Name"
-          formControlName="name"
+          [formControl]="Name"
           aria-describedby="nameHelp"
         />
       </div>
@@ -27,30 +31,30 @@
         <div class="mb-3">
           <label>Genre:</label>
           <label class="mx-2">Mâle
-            <input type="radio" value="male" formControlName="isMale" [checked]="animal.isMale">
+            <input type="radio" value="true" [formControl]="isMale" [checked]="animal.isMale">
           </label>
           <label class="mx-2">Femelle
-            <input type="radio" value="female" formControlName="isMale" [checked]="!animal.isMale">
+            <input type="radio" value="false" [formControl]="isMale"  [checked]="!animal.isMale">
           </label>
         </div>
       } @else {
         <div class="mb-3">
           <label>Genre:</label>
           <label class="mx-2">Mâle
-            <input type="radio" value="male" formControlName="isMale">
+            <input type="radio" [formControl]="isMale">
           </label>
           <label class="mx-2">Femelle
-            <input type="radio" value="female" formControlName="isMale">
+            <input type="radio">
           </label>
         </div>
       }
 
       <div class="d-flex flex-column form-group">
         <label>Espèce
-          <select formControlName="Species">
+          <select [formControl]="idSpecies">
             @if (speciess$ | async; as species) {
               @for (spe of species; track spe.id) {
-                <option>{{ spe.name }}</option>
+                <option [value]="spe.id">{{ spe.name }}</option>
               }
             }
           </select>
@@ -61,9 +65,12 @@
         <label>Images: </label>
 
         <div class="my-3">
-          <input (change)="addFiles($event)" type="file" multiple id="Files"/>
+          <div (click)="openFile()" class="border border-1 border-dark-subtle rounded" style="height: 4rem;">
+            <p class="fs-1 text-dark-emphasis text-center">+</p>
+            <input #fileinput (change)="addFiles($event)" type="file" multiple id="Files" style="visibility: collapse" accept="image/*"/>
+          </div>
           <div class="files">
-            @for (file of filesHolder$ | async; track $index) {
+            @for (file of selectedFiles; track $index) {
               <div
                 class="d-flex flex-row border border-1 border-dark-subtle m-2 justify-content-between"
               >
@@ -73,12 +80,6 @@
             }
           </div>
         </div>
-
-        <!--        <div>-->
-        <!--          <label for="files">Ajouter des images:</label>-->
-        <!--          <input type="file" id="files" name="files" multiple>-->
-        <!--        </div>-->
-
 
         <div class="d-flex flex-row justify-content-around flex-wrap">
 
