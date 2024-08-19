@@ -77,6 +77,8 @@ export class AdminAnimalsFormComponent {
         if (animal.idHealth) {
           this.idHealth.setValue(animal.idHealth);
         }
+
+        console.log(animal)
       }
     })
   }
