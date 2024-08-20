@@ -8,7 +8,7 @@ import { AnimalService } from "../../../../shared/services/animal.service";
 import { ISpecies } from "../../../../shared/interfaces/species.interface";
 import { IAnimalDTO } from "../../../../shared/interfaces/animalDTO.interface";
 import { FilesService } from "../../../../shared/services/files.service";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'app-admin-animals-form',
@@ -106,19 +106,26 @@ export class AdminAnimalsFormComponent {
 
     // Append properties to FormData
     fd.append("id", animalDTO.id.toString());
-    fd.append("name", animalDTO.name);
-    fd.append("isMale", animalDTO.isMale.toString());
-    fd.append("idSpecies", animalDTO.idSpecies.toString());
-    fd.append("idHealth", animalDTO.idHealth.toString());
+    // fd.append("name", animalDTO.name);
+    // fd.append("isMale", animalDTO.isMale.toString());
+    // fd.append("idSpecies", animalDTO.idSpecies.toString());
+    // fd.append("idHealth", animalDTO.idHealth.toString());
 
     // Append deleted images as JSON string
-    fd.append("deletedImages", JSON.stringify(animalDTO.deletedImages));
+    //fd.append("deletedImages", JSON.stringify(animalDTO.deletedImages));
 
+    //Test d'affichage du fd dans la console
+    fd.forEach((value, key) => {
+      console.log(key + ': ' + value);
+    });
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'multipart/form-data',
+    })
     // Choose method based on presence of id
     const request$ = this.id
-      ? this.http.put(`https://localhost:7015/api/Animals/${this.id}/`, fd)
+      ? this.http.put(`https://localhost:7015/api/Animals/${this.id}/`, fd, {headers: headers})
       : this.http.post(`https://localhost:7015/api/Animals`, fd);
-
     request$.subscribe({
       next: (response) => {
         console.log('Request successful', response);
