@@ -1,14 +1,17 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AsyncPipe, UpperCasePipe } from "@angular/common";
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AsyncPipe, UpperCasePipe} from "@angular/common";
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import { Observable } from "rxjs";
-import { ActivatedRoute, ParamMap } from "@angular/router";
-import { IAnimal } from "../../../../shared/interfaces/animal.interface";
-import { AnimalService } from "../../../../shared/services/animal.service";
-import { ISpecies } from "../../../../shared/interfaces/species.interface";
-import { IAnimalDTO } from "../../../../shared/interfaces/animalDTO.interface";
-import { FilesService } from "../../../../shared/services/files.service";
+import {Observable} from "rxjs";
+import {ActivatedRoute, ParamMap} from "@angular/router";
+import {IAnimal} from "../../../../shared/interfaces/animal.interface";
+import {AnimalService} from "../../../../shared/services/animal.service";
+import {ISpecies} from "../../../../shared/interfaces/species.interface";
+import {IAnimalDTO} from "../../../../shared/interfaces/animalDTO.interface";
+import {FilesService} from "../../../../shared/services/files.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+
+
+//TODO: Fix gender radio button
 
 @Component({
   selector: 'app-admin-animals-form',
@@ -23,7 +26,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   styleUrl: './admin-animals-form.component.css'
 })
 export class AdminAnimalsFormComponent {
-  @ViewChild('fileinput', { static: true }) inputRef!: ElementRef;
+  @ViewChild('fileinput', {static: true}) inputRef!: ElementRef;
   selectedFiles: File[] = [];
 
   // FORM CONTROLS
@@ -37,7 +40,6 @@ export class AdminAnimalsFormComponent {
   // PROPS
   private id: string | null = null;
   protected deletedImagesArray: number[] = [];
-  protected deleteBtnText: string = "Supprimer";
 
   // OBSERVABLES
   public animal$: Observable<IAnimal | undefined> = new Observable<IAnimal | undefined>();
@@ -46,7 +48,6 @@ export class AdminAnimalsFormComponent {
 
   constructor(private animalService: AnimalService,
               private activatedRoute: ActivatedRoute,
-              private fb: FormBuilder,
               private fs: FilesService,
               private http: HttpClient) {
     this.animal$ = animalService.animal$;
@@ -62,25 +63,26 @@ export class AdminAnimalsFormComponent {
       if (this.id) {
         this.animalService.fetchUniqueAnimal(parseInt(this.id));
       } else {
+        this.animal$ = new Observable<IAnimal | undefined>(undefined);
         this.resetForm();
       }
     });
 
-    this.animal$.subscribe(animal => {
-      if (animal) {
-        if (animal.id) {
-          this.Id.setValue(animal.id);
+    if (this.id) {
+      this.animal$.subscribe(animal => {
+        if (animal) {
+          if (animal.id) {
+            this.Id.setValue(animal.id);
+          }
+          this.Name.setValue(animal.name);
+          this.isMale.setValue(animal.isMale);
+          this.idSpecies.setValue(animal.idSpecies);
+          if (animal.idHealth) {
+            this.idHealth.setValue(animal.idHealth);
+          }
         }
-        this.Name.setValue(animal.name);
-        this.isMale.setValue(animal.isMale);
-        this.idSpecies.setValue(animal.idSpecies);
-        if (animal.idHealth) {
-          this.idHealth.setValue(animal.idHealth);
-        }
-
-        console.log(animal)
-      }
-    })
+      })
+    }
   }
 
   public openFile() {
@@ -93,7 +95,6 @@ export class AdminAnimalsFormComponent {
     this.selectedFiles.forEach(file => {
       fd.append("images", file);
     });
-    //TODO: FIX SERVER ERROR 415
 
     const animalDTO: IAnimalDTO = {
       id: this.Id.value ?? 0,
@@ -105,35 +106,30 @@ export class AdminAnimalsFormComponent {
     };
 
     // Append properties to FormData
-    fd.append("id", animalDTO.id.toString());
-    // fd.append("name", animalDTO.name);
-    // fd.append("isMale", animalDTO.isMale.toString());
-    // fd.append("idSpecies", animalDTO.idSpecies.toString());
-    // fd.append("idHealth", animalDTO.idHealth.toString());
+    if(this.id){
+      fd.append("id", animalDTO.id.toString());
+      fd.append("name", animalDTO.name);
+      fd.append("isMale", animalDTO.isMale.toString());
+      fd.append("idSpecies", animalDTO.idSpecies.toString());
+      fd.append("idHealth", animalDTO.idHealth.toString());
+      animalDTO.deletedImages.forEach(imgId => {
+        fd.append("deletedImages", imgId.toString());
+      })
+    } else{
+      fd.append("name", animalDTO.name);
+      fd.append("isMale", animalDTO.isMale.toString());
+      fd.append("idSpecies", animalDTO.idSpecies.toString());
+      fd.append("idHealth", "1");
+    }
 
-    // Append deleted images as JSON string
-    //fd.append("deletedImages", JSON.stringify(animalDTO.deletedImages));
-
-    //Test d'affichage du fd dans la console
-    fd.forEach((value, key) => {
-      console.log(key + ': ' + value);
-    });
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data',
-    })
     // Choose method based on presence of id
-    const request$ = this.id
-      ? this.http.put(`https://localhost:7015/api/Animals/${this.id}/`, fd, {headers: headers})
-      : this.http.post(`https://localhost:7015/api/Animals`, fd);
-    request$.subscribe({
-      next: (response) => {
-        console.log('Request successful', response);
-      },
-      error: (error) => {
-        console.error('Request failed', error);
-      }
-    });
+    if(this.id){
+      this.animalService.updateAnimal(this.id, fd)
+    } else{
+      this.animalService.createAnimal(fd);
+    }
+
+    this.resetForm()
   }
 
   public resetForm() {
@@ -158,15 +154,12 @@ export class AdminAnimalsFormComponent {
   }
 
   public deleteImage(id: number): void {
-    if (this.deleteBtnText === 'Supprimer') {
-      this.deleteBtnText = 'Annuler';
+    if (!this.deletedImagesArray.includes(id)) {
       this.deletedImagesArray.push(id);
-    } else if (this.deleteBtnText === 'Annuler') {
-      this.deleteBtnText = 'Supprimer';
-      const idx = this.deletedImagesArray.indexOf(id);
-      if (idx !== -1) {
-        this.deletedImagesArray.splice(idx, 1);
-      }
+    } else {
+      this.deletedImagesArray.splice(this.deletedImagesArray.indexOf(id), 1);
     }
+
+    console.log(this.deletedImagesArray)
   }
 }

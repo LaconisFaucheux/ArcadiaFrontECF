@@ -4,7 +4,7 @@ import {IDiet} from "./diet.interface";
 import {IHabitat} from "./habitat.interface";
 
 export interface ISpecies{
-  id: number;
+  id: number | null;
   name: string;
   scientificName: string;
   description: string;

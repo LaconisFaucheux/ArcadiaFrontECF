@@ -4,16 +4,13 @@
     @if (animal$ | async; as animal) {
       <h1 class="fw-bold flex-wrap">{{ animal.name | uppercase }}</h1>
       <h6 class="fst-italic mb-3">{{ animal.speciesData.name }}</h6>
-<!--      <h6 class="fst-italic mb-3">Id : {{ animal.id }}</h6>-->
+      <h6 class="fst-italic mb-3">Id : {{ animal.id }}</h6>
     } @else {
       <h1 class="fw-bold">Nouvel Animal</h1>
     }
     <form (ngSubmit)="submit()">
 
       <div class="mb-3">
-
-        <label for="id" class="form-label">Id</label>
-        <input type="text" class="form-control" id="id" [formControl]="Id" aria-describedby="IdHelp" [disabled]="true"/>
 
         <label for="Name" class="form-label"
         >Nom</label
@@ -34,7 +31,7 @@
             <input type="radio" value="true" [formControl]="isMale" [checked]="animal.isMale">
           </label>
           <label class="mx-2">Femelle
-            <input type="radio" value="false" [formControl]="isMale"  [checked]="!animal.isMale">
+            <input type="radio" value="false" [formControl]="isMale" [checked]="!animal.isMale">
           </label>
         </div>
       } @else {
@@ -44,7 +41,7 @@
             <input type="radio" [formControl]="isMale">
           </label>
           <label class="mx-2">Femelle
-            <input type="radio">
+            <input type="radio" [formControl]="isMale">
           </label>
         </div>
       }
@@ -67,7 +64,8 @@
         <div class="my-3">
           <div (click)="openFile()" class="border border-1 border-dark-subtle rounded" style="height: 4rem;">
             <p class="fs-1 text-dark-emphasis text-center">+</p>
-            <input #fileinput (change)="addFiles($event)" type="file" multiple id="Files" style="visibility: collapse" accept="image/*"/>
+            <input #fileinput (change)="addFiles($event)" type="file" multiple id="Files" style="visibility: collapse"
+                   accept="image/*"/>
           </div>
           <div class="files">
             @for (file of selectedFiles; track $index) {
@@ -75,7 +73,7 @@
                 class="d-flex flex-row border border-1 border-dark-subtle m-2 justify-content-between"
               >
                 <span class="fs-5 ps-3">{{ file.name }}</span>
-                <button class="btn me-3" (click)="removeFile($index)">╳</button>
+                <button class="btn me-3" type="button" (click)="removeFile($index)">╳</button>
               </div>
             }
           </div>
@@ -89,7 +87,7 @@
                 <img [src]="'https://localhost:7015/' + pic.miniSlug" class="card-img-top overflow-hidden">
                 <div class="card-body d-flex align-items-end justify-content-center">
                   <button type="button" href="#" class="btn btn-danger"
-                          (click)="deleteImage(pic.id)">{{ deleteBtnText }}
+                          (click)="deleteImage(pic.id)">{{ deletedImagesArray.includes(pic.id) ? 'Annuler' : 'Supprimer' }}
                   </button>
                 </div>
               </div>

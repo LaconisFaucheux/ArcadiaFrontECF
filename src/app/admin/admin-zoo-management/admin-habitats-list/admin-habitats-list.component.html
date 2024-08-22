@@ -1,1 +1,40 @@
-<p>admin-habitats-list works!</p>
+<main>
+  <h1 class="text-center">Gestion des habitats</h1>
+  <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center">
+    <a class="btn btn-outline-success m-2 m-lg-5" routerLink="new">Créer un nouvel habitat</a>
+  </div>
+
+  @if (habitats$ | async; as habitats) {
+
+    <div class="d-flex flex-row justify-content-center">
+      <div class="col-12 m-5 d-flex justify-content-center table-responsive">
+        <table class="table mx-5 table-striped">
+          <thead>
+          <tr class="table-dark">
+            <th scope="col">Id</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (habitat of habitats; track habitat.id) {
+              <tr>
+                <td>{{ habitat.id }}</td>
+                <td>{{ habitat.name | titlecase}}</td>
+                <td>
+                  <a class="btn btn-success m-1" [routerLink]="getPath(habitat.id)">Modifier</a>
+                  <a class="btn btn-danger m-1">Supprimer</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  } @else {
+    <app-loading-spinner></app-loading-spinner>
+  }
+
+</main>
+

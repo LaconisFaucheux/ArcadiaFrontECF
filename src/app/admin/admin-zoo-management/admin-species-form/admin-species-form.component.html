@@ -1,0 +1,157 @@
+<main class="d-flex justify-content-center align-items-center">
+  <div class="col-11 col-xl-8 d-flex flex-column justify-content-center align-self-center mb-5 custom-form">
+
+    @if (species$ | async; as species) {
+      <h1 class="fw-bold flex-wrap">{{ species.name | uppercase }}</h1>
+      <h6 class="fst-italic">{{ species.scientificName }}</h6>
+      <h6 class="fst-italic mb-3">Id : {{ species.id }}</h6>
+    } @else {
+      <h1 class="fw-bold">Nouvelle espèce</h1>
+    }
+    <form (ngSubmit)="submit()">
+
+      <div class="mb-3">
+
+        <label for="Name" class="form-label fw-bold fst-italic"
+        >Nom</label
+        >
+        <input
+          type="text"
+          class="form-control mb-3"
+          id="Name"
+          [formControl]="Name"
+          aria-describedby="nameHelp"
+        />
+
+        <label for="ScientificName" class="form-label fw-bold fst-italic"
+        >Nom scientifique</label
+        >
+        <input
+          type="text"
+          class="form-control mb-3"
+          id="ScientificName"
+          [formControl]="ScientificName"
+          aria-describedby="nameHelp"
+        />
+
+        <div>
+          <label for="MaleMaxSize" class="form-label fw-bold fst-italic"
+          >Taille Maximale du mâle</label
+          >
+          <div class="d-flex flex-row">
+            <input
+              type="number"
+              class="form-control me-2 mb-3"
+              id="MaleMaxSize"
+              [formControl]="MaleMaxSize"
+              aria-describedby="nameHelp"
+            />
+            <select [formControl]="IdSizeUnit" class="mb-3">
+              @if (sizeUnits$ | async; as sizeUnits) {
+                @for (su of sizeUnits; track su.id) {
+                  <option [value]="su.id">{{ su.name }}</option>
+                }
+              }
+            </select>
+          </div>
+        </div>
+
+        <label for="FemaleMaxSize" class="form-label fw-bold fst-italic"
+        >Taille Maximale de la femelle (optionnel)</label
+        >
+        <input
+          type="number"
+          class="form-control mb-3"
+          id="FemaleMaxSize"
+          [formControl]="FemaleMaxSize"
+          aria-describedby="nameHelp"
+        />
+
+        <div>
+          <label for="MaleMaxWeight" class="form-label fw-bold fst-italic"
+          >Poids Maximal du mâle</label
+          >
+          <div class="d-flex flex-row">
+            <input
+              type="number"
+              class="form-control me-2 mb-3"
+              id="MaleMaxWeight"
+              [formControl]="MaleMaxWeight"
+              aria-describedby="nameHelp"
+            />
+            <select [formControl]="IdWeightUnit" class="mb-3">
+              @if (weightUnits$ | async; as weightUnits) {
+                @for (wu of weightUnits; track wu.id) {
+                  <option [value]="wu.id">{{ wu.name }}</option>
+                }
+              }
+            </select>
+          </div>
+        </div>
+
+        <label for="FemaleMaxWeight" class="form-label fw-bold fst-italic"
+        >Poids Maximal de la femelle (optionnel)</label
+        >
+        <input
+          type="number"
+          class="form-control mb-3"
+          id="FemaleMaxWeight"
+          [formControl]="FemaleMaxWeight"
+          aria-describedby="nameHelp"
+        />
+
+        <label for="Lifespan" class="form-label fw-bold fst-italic"
+        >Durée de vie (années)</label
+        >
+        <input
+          type="number"
+          class="form-control mb-3"
+          id="Lifespan"
+          [formControl]="Lifespan"
+          aria-describedby="nameHelp"
+        />
+
+        <div class="d-flex flex-row form-group mb-3 justify-content-between">
+          <label class="fw-bold fst-italic form-label">Régime Alimentaire
+            <select [formControl]="IdDiet">
+              @if (diets$ | async; as diets) {
+                @for (diet of diets; track diet.id) {
+                  <option [value]="diet.id">{{ diet.name | titlecase }}</option>
+                }
+              }
+            </select>
+          </label>
+        </div>
+
+        <label for="Habitats" class="form-label fw-bold fst-italic">Habitats Naturels</label>
+        <fieldset class="d-flex flex-row flex-wrap mb-3" id="Habitats">
+          @if (habitats$ | async; as habitats) {
+            @for (h of habitats; track h.id) {
+              <div class="m-2">
+                <input type="checkbox" id="{{h.name}}" (change)="addOrRemoveFilters($event, h.id)"
+                       [checked]="isItChecked(h.id)"/>
+                <label for="{{h.name}}" class="mx-1">{{ h.name | titlecase }}</label>
+              </div>
+            }
+          }
+        </fieldset>
+
+        <label for="Description" class="form-label fw-bold fst-italic"
+        >Description</label
+        >
+        <textarea
+          type="text"
+          rows="10"
+          class="form-control mb-3"
+          id="Description"
+          [formControl]="Description"
+          aria-describedby="nameHelp"
+        ></textarea>
+      </div>
+
+      <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-success mx-1">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</main>

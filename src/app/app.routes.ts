@@ -41,6 +41,8 @@ import {
 import {
   AdminZooManagementLandingPageComponent
 } from "./admin/admin-zoo-management/admin-zoo-management-landing-page/admin-zoo-management-landing-page.component";
+import {AdminSpeciesListComponent} from "./admin/admin-zoo-management/admin-species-list/admin-species-list.component";
+import {AdminSpeciesFormComponent} from "./admin/admin-zoo-management/admin-species-form/admin-species-form.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -86,6 +88,9 @@ export const routes: Routes = [
           {path: 'animals', component: AdminAnimalsListComponent},
           {path: 'animals/detailed/:id', component: AdminAnimalsFormComponent},
           {path: 'animals/new', component: AdminAnimalsFormComponent, pathMatch: "full"},
+          {path: 'species', component: AdminSpeciesListComponent},
+          {path: 'species/detailed/:id', component: AdminSpeciesFormComponent},
+          {path: 'species/new', component: AdminSpeciesFormComponent, pathMatch: "full"},
           {path: 'habitats', component: AdminHabitatsListComponent},
           {path: 'habitats/detailed/:id', component: AdminHabitatsFormComponent},
           {path: 'habitats/new', component: AdminHabitatsFormComponent, pathMatch: "full"},
