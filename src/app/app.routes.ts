@@ -43,6 +43,9 @@ import {
 } from "./admin/admin-zoo-management/admin-zoo-management-landing-page/admin-zoo-management-landing-page.component";
 import {AdminSpeciesListComponent} from "./admin/admin-zoo-management/admin-species-list/admin-species-list.component";
 import {AdminSpeciesFormComponent} from "./admin/admin-zoo-management/admin-species-form/admin-species-form.component";
+import {
+  AdminOpeningHoursFormComponent
+} from "./admin/admin-zoo-management/admin-opening-hours-form/admin-opening-hours-form.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -97,7 +100,8 @@ export const routes: Routes = [
           {path: 'services', component: AdminServicesListComponent},
           {path: 'services/detailed/:id', component: AdminServicesFormComponent},
           {path: 'services/new', component: AdminServicesFormComponent, pathMatch: "full"},
-          {path: 'opening-hours', component: AdminOpeningHoursManagementComponent}
+          {path: 'opening-hours', component: AdminOpeningHoursManagementComponent},
+          {path: 'opening-hours/:id', component: AdminOpeningHoursFormComponent, pathMatch: "full"},
         ]
       }
     ]

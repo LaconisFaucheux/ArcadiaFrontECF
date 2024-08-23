@@ -1,0 +1,88 @@
+<main class="d-flex justify-content-center align-items-center">
+  <div class="col-11 col-xl-8 d-flex flex-column justify-content-center align-self-center mb-5 custom-form">
+
+    @if (horaire$ | async; as horaire) {
+      <h1 class="fw-bold flex-wrap">{{ horaire.dayOfWeek | uppercase }}</h1>
+      <h6 class="fst-italic mb-3">Id : {{ horaire.id }}</h6>
+
+
+      <form (ngSubmit)="submit()">
+
+        <div class="mb-3">
+
+          <div class="mb-3">
+            <label for="MorningOpeningHour" class="form-label fw-bold fst-italic"
+            >Ouverture du matin</label
+            >
+            <input
+              type="time"
+              class="form-control"
+              id="MorningOpeningHour"
+              [formControl]="MorningOpeningHour"
+              aria-describedby="nameHelp"
+            />
+            <div class="d-flex flex-row">
+              <label class="form-label fst-italic fw-bold" for="isMorningOpeningHappening">Fermé
+                <input type="checkbox" id="isMorningOpeningHappening" (change)="nullifyTime('ChildPrice', $event)">
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="MorningClosingHour" class="form-label fw-bold fst-italic"
+            >Fermeture du matin</label
+            >
+            <input
+              type="time"
+              class="form-control"
+              id="MorningClosingHour"
+              [formControl]="MorningClosingHour"
+              aria-describedby="nameHelp"
+            />
+            <div class="d-flex flex-row">
+              <label class="form-label fst-italic fw-bold" for="isMorningClosingHappening">Fermé
+                <input type="checkbox" id="isMorningClosingHappening" (change)="nullifyTime('ChildPrice', $event)">
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="AfternoonOpeningHour" class="form-label fw-bold fst-italic"
+            >Ouverture de l'après-midi</label
+            >
+            <input
+              type="time"
+              class="form-control"
+              id="AfternoonOpeningHour"
+              [formControl]="AfternoonOpeningHour"
+              aria-describedby="nameHelp"
+            />
+            <div class="d-flex flex-row">
+              <label class="form-label fst-italic fw-bold" for="isAfternoonOpeningHappening">Fermé
+                <input type="checkbox" id="isAfternoonOpeningHappening" (change)="nullifyTime('ChildPrice', $event)">
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="AfternoonClosingHour" class="form-label fw-bold fst-italic"
+            >Fermeture de l'après-midi</label
+            >
+            <input
+              type="time"
+              class="form-control"
+              id="AfternoonClosingHour"
+              [formControl]="AfternoonClosingHour"
+              aria-describedby="nameHelp"
+            />
+            <div class="d-flex flex-row">
+              <label class="form-label fst-italic fw-bold" for="isAfternoonClosingHappening">Fermé
+                <input type="checkbox" id="isAfternoonClosingHappening" (change)="nullifyTime('ChildPrice', $event)">
+              </label>
+            </div>
+          </div>
+        </div>
+      </form>
+    }
+  </div>
+</main>

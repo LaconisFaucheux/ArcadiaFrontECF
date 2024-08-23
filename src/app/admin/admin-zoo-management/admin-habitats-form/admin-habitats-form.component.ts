@@ -2,13 +2,8 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {AsyncPipe, UpperCasePipe} from "@angular/common";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Observable} from "rxjs";
-import {IAnimal} from "../../../../shared/interfaces/animal.interface";
-import {ISpecies} from "../../../../shared/interfaces/species.interface";
-import {AnimalService} from "../../../../shared/services/animal.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {FilesService} from "../../../../shared/services/files.service";
-import {HttpClient} from "@angular/common/http";
-import {IAnimalDTO} from "../../../../shared/interfaces/animalDTO.interface";
 import {IHabitat} from "../../../../shared/interfaces/habitat.interface";
 import {HabitatService} from "../../../../shared/services/habitat.service";
 

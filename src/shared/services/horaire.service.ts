@@ -2,17 +2,25 @@ import {Injectable} from '@angular/core';
 import {IHoraires} from "../interfaces/horaires.interface";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {IUser} from "../interfaces/user.interface";
+import {IHorairesDTO} from "../interfaces/horairesDTO.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HoraireService {
   //PROPS
-  public horaires: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([])
+  private horaires: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([])
   public horaires$: Observable<IHoraires[]> = this.horaires.asObservable();
 
   private isOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   public isOpen$: Observable<boolean> = this.isOpen.asObservable();
+
+  private rawData: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([]);
+  public rawData$ = this.rawData.asObservable();
+
+  private uniqueRawData: BehaviorSubject<IHorairesDTO | null> = new BehaviorSubject<IHorairesDTO | null>(null);
+  public uniqueRawData$ = this.uniqueRawData.asObservable();
 
 //CTOR
   constructor(private http: HttpClient) {
@@ -34,6 +42,20 @@ export class HoraireService {
       this.horaires.next(transformedHours);
       this.isItOpen();
     });
+  }
+
+  public fetchRawData() {
+    this.http.get<IHoraires[]>('https://localhost:7015/api/OpeningHours')
+      .subscribe( a => {
+        this.rawData.next(a);
+      });
+  }
+
+  public fetchUniqueRawData(id: number) {
+    this.http.get<IHorairesDTO>(`https://localhost:7015/api/OpeningHours/${id}`)
+      .subscribe( a => {
+        this.uniqueRawData.next(a);
+      });
   }
 
   public convertTimeToDate(timeString: string | null): Date | null {

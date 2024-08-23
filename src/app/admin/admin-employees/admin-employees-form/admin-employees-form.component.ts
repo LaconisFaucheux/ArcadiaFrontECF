@@ -42,7 +42,7 @@ export class AdminEmployeesFormComponent {
     //this.roles$ = usersService.roles$;
     this.employeeForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: [''],
+      password: ['', Validators.required],
       Admin: [false],
       Employee: [false],
       Vet: [false]
