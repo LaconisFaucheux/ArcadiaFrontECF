@@ -23,7 +23,7 @@
                 <td>{{ habitat.name | titlecase}}</td>
                 <td>
                   <a class="btn btn-success m-1" [routerLink]="getPath(habitat.id)">Modifier</a>
-                  <a class="btn btn-danger m-1">Supprimer</a>
+                  <a class="btn btn-danger m-1" (click)="deleteHabitat(habitat.id)">Supprimer</a>
                 </td>
               </tr>
             }

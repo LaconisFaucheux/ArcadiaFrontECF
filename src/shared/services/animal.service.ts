@@ -7,6 +7,8 @@ import {ISpecies} from "../interfaces/species.interface";
 import {ISizeUnit} from "../interfaces/sizeUnit.interface";
 import {IWeightUnit} from "../interfaces/weightUnit.interface";
 import {IDiet} from "../interfaces/diet.interface";
+import {IHealth} from "../interfaces/health.interface";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +44,14 @@ export class AnimalService {
   private diets: BehaviorSubject<IDiet[]> = new BehaviorSubject<IDiet[]>([]);
   public diets$ = this.diets.asObservable();
 
+  private health: BehaviorSubject<IHealth[]> = new BehaviorSubject<IHealth[]>([]);
+  public health$ = this.health.asObservable();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {
+
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private router: Router) {
   }
 
   //GET
@@ -119,12 +127,20 @@ export class AnimalService {
       });
   }
 
+  fetchHealth() {
+    this.http.get<IHealth[]>(`https://localhost:7015/api/Healths`)
+      .subscribe(h => {
+        this.health.next(h)
+      });
+  }
+
   //POST
   createAnimal(fd: FormData) {
     this.http.post(`https://localhost:7015/api/Animals`, fd)
       .subscribe({
         next: (response) => {
           console.log('Request successful', response);
+          this.router.navigateByUrl('/admin/zoo-management/animals')
         },
         error: (error) => {
           console.error('Request failed', error);
@@ -137,6 +153,7 @@ export class AnimalService {
       .subscribe({
         next: (response) => {
           console.log('Request successful', response);
+          this.router.navigateByUrl('/admin/zoo-management/species')
         },
         error: (error) => {
           console.error('Request failed', error);
@@ -150,6 +167,7 @@ export class AnimalService {
       .subscribe({
         next: (response) => {
           console.log('Request successful', response);
+          this.router.navigateByUrl('/admin/zoo-management/animals')
         },
         error: (error) => {
           console.error('Request failed', error);
@@ -162,6 +180,7 @@ export class AnimalService {
       .subscribe({
         next: (response) => {
           console.log('Request successful', response);
+          this.router.navigateByUrl('/admin/zoo-management/species')
         },
         error: (error) => {
           console.error('Request failed', error);
@@ -170,6 +189,26 @@ export class AnimalService {
   }
 
   //DELETE
+  deleteAnimal(id: number) {
+    this.http.delete(`https://localhost:7015/api/Animals/${id}`).subscribe( a =>{
+      this.fetchAllData()
+    })
+  }
+
+  deleteSpecies(id: number) {
+    this.http.delete(`https://localhost:7015/api/Species/${id}`).subscribe({
+      next: (response) => {
+        console.log('Request successful', response);
+        this.fetchSpecies()
+      },
+      error: (error) => {
+        alert("Suppression impossible: Avez-vous vérifié que d'autres animaux de cette espèce ne sont pas encore enregistrés?")
+        console.error('Request failed', error);
+      }
+    });
+  }
+
+
 
   //GETTERS
   getAnimals(): Observable<IAnimal[]> {

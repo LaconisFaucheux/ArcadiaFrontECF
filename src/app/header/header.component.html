@@ -115,13 +115,13 @@
                   <a class="nav-link" routerLink="/admin/zoo-management" routerLinkActive="active">Gestion du Parc</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" routerLink="habitats" routerLinkActive="active">Gestion des Avis</a>
+                  <a class="nav-link" routerLink="admin/reviews" routerLinkActive="active">Gestion des Avis</a>
                 </li>
               }
 
               @if (user.roles.includes('Vet')) {
                 <li class="nav-item">
-                  <a class="nav-link" routerLink="activites" routerLinkActive="active">Rapports Vétérinaires</a>
+                  <a class="nav-link" routerLink="admin/vet-reports" routerLinkActive="active">Rapports Vétérinaires</a>
                 </li>
               }
               <li class="nav-item">

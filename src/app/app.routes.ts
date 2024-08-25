@@ -46,6 +46,16 @@ import {AdminSpeciesFormComponent} from "./admin/admin-zoo-management/admin-spec
 import {
   AdminOpeningHoursFormComponent
 } from "./admin/admin-zoo-management/admin-opening-hours-form/admin-opening-hours-form.component";
+import {AdminReviewsManagementComponent} from "./admin/admin-reviews-management/admin-reviews-management.component";
+import {
+  AdminVetVisitsManagementComponent
+} from "./admin/admin-vet-visits-management/admin-vet-visits-management.component";
+import {
+  AdminVetVisitsFormComponent
+} from "./admin/admin-vet-visits-management/admin-vet-visits-form/admin-vet-visits-form.component";
+import {
+  AdminVetVisitsListComponent
+} from "./admin/admin-vet-visits-management/admin-vet-visits-list/admin-vet-visits-list.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -103,7 +113,13 @@ export const routes: Routes = [
           {path: 'opening-hours', component: AdminOpeningHoursManagementComponent},
           {path: 'opening-hours/:id', component: AdminOpeningHoursFormComponent, pathMatch: "full"},
         ]
-      }
+      },
+      {path: 'reviews', component: AdminReviewsManagementComponent},
+      {path: 'vet-reports', component:AdminVetVisitsManagementComponent,
+        children: [
+          {path: '', component:AdminVetVisitsListComponent, pathMatch: "full"},
+          {path: 'new', component:AdminVetVisitsFormComponent, pathMatch: "full"},
+        ]}
     ]
   }
 ];

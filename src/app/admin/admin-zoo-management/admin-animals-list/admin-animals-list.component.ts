@@ -74,4 +74,9 @@ export class AdminAnimalsListComponent {
       return 'register';
     }
   }
+
+  public deleteAnimal(id: number | undefined) {
+    if(id) this.animalService.deleteAnimal(id);
+
+  }
 }

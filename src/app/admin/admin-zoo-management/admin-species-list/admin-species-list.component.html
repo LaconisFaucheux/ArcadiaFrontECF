@@ -1,35 +1,8 @@
 <main>
   <h1 class="text-center">Gestion des espèces</h1>
   <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center">
-    <!--    <a class="btn btn-outline-success m-2 m-lg-5" routerLink="new">Créer un nouvel animal</a>-->
     <a class="btn btn-outline-success m-2 m-lg-5" routerLink="new">Créer une nouvelle espèce</a>
   </div>
-
-  <!--  <div class="d-flex flex-column justify-content-center align-items-center">-->
-  <!--    <p class="">Filtrer par habitat:</p>-->
-
-  <!--    <fieldset class="d-flex flex-row flex-wrap">-->
-
-  <!--      @if(habitats$ | async; as habitats){-->
-  <!--        @for(h of habitats; track h.id){-->
-  <!--          <div class="m-2">-->
-  <!--            <input type="checkbox" id="{{h.name}}" (change)="addOrRemoveFilters($event, h.id)" [checked]="isItChecked(h.id)"/>-->
-  <!--            <label for="{{h.name}}" class="mx-1">{{h.name | titlecase}}</label>-->
-  <!--          </div>-->
-  <!--        }-->
-  <!--      }-->
-  <!--    </fieldset>-->
-
-  <!--    <div class="flex-row mt-4">-->
-  <!--      @if(filters.length !== habitatService.getHabitatsIds().length){-->
-  <!--        <button class="btn btn-outline-success mx-2" (click)="allFiltersActive()">Tout cocher</button>-->
-  <!--      }-->
-  <!--      @if(filters.length > 0){-->
-  <!--        <button class="btn btn-outline-success mx-2" (click)="noFilterActive()">Tout décocher</button>-->
-  <!--      }-->
-  <!--    </div>-->
-
-  <!--  </div>-->
 
   @if (species$ | async; as species) {
 
@@ -50,8 +23,8 @@
                   <td>{{ specie.id }}</td>
                   <td>{{ specie.name }}</td>
                   <td>
-                    <a href="#" class="btn btn-success m-1" [routerLink]="getPath(specie.id)">Modifier</a>
-                    <a href="#" class="btn btn-danger m-1">Supprimer</a></td>
+                    <a class="btn btn-success m-1" [routerLink]="getPath(specie.id)">Modifier</a>
+                    <a class="btn btn-danger m-1" (click)="deleteSpecies(specie.id)">Supprimer</a></td>
                 </tr>
               }
             }

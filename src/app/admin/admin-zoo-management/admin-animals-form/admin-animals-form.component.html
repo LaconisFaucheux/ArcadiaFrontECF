@@ -28,20 +28,20 @@
         <div class="mb-3">
           <label>Genre:</label>
           <label class="mx-2">Mâle
-            <input type="radio" value="true" [formControl]="isMale" [checked]="animal.isMale">
+            <input type="radio" value="true" name="gender" [formControl]="isMale" [checked]="animal.isMale">
           </label>
           <label class="mx-2">Femelle
-            <input type="radio" value="false" [formControl]="isMale" [checked]="!animal.isMale">
+            <input type="radio" value="false" name="gender" [checked]="!animal.isMale">
           </label>
         </div>
       } @else {
         <div class="mb-3">
           <label>Genre:</label>
           <label class="mx-2">Mâle
-            <input type="radio" [formControl]="isMale">
+            <input type="radio" name="gender" [formControl]="isMale">
           </label>
           <label class="mx-2">Femelle
-            <input type="radio" [formControl]="isMale">
+            <input type="radio" name="gender">
           </label>
         </div>
       }

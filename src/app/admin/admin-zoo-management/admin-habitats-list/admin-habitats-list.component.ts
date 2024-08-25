@@ -40,4 +40,8 @@ export class AdminHabitatsListComponent {
     }
   }
 
+  public deleteHabitat(id: number | undefined) {
+    if(id) this.habitatsService.deleteHabitat(id)
+  }
+
 }

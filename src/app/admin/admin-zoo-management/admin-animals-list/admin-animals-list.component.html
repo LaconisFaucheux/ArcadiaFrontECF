@@ -59,8 +59,8 @@
                     }
                   }</td>
                 <td>
-                  <a href="#" class="btn btn-success m-1" [routerLink]="getPath(animal.id)">Modifier</a>
-                  <a href="#" class="btn btn-danger m-1">Supprimer</a></td>
+                  <a class="btn btn-success m-1" [routerLink]="getPath(animal.id)">Modifier</a>
+                  <a class="btn btn-danger m-1" (click)="deleteAnimal(animal.id)">Supprimer</a></td>
               </tr>
             }
           </tbody>

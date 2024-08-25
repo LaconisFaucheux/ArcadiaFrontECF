@@ -1,0 +1,71 @@
+<main class="mb-5">
+  <div class="d-flex flex-column justify-content-center">
+    <h1 class="text-center">Gestion des rapports vétérinaires</h1>
+    <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center">
+      <a class="btn btn-outline-success m-2 m-lg-5" routerLink="new">Rédiger un nouveau rapport</a>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-around">
+    <section class="col-7 border border-2 border-black rounded p-1 d-flex flex-wrap">
+      <div class="d-flex flex-row justify-content-center">
+        <div class="col-12 m-2 d-flex justify-content-center table-responsive flex-wrap" style="height: 60vh">
+          <table class="table mx-2 table-striped">
+            <thead>
+            <tr class="table-dark">
+              <th scope="col">Date</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Espèce</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              @if (reports$ | async; as reports) {
+                @for (r of reports; track r.id) {
+                  <tr>
+                    <td>{{ r.visitDate | date }}</td>
+                    <td>{{ r.animal.name }}</td>
+                    <td>{{ getAnimalSpecies(r.animal.id) }}</td>
+                    <td>
+                      <button type="button" class="btn btn-success" (click)="getDetailedReport(r.id)">Consulter</button>
+                      @if(user$ | async; as user){
+                        @if(user.roles.includes('Admin')){
+                          <button type="button" class="btn btn-danger ms-2" (click)="deleteReport(r.id)">Supprimer</button>
+                        }
+                      }
+                    </td>
+                  </tr>
+                }
+              } @else {
+                <app-loading-spinner></app-loading-spinner>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    @if (report$ | async; as report) {
+      <section class="col-4 border border-2 border-black rounded p-2">
+        <div class="d-flex justify-content-end">
+          <a type="button" class="mx-3" (click)="nullifyReport()">X</a>
+        </div>
+        <h3 class="text-center">{{ report.animal.name }}</h3>
+        <h4 class="mb-4 text-center">Rapport n°: {{ report.id }}</h4>
+
+        <h5>Date: </h5>
+        <p class="mb-4">{{ report.visitDate | date }}</p>
+
+        <h5>Nourriture proposée: </h5>
+        <p class="mb-4"><span>{{ report.foodWeight }}</span><span>{{ report.foodWeightUnit.abbr }}</span> de
+          <span>{{ report.food }}</span></p>
+
+        <h5>Observations: </h5>
+        <p class="mb-4">{{ report.observations }}</p>
+
+        <h5>Etat de santé (public): </h5>
+        @if (report.animal.healthData) {
+          <p>{{ report.animal.healthData.state }}</p>
+        }
+      </section>
+    }
+  </div>
+</main>

@@ -4,6 +4,7 @@ import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {IUser} from "../interfaces/user.interface";
 import {IHorairesDTO} from "../interfaces/horairesDTO.interface";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,11 @@ export class HoraireService {
   public uniqueRawData$ = this.uniqueRawData.asObservable();
 
 //CTOR
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     setInterval(this.isItOpen.bind(this), 6000);
   }
 
-//METHODS
+//GET
   public fetchData() {
     this.http.get<any[]>('https://localhost:7015/api/OpeningHours').pipe(
       map(hours => hours.map(hour => ({
@@ -44,6 +45,7 @@ export class HoraireService {
     });
   }
 
+
   public fetchRawData() {
     this.http.get<IHoraires[]>('https://localhost:7015/api/OpeningHours')
       .subscribe( a => {
@@ -56,6 +58,20 @@ export class HoraireService {
       .subscribe( a => {
         this.uniqueRawData.next(a);
       });
+  }
+
+  //PUT
+  public updateHoraire(id: string, fd: FormData) {
+    this.http.put(`https://localhost:7015/api/OpeningHours/${id}`, fd)
+    .subscribe({
+      next: (response) => {
+        console.log('Request successful', response);
+        this.router.navigateByUrl('admin/zoo-management/opening-hours');
+      },
+      error: (error) => {
+        console.error('Request failed', error);
+      }
+    });
   }
 
   public convertTimeToDate(timeString: string | null): Date | null {

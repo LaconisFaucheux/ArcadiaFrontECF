@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {IReview} from "../interfaces/review.interface";
 import {HttpClient} from "@angular/common/http";
@@ -8,20 +8,55 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class ReviewService {
-  private reviews: BehaviorSubject<IReview[]> = new BehaviorSubject<IReview[]>([])
-  public reviews$ = this.reviews.asObservable();
+  private validatedReviews: BehaviorSubject<IReview[]> = new BehaviorSubject<IReview[]>([])
+  public validatedReviews$ = this.validatedReviews.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  private unvalidatedReviews: BehaviorSubject<IReview[]> = new BehaviorSubject<IReview[]>([])
+  public unvalidatedReviews$ = this.unvalidatedReviews.asObservable();
 
-  public fetchData() {
-    //retirer le /unfiltered à la mise en prod
-    this.http.get<IReview[]>('https://localhost:7015/api/Reviews').subscribe(r => this.reviews.next(r))
+
+  constructor(private http: HttpClient, private router: Router) {
   }
 
+  //GET
+  public fetchValidatedReviews() {
+    this.http.get<IReview[]>('https://localhost:7015/api/Reviews')
+      .subscribe(r => this.validatedReviews.next(r))
+  }
+
+  public fetchUnvalidatedReviews() {
+    this.http.get<IReview[]>('https://localhost:7015/api/Reviews/unvalidated')
+      .subscribe(r => this.unvalidatedReviews.next(r))
+  }
+
+  //PUT
+  public updateReview(id: string, review: IReview) {
+    this.http.put(`https://localhost:7015/api/Reviews/${id}`, review)
+      .subscribe({
+        next: (response) => {
+          console.log('Request successful', response);
+          this.fetchUnvalidatedReviews();
+          this.fetchValidatedReviews();
+        },
+        error: (error) => {
+          console.error('Request failed', error);
+        }
+      });
+
+  }
+
+  //POST
   public postReview(review: IReview) {
     this.http.post<IReview>('https://localhost:7015/api/Reviews', review).subscribe(r => {
       this.router.navigateByUrl('/');
-      this.fetchData() //bien utile dans la mesure où de toute façon un employé doit valider l'avis avant qu'il soit visible? => A retirer à la mise en prod
+    })
+  }
+
+  //DELETE
+  deleteReview(id: string) {
+    this.http.delete(`https://localhost:7015/api/Reviews/${id}`).subscribe(r => {
+      this.fetchUnvalidatedReviews()
+      this.fetchValidatedReviews();
     })
   }
 }

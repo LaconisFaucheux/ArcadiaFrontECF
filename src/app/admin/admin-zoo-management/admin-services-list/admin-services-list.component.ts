@@ -39,6 +39,10 @@ export class AdminServicesListComponent {
     }
   }
 
+  public deleteService(id: number | undefined) :void {
+    if(id) this.zooServices.deleteService(id);
+  }
+
 
 
 }

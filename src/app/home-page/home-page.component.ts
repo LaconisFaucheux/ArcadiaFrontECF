@@ -43,14 +43,14 @@ export class HomePageComponent {
     this.horaires$ = this.horairesService.horaires$;
     this.isOpen$ = this.horairesService.isOpen$;
     this.randomAnimal$ = this.animalService.randomAnimal$;
-    this.reviews$ = this.reviewService.reviews$;
+    this.reviews$ = this.reviewService.validatedReviews$;
     this.meteo$ = this.meteoService.meteo$;
   }
 
   ngOnInit() {
     this.animalService.fetchRandomAnimal();
     this.horairesService.fetchData()
-    this.reviewService.fetchData()
+    this.reviewService.fetchValidatedReviews()
     this.meteoService.fetchMeteo()
     console.log(this.meteo$)
   }

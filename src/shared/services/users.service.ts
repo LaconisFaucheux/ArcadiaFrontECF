@@ -5,6 +5,7 @@ import {IUser} from "../interfaces/user.interface";
 import {IAnimal} from "../interfaces/animal.interface";
 import {IRole} from "../interfaces/role.interface";
 import {INewUser} from "../interfaces/new-user.interface";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,9 @@ export class UsersService {
   private roles: BehaviorSubject<IRole[]> = new BehaviorSubject<IRole[]>([]);
   public roles$ = this.roles.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
+  //GET
   fetchRoles(){
     this.http.get<IRole[]>(
       'https://localhost:7015/api/Auth/roles')
@@ -44,12 +46,26 @@ export class UsersService {
       });
   }
 
+  //PUT
   putUser(user: IUser){
-    this.http.put(`https://localhost:7015/api/Auth/${user.id}`, user).subscribe();
+    this.http.put(`https://localhost:7015/api/Auth/${user.id}`, user).subscribe( u => {
+      this.router.navigateByUrl('admin/employees')
+    });
   }
 
+  //POST
   registerUser(user: INewUser){
-    this.http.post(`https://localhost:7015/api/Auth/register`, user).subscribe();
+    this.http.post(`https://localhost:7015/api/Auth/register`, user).subscribe( u => {
+      this.router.navigateByUrl('admin/employees')
+    });
+  }
+
+  //DELETE
+  deleteUser(id: string){
+    this.http.delete(`https://localhost:7015/api/Auth/${id}`, {responseType: "text"}).subscribe(a => {
+      this.fetchAllData()
+      }
+    );
   }
 
   resetUser(){

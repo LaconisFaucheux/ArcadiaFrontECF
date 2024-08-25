@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {IHabitat} from "../interfaces/habitat.interface";
 import {HttpClient} from "@angular/common/http";
 import {IHabitatDTO} from "../interfaces/habitatDTO.interface";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class HabitatService {
   private habitat: BehaviorSubject<IHabitat> = new BehaviorSubject(this.habitats.value[0]);
   public habitat$ = this.habitat.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   //GET
   fetchAllData() {
@@ -34,6 +35,7 @@ export class HabitatService {
       .subscribe({
         next: (response) => {
           console.log('Request successful', response);
+          this.router.navigateByUrl('/admin/zoo-management/habitats')
         },
         error: (error) => {
           console.error('Request failed', error);
@@ -47,11 +49,19 @@ export class HabitatService {
       .subscribe({
         next: (response) => {
           console.log('Request successful', response);
+          this.router.navigateByUrl('/admin/zoo-management/habitats')
         },
         error: (error) => {
           console.error('Request failed', error);
         }
       });
+  }
+
+  //DELETE
+  deleteHabitat(id: number){
+    this.http.delete(`https://localhost:7015/api/Habitats/${id}`).subscribe( h => {
+      this.fetchAllData();
+    })
   }
 
   //GETTERS

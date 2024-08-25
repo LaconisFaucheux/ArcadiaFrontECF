@@ -25,8 +25,8 @@
                 <td>{{ service.name }}</td>
                 <td>{{ service.fullPrice === null ? '-' : service.fullPrice === 0 ? 'Gratuit' : service.fullPrice + '€'}}</td>
                 <td>{{ service.childPrice === null ? '-' : service.childPrice === 0 ? 'Gratuit' : service.childPrice + '€'}}<td>
-                  <a href="#" class="btn btn-success m-1" [routerLink]="getPath(service.id)">Modifier</a>
-                  <a href="#" class="btn btn-danger m-1">Supprimer</a></td>
+                  <a class="btn btn-success m-1" [routerLink]="getPath(service.id)">Modifier</a>
+                  <a class="btn btn-danger m-1" (click)="deleteService(service.id)">Supprimer</a></td>
               </tr>
             }
           </tbody>

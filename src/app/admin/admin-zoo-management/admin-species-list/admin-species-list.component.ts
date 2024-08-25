@@ -40,4 +40,8 @@ export class AdminSpeciesListComponent {
 
   }
 
+  public deleteSpecies(id: number | undefined): void {
+    if(id) this.animalService.deleteSpecies(id);
+  }
+
 }

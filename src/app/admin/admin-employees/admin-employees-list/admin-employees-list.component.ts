@@ -62,7 +62,9 @@ export class AdminEmployeesListComponent {
     } else {
       this.filters.splice(this.filters.indexOf(roleName), 1);
     }
+  }
 
-    console.log(this.filters);
+  public deleteUSer(id: string | undefined){
+    if(id) this.usersService.deleteUser(id);
   }
 }

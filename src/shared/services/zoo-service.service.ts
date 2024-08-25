@@ -57,6 +57,13 @@ export class ZooServiceService {
       });
   }
 
+  //DELETE
+  deleteService(id: number) {
+    this.http.delete(`https://localhost:7015/api/ZooServices/${id}`).subscribe(zs => {
+      this.fetchAllData();
+    })
+  }
+
   public getZooServices() {
     return this.zooServices$;
   }
