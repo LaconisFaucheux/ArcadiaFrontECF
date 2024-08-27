@@ -16,7 +16,5 @@ console.log(`filter = ${filter}`);
       return animals.filter(animal =>
         animal.speciesData.id == filter);
     }
-
   }
-
 }

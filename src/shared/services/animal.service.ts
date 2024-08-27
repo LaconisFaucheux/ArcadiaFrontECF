@@ -139,11 +139,11 @@ export class AnimalService {
     this.http.post(`https://localhost:7015/api/Animals`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Animal créé avec succès!')
           this.router.navigateByUrl('/admin/zoo-management/animals')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Echec de la création de l\'animal')
         }
       });
   }
@@ -152,11 +152,11 @@ export class AnimalService {
     this.http.post(`https://localhost:7015/api/Species`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Espèce créée avec succès!')
           this.router.navigateByUrl('/admin/zoo-management/species')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Echec de la création de l\'espèce');
         }
       });
   }
@@ -166,11 +166,11 @@ export class AnimalService {
     this.http.put(`https://localhost:7015/api/Animals/${animalId}/`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Mise à jour réussie!')
           this.router.navigateByUrl('/admin/zoo-management/animals')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Échec de la mise à jour')
         }
       });
   }
@@ -179,26 +179,30 @@ export class AnimalService {
     this.http.put(`https://localhost:7015/api/Species/${speciesId}/`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Mise à jour réussie!')
           this.router.navigateByUrl('/admin/zoo-management/species')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Échec de la mise à jour')
         }
       });
   }
 
   //DELETE
   deleteAnimal(id: number) {
-    this.http.delete(`https://localhost:7015/api/Animals/${id}`).subscribe( a =>{
-      this.fetchAllData()
+    this.http.delete(`https://localhost:7015/api/Animals/${id}`).subscribe({
+      next: (response) => {
+        this.fetchAllData()
+      },
+      error: (error) => {
+      }
+
     })
   }
 
   deleteSpecies(id: number) {
     this.http.delete(`https://localhost:7015/api/Species/${id}`).subscribe({
       next: (response) => {
-        console.log('Request successful', response);
         this.fetchSpecies()
       },
       error: (error) => {

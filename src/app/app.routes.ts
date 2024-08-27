@@ -56,6 +56,8 @@ import {
 import {
   AdminVetVisitsListComponent
 } from "./admin/admin-vet-visits-management/admin-vet-visits-list/admin-vet-visits-list.component";
+import {AdminChangePasswordComponent} from "./admin/admin-change-password/admin-change-password.component";
+import {AdminResetPasswordComponent} from "./admin/admin-reset-password/admin-reset-password.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -119,7 +121,9 @@ export const routes: Routes = [
         children: [
           {path: '', component:AdminVetVisitsListComponent, pathMatch: "full"},
           {path: 'new', component:AdminVetVisitsFormComponent, pathMatch: "full"},
-        ]}
+        ]},
+      {path: 'change-password', component: AdminChangePasswordComponent, pathMatch: "full" },
+      {path: 'reset-password/:id', component: AdminResetPasswordComponent, pathMatch: "full" },
     ]
   }
 ];

@@ -116,7 +116,7 @@ export class AdminServicesFormComponent {
       this.zooService.createService(fd);
     }
 
-    this.resetForm()
+    //this.resetForm()
   }
 
   public resetForm() {

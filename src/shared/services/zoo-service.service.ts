@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs";
 import {IAnimal} from "../interfaces/animal.interface";
 import {IZooService} from "../interfaces/zoo-service.interface";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ZooServiceService {
   private zooService: BehaviorSubject<IZooService | undefined> = new BehaviorSubject<IZooService | undefined>(undefined)
   public zooService$ = this.zooService.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   //GET
   public fetchAllData() {
@@ -36,10 +37,11 @@ export class ZooServiceService {
     this.http.post(`https://localhost:7015/api/ZooServices`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Service créé avec succès!')
+          this.router.navigateByUrl('/admin/zoo-management/services')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Échec de la création du service')
         }
       });
   }
@@ -49,10 +51,11 @@ export class ZooServiceService {
     this.http.put(`https://localhost:7015/api/ZooServices/${id}/`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Mise à jour réussie!')
+          this.router.navigateByUrl('/admin/zoo-management/services')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Échec de la mise à jour')
         }
       });
   }

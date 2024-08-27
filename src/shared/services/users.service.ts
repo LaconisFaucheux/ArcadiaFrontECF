@@ -48,27 +48,69 @@ export class UsersService {
 
   //PUT
   putUser(user: IUser){
-    this.http.put(`https://localhost:7015/api/Auth/${user.id}`, user).subscribe( u => {
-      this.router.navigateByUrl('admin/employees')
-    });
+    this.http.put(`https://localhost:7015/api/Auth/${user.id}`, user)
+      .subscribe({
+        next: (response) => {
+          alert('Mise à jour réussie')
+          this.router.navigateByUrl('/admin/employees')
+        },
+        error: (error) => {
+          alert('Échec de la mise à jour')
+        }
+      });
   }
 
   //POST
   registerUser(user: INewUser){
-    this.http.post(`https://localhost:7015/api/Auth/register`, user).subscribe( u => {
-      this.router.navigateByUrl('admin/employees')
+    this.http.post(`https://localhost:7015/api/Auth/register`, user)
+      .subscribe({
+        next: (response) => {
+          alert('Employé créé avec succès!')
+          this.router.navigateByUrl('admin/employees')
+        },
+        error: (error) => {
+         alert('Échec de la création de l\'employé');
+        }
     });
   }
 
   //DELETE
   deleteUser(id: string){
-    this.http.delete(`https://localhost:7015/api/Auth/${id}`, {responseType: "text"}).subscribe(a => {
-      this.fetchAllData()
+    this.http.delete(`https://localhost:7015/api/Auth/${id}`, {responseType: "text"})
+      .subscribe({
+        next: (response) => {
+          this.fetchAllData()
+        },
+        error: (error) => {}
       }
     );
   }
 
   resetUser(){
     this.user.next(undefined);
+  }
+
+  generatePassword(length: number = 14): string {
+    const upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lowerChars = "abcdefghijklmnopqrstuvwxyz";
+    const digits = "0123456789";
+    const specialChars = "!@#$%^&*()-_=+[]{}|;:,.<>?/";
+
+    const allChars = upperChars + lowerChars + digits + specialChars;
+
+    let password = "";
+
+    password += upperChars[Math.floor(Math.random() * upperChars.length)];
+    password += lowerChars[Math.floor(Math.random() * lowerChars.length)];
+    password += digits[Math.floor(Math.random() * digits.length)];
+    password += specialChars[Math.floor(Math.random() * specialChars.length)];
+
+    for (let i = 4; i < length; i++) {
+      password += allChars[Math.floor(Math.random() * allChars.length)];
+    }
+
+    const pwd = password.split('').sort(() => 0.5 - Math.random()).join('');
+    //this.RandomPassword.setValue(pwd)
+    return pwd;
   }
 }

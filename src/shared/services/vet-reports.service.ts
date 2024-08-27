@@ -39,11 +39,11 @@ export class VetReportsService {
     this.http.post('https://localhost:7015/api/VetVisits', report)
       .subscribe({
       next: (response) => {
-        console.log('Request successful', response);
+        alert('Raport créé avec succès');
         this.router.navigateByUrl('/admin/vet-reports')
       },
       error: (error) => {
-        console.error('Request failed', error);
+        alert('Échec de la création du rapport')
       }
     });
   }

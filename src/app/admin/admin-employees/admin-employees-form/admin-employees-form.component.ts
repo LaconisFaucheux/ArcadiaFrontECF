@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
 import {IUser} from "../../../../shared/interfaces/user.interface";
 import {UsersService} from "../../../../shared/services/users.service";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute, ParamMap, RouterLink} from "@angular/router";
 import {
   FormArray,
   FormBuilder,
@@ -23,7 +23,8 @@ import {INewUser} from "../../../../shared/interfaces/new-user.interface";
     ReactiveFormsModule,
     AsyncPipe,
     UpperCasePipe,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './admin-employees-form.component.html',
   styleUrl: './admin-employees-form.component.css'
@@ -34,10 +35,12 @@ export class AdminEmployeesFormComponent {
   public user$: Observable<IUser | undefined> = new Observable<IUser>(undefined);
   //public roles$: Observable<IRole[]> = new Observable<IRole[]>();
   public employeeForm: FormGroup;
+  public RandomPassword = new FormControl('');
 
   constructor(private usersService: UsersService,
               private activatedRoute: ActivatedRoute,
-              private fb: FormBuilder,) {
+              private fb: FormBuilder,
+              private userService: UsersService,) {
     this.user$ = usersService.user$;
     //this.roles$ = usersService.roles$;
     this.employeeForm = this.fb.group({
@@ -50,6 +53,8 @@ export class AdminEmployeesFormComponent {
   }
 
   ngOnInit(): void {
+    this.generatePassword();
+
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       this.id = paramMap.get('id');
       if (this.id) {
@@ -112,6 +117,12 @@ export class AdminEmployeesFormComponent {
       roleArray.push('Employee')
     }
     return roleArray;
+  }
+
+  generatePassword(): string {
+    const pwd = this.userService.generatePassword()
+    this.RandomPassword.setValue(pwd)
+    return pwd;
   }
 
 }

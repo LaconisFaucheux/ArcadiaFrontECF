@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {AdminEmployeesListComponent} from "../admin-employees/admin-employees-list/admin-employees-list.component";
 import {TitleCasePipe, UpperCasePipe} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-admin-homepage',
@@ -10,7 +11,8 @@ import {TitleCasePipe, UpperCasePipe} from "@angular/common";
     DashboardComponent,
     AdminEmployeesListComponent,
     UpperCasePipe,
-    TitleCasePipe
+    TitleCasePipe,
+    RouterLink
   ],
   templateUrl: './admin-homepage.component.html',
   styleUrl: './admin-homepage.component.css'

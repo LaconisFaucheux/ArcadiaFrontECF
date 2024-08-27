@@ -33,10 +33,14 @@ export class AuthComponent {
           this.cookieService.set('Authorization', `Bearer ${res.token}`, undefined, '/', undefined, true, 'Strict');
           console.log(res.token);
           //Set user
-          this.authService.setUser({id: undefined, email: res.email, roles: res.roles});
+          this.authService.setUser({id: res.userId, email: res.email, roles: res.roles});
           //Redirection:
           this.router.navigateByUrl('/admin');
+        },
+        error: (error) => {
+          alert("Echec de l'authentification")
         }
+
       })
   }
 }

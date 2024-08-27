@@ -34,11 +34,11 @@ export class HabitatService {
     this.http.post(`https://localhost:7015/api/Habitats`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Habitat créé avec succès!')
           this.router.navigateByUrl('/admin/zoo-management/habitats')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Échec de la création de l\'habitat')
         }
       });
   }
@@ -48,11 +48,11 @@ export class HabitatService {
     this.http.put(`https://localhost:7015/api/Habitats/${id}/`, fd)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
+          alert('Mise à jour réussie')
           this.router.navigateByUrl('/admin/zoo-management/habitats')
         },
         error: (error) => {
-          console.error('Request failed', error);
+          alert('Échec de la mise à jour')
         }
       });
   }
