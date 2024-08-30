@@ -58,6 +58,9 @@ import {
 } from "./admin/admin-vet-visits-management/admin-vet-visits-list/admin-vet-visits-list.component";
 import {AdminChangePasswordComponent} from "./admin/admin-change-password/admin-change-password.component";
 import {AdminResetPasswordComponent} from "./admin/admin-reset-password/admin-reset-password.component";
+import {authGuard} from "../shared/guards/auth.guard";
+import {adminGuard} from "../shared/guards/admin.guard";
+import {employeeGuard} from "../shared/guards/employee.guard";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -84,12 +87,11 @@ export const routes: Routes = [
   {
     path: "admin",
     component: AdminComponent,
+    canActivate: [authGuard],
     children: [
       {path: '', component: AdminHomepageComponent},
-      {path: 'dashboard', component: DashboardComponent},
-      {
-        path: 'employees',
-        component: AdminEmployeesComponent,
+      {path: 'dashboard', component: DashboardComponent, canActivate: [adminGuard]},
+      {path: 'employees', component: AdminEmployeesComponent, canActivate: [adminGuard],
         children: [
           {path: '', component: AdminEmployeesListComponent},
           {path: 'detailed/:id', component: AdminEmployeesFormComponent},
@@ -97,33 +99,33 @@ export const routes: Routes = [
         ]
       },
       {
-        path: 'zoo-management', component: AdminZooManagementComponent,
+        path: 'zoo-management', component: AdminZooManagementComponent, canActivate: [authGuard],
         children: [
-          {path: '', component: AdminZooManagementLandingPageComponent},
-          {path: 'animals', component: AdminAnimalsListComponent},
-          {path: 'animals/detailed/:id', component: AdminAnimalsFormComponent},
-          {path: 'animals/new', component: AdminAnimalsFormComponent, pathMatch: "full"},
-          {path: 'species', component: AdminSpeciesListComponent},
-          {path: 'species/detailed/:id', component: AdminSpeciesFormComponent},
-          {path: 'species/new', component: AdminSpeciesFormComponent, pathMatch: "full"},
-          {path: 'habitats', component: AdminHabitatsListComponent},
-          {path: 'habitats/detailed/:id', component: AdminHabitatsFormComponent},
-          {path: 'habitats/new', component: AdminHabitatsFormComponent, pathMatch: "full"},
-          {path: 'services', component: AdminServicesListComponent},
-          {path: 'services/detailed/:id', component: AdminServicesFormComponent},
-          {path: 'services/new', component: AdminServicesFormComponent, pathMatch: "full"},
-          {path: 'opening-hours', component: AdminOpeningHoursManagementComponent},
-          {path: 'opening-hours/:id', component: AdminOpeningHoursFormComponent, pathMatch: "full"},
+          {path: '', component: AdminZooManagementLandingPageComponent, canActivate: [authGuard]},
+          {path: 'animals', component: AdminAnimalsListComponent, canActivate: [authGuard]},
+          {path: 'animals/detailed/:id', component: AdminAnimalsFormComponent , canActivate: [employeeGuard]},
+          {path: 'animals/new', component: AdminAnimalsFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
+          {path: 'species', component: AdminSpeciesListComponent, canActivate: [authGuard]},
+          {path: 'species/detailed/:id', component: AdminSpeciesFormComponent , canActivate: [employeeGuard]},
+          {path: 'species/new', component: AdminSpeciesFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
+          {path: 'habitats', component: AdminHabitatsListComponent , canActivate: [authGuard]},
+          {path: 'habitats/detailed/:id', component: AdminHabitatsFormComponent , canActivate: [employeeGuard]},
+          {path: 'habitats/new', component: AdminHabitatsFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
+          {path: 'services', component: AdminServicesListComponent, canActivate: [authGuard]},
+          {path: 'services/detailed/:id', component: AdminServicesFormComponent , canActivate: [employeeGuard]},
+          {path: 'services/new', component: AdminServicesFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
+          {path: 'opening-hours', component: AdminOpeningHoursManagementComponent , canActivate: [employeeGuard]},
+          {path: 'opening-hours/:id', component: AdminOpeningHoursFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
         ]
       },
-      {path: 'reviews', component: AdminReviewsManagementComponent},
-      {path: 'vet-reports', component:AdminVetVisitsManagementComponent,
+      {path: 'reviews', component: AdminReviewsManagementComponent, canActivate: [employeeGuard]},
+      {path: 'vet-reports', component:AdminVetVisitsManagementComponent, canActivate: [employeeGuard],
         children: [
           {path: '', component:AdminVetVisitsListComponent, pathMatch: "full"},
           {path: 'new', component:AdminVetVisitsFormComponent, pathMatch: "full"},
         ]},
-      {path: 'change-password', component: AdminChangePasswordComponent, pathMatch: "full" },
-      {path: 'reset-password/:id', component: AdminResetPasswordComponent, pathMatch: "full" },
+      {path: 'change-password', component: AdminChangePasswordComponent, pathMatch: "full" , canActivate: [authGuard]},
+      {path: 'reset-password/:id', component: AdminResetPasswordComponent, pathMatch: "full" , canActivate: [adminGuard]},
     ]
   }
 ];
