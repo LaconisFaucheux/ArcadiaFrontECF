@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IZooService} from "../../../../shared/interfaces/zoo-service.interface";
 import {Observable} from "rxjs";
 import {ZooServiceService} from "../../../../shared/services/zoo-service.service";
@@ -23,7 +23,7 @@ import {RouterLink} from "@angular/router";
 export class AdminServicesListComponent {
   public services$: Observable<IZooService[]> = new Observable<IZooService[]>();
 
-  constructor( private zooServices: ZooServiceService) {
+  constructor(private zooServices: ZooServiceService) {
     this.services$ = this.zooServices.zooServices$
   }
 
@@ -31,7 +31,7 @@ export class AdminServicesListComponent {
     this.zooServices.fetchAllData();
   }
 
-  public getPath(id: number | undefined) :string{
+  public getPath(id: number | undefined): string {
     if (id != undefined) {
       return `detailed/${id}`;
     } else {
@@ -39,10 +39,11 @@ export class AdminServicesListComponent {
     }
   }
 
-  public deleteService(id: number | undefined) :void {
-    if(id) this.zooServices.deleteService(id);
+  public deleteService(id: number | undefined): void {
+    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
+      if (id) this.zooServices.deleteService(id);
+    }
   }
-
 
 
 }

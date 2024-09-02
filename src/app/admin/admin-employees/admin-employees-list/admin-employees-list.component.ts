@@ -56,15 +56,17 @@ export class AdminEmployeesListComponent {
     return `detailed/${id}`;
   }
 
-  public addOrRemoveFilters(event: any, roleName: string){
-    if(event.target.checked && !this.filters.includes(roleName)){
+  public addOrRemoveFilters(event: any, roleName: string) {
+    if (event.target.checked && !this.filters.includes(roleName)) {
       this.filters.push(roleName);
     } else {
       this.filters.splice(this.filters.indexOf(roleName), 1);
     }
   }
 
-  public deleteUSer(id: string | undefined){
-    if(id) this.usersService.deleteUser(id);
+  public deleteUSer(id: string | undefined) {
+    if (confirm('Voulez vous vraiment supprimer cet(te) employé(e)?')) {
+      if (id) this.usersService.deleteUser(id);
+    }
   }
 }

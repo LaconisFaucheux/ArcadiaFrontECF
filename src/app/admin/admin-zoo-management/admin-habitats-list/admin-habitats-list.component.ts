@@ -1,22 +1,22 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AnimalFilterPipe} from "../../../../shared/pipes/animal-filter.pipe";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
 import {LoadingSpinnerComponent} from "../../../loading-spinner/loading-spinner.component";
 import {RouterLink} from "@angular/router";
 import {Observable} from "rxjs";
-import { IHabitat } from '../../../../shared/interfaces/habitat.interface';
+import {IHabitat} from '../../../../shared/interfaces/habitat.interface';
 import {HabitatService} from "../../../../shared/services/habitat.service";
 
 @Component({
   selector: 'app-admin-habitats-list',
   standalone: true,
-    imports: [
-        AnimalFilterPipe,
-        AsyncPipe,
-        LoadingSpinnerComponent,
-        RouterLink,
-        TitleCasePipe
-    ],
+  imports: [
+    AnimalFilterPipe,
+    AsyncPipe,
+    LoadingSpinnerComponent,
+    RouterLink,
+    TitleCasePipe
+  ],
   templateUrl: './admin-habitats-list.component.html',
   styleUrl: './admin-habitats-list.component.css'
 })
@@ -41,7 +41,9 @@ export class AdminHabitatsListComponent {
   }
 
   public deleteHabitat(id: number | undefined) {
-    if(id) this.habitatsService.deleteHabitat(id)
+    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
+      if (id) this.habitatsService.deleteHabitat(id)
+    }
   }
 
 }

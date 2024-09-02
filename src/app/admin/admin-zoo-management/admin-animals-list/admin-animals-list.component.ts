@@ -76,7 +76,8 @@ export class AdminAnimalsListComponent {
   }
 
   public deleteAnimal(id: number | undefined) {
-    if(id) this.animalService.deleteAnimal(id);
-
+    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
+      if (id) this.animalService.deleteAnimal(id);
+    }
   }
 }

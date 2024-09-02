@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {VetReportsService} from "../../../../shared/services/vet-reports.service";
 import {AnimalService} from "../../../../shared/services/animal.service";
@@ -37,7 +37,7 @@ export class AdminVetVisitsListComponent {
     this.user$ = this.authService.user$
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.reportService.fetchReports()
     this.animalService.fetchAllData()
 
@@ -50,7 +50,7 @@ export class AdminVetVisitsListComponent {
   }
 
   public getAnimalSpecies(id: number | undefined): string {
-    if(id){
+    if (id) {
       let animal = this.animals.find(a => a.id === id)
       return animal?.speciesData.name ?? '';
     } else {
@@ -59,7 +59,7 @@ export class AdminVetVisitsListComponent {
   }
 
   public getDetailedReport(id: number | undefined) {
-    if(id){
+    if (id) {
       this.reportService.fetchReport(id.toString());
     }
   }
@@ -69,7 +69,9 @@ export class AdminVetVisitsListComponent {
   }
 
   public deleteReport(id: number | undefined) {
-    if(id) this.reportService.deleteReport(id.toString());
+    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
+      if (id) this.reportService.deleteReport(id.toString());
+    }
   }
 
 }

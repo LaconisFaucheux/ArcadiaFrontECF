@@ -17,92 +17,32 @@
         <thead>
         <tr>
           <th scope="col" class="text-center">Animal</th>
-          <th scope="col" class="text-center">Name</th>
-          <th scope="col" class="text-center">Ranking</th>
-          <th scope="col" class="text-center">Clicks</th>
+          <th scope="col" class="text-center">Nom</th>
+          <th scope="col" class="text-center">Espèce</th>
+          <th scope="col" class="text-center">Classement</th>
+          <th scope="col" class="text-center">Clics</th>
+          <th scope="col" class="text-center">Suppr.</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">2</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">3</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../phpLZpIW4.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Anansi</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
+          @if (animalStats$ | async; as animalStats) {
+            @for (animalStat of animalStats; track animalStat.id) {
+              <tr>
+                <td scope="row" align="center">
+                  <div class="circle-container-small">
+                    <img [src]="'https://localhost:7015/' + animalStat.miniSlug" class="img-fluid" alt=""/>
+                  </div>
+                </td>
+                <td valign="middle" align="center">{{ animalStat.name | titlecase }}</td>
+                <td valign="middle" align="center">{{ animalStat.speciesName | titlecase }}</td>
+                <td valign="middle" align="center">{{ $index + 1 }}</td>
+                <td valign="middle" align="center">{{ animalStat.nbClics }}</td>
+                <td valign="middle" align="center">
+                  <button type="button" class="btn btn-outline-danger" (click)="deleteAnimalStat(animalStat.id)">X</button>
+                </td>
+              </tr>
+            }
+          }
         </tbody>
       </table>
     </div>
@@ -121,92 +61,30 @@
         <thead>
         <tr>
           <th scope="col" class="text-center">Habitat</th>
-          <th scope="col" class="text-center">Name</th>
-          <th scope="col" class="text-center">Ranking</th>
-          <th scope="col" class="text-center">Clicks</th>
+          <th scope="col" class="text-center">Nom</th>
+          <th scope="col" class="text-center">Classement</th>
+          <th scope="col" class="text-center">Clics</th>
+          <th scope="col" class="text-center">Suppr.</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">2</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">3</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
-        <tr>
-          <td scope="row" align="center">
-            <div class="circle-container-small">
-              <img src="../savane.jpg" class="img-fluid" alt="" />
-            </div>
-          </td>
-          <td valign="middle" align="center">Savane</td>
-          <td valign="middle" align="center">1</td>
-          <td valign="middle" align="center">233</td>
-        </tr>
+          @if (habitatStats$ | async; as habitatStats) {
+            @for (habitatStat of habitatStats; track habitatStat.id) {
+              <tr>
+                <td scope="row" align="center">
+                  <div class="circle-container-small">
+                    <img [src]="'https://localhost:7015/' + habitatStat.miniSlug" class="img-fluid" alt=""/>
+                  </div>
+                </td>
+                <td valign="middle" align="center">{{ habitatStat.name | titlecase }}</td>
+                <td valign="middle" align="center">{{ $index + 1 }}</td>
+                <td valign="middle" align="center">{{ habitatStat.nbClics }}</td>
+                <td valign="middle" align="center">
+                  <button type="button" class="btn btn-outline-danger" (click)="deleteHabitatStat(habitatStat.id)">X</button>
+                </td>
+              </tr>
+            }
+          }
         </tbody>
       </table>
     </div>

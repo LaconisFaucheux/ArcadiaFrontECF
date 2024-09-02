@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
 import {LoadingSpinnerComponent} from "../../../loading-spinner/loading-spinner.component";
 import {RouterLink} from "@angular/router";
@@ -41,7 +41,9 @@ export class AdminSpeciesListComponent {
   }
 
   public deleteSpecies(id: number | undefined): void {
-    if(id) this.animalService.deleteSpecies(id);
+    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
+      if (id) this.animalService.deleteSpecies(id);
+    }
   }
 
 }

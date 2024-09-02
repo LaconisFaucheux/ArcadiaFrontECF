@@ -50,7 +50,6 @@ export class AnimalService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService,
     private router: Router) {
   }
 
