@@ -6,6 +6,7 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 import {FilesService} from "../../../../shared/services/files.service";
 import {IHabitat} from "../../../../shared/interfaces/habitat.interface";
 import {HabitatService} from "../../../../shared/services/habitat.service";
+import {ApiService} from "../../../../shared/services/api.service";
 
 @Component({
   selector: 'app-admin-habitats-form',
@@ -31,6 +32,8 @@ export class AdminHabitatsFormComponent {
   deletedImages = new FormControl<number[]>([]);
 
   // PROPS
+  public apiUrl: string = '';
+  public imageApiUrl: string = '';
   private id: string | null = null;
   protected deletedImagesArray: number[] = [];
 
@@ -38,9 +41,13 @@ export class AdminHabitatsFormComponent {
   public habitat$: Observable<IHabitat | undefined> = new Observable<IHabitat | undefined>();
   public filesHolder$: Observable<File[]> = new Observable<File[]>();
 
+
   constructor(private habitatService: HabitatService,
               private activatedRoute: ActivatedRoute,
-              private fs: FilesService,) {
+              private fs: FilesService,
+              private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.habitat$ = this.habitatService.habitat$
     this.filesHolder$ = this.fs.filesHolder$;
   }

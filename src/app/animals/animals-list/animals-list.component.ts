@@ -8,6 +8,7 @@ import {HabitatService} from "../../../shared/services/habitat.service";
 import {IHabitat} from "../../../shared/interfaces/habitat.interface";
 import {AnimalFilterPipe} from "../../../shared/pipes/animal-filter.pipe";
 import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
+import {ApiService} from "../../../shared/services/api.service";
 
 @Component({
   selector: 'app-animals-list',
@@ -26,12 +27,17 @@ import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.com
 })
 
 export class AnimalsListComponent {
+  public apiUrl = '';
+  public imageApiUrl: string = '';
   public animals$: Observable<IAnimal[]>;
   public habitats$: Observable<IHabitat[]>;
   public filters: number[] = [];
 
   constructor(private animalService: AnimalService,
-              protected habitatService: HabitatService) {
+              protected habitatService: HabitatService,
+              private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.animals$ = this.animalService.getAnimals();
     this.habitats$ = this.habitatService.getHabitats();
     this.habitats$.subscribe((habitats) => {

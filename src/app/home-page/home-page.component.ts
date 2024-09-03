@@ -13,6 +13,7 @@ import {CharLimiterPipe} from "../../shared/pipes/char-limiter.pipe";
 import {IMeteo} from "../../shared/interfaces/meteo.interface";
 import {MeteoService} from "../../shared/services/meteo.service";
 import {LoadingSpinnerComponent} from "../loading-spinner/loading-spinner.component";
+import {ApiService} from "../../shared/services/api.service";
 
 @Component({
   selector: 'app-home-page',
@@ -30,6 +31,8 @@ import {LoadingSpinnerComponent} from "../loading-spinner/loading-spinner.compon
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
+  public apiUrl: string = '';
+  public imageApiUrl: string = '';
   public horaires$: Observable<IHoraires[]>;
   public isOpen$: Observable<boolean>;
   public reviews$: Observable<IReview[]>;
@@ -39,7 +42,10 @@ export class HomePageComponent {
   constructor(private horairesService: HoraireService,
               private reviewService: ReviewService,
               protected animalService: AnimalService,
-              private meteoService: MeteoService,) {
+              private meteoService: MeteoService,
+              private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.horaires$ = this.horairesService.horaires$;
     this.isOpen$ = this.horairesService.isOpen$;
     this.randomAnimal$ = this.animalService.randomAnimal$;

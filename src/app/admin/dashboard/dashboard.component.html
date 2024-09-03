@@ -30,7 +30,7 @@
               <tr>
                 <td scope="row" align="center">
                   <div class="circle-container-small">
-                    <img [src]="'https://localhost:7015/' + animalStat.miniSlug" class="img-fluid" alt=""/>
+                    <img [src]="imageApiUrl + animalStat.miniSlug" class="img-fluid" alt=""/>
                   </div>
                 </td>
                 <td valign="middle" align="center">{{ animalStat.name | titlecase }}</td>
@@ -73,7 +73,7 @@
               <tr>
                 <td scope="row" align="center">
                   <div class="circle-container-small">
-                    <img [src]="'https://localhost:7015/' + habitatStat.miniSlug" class="img-fluid" alt=""/>
+                    <img [src]="imageApiUrl + habitatStat.miniSlug" class="img-fluid" alt=""/>
                   </div>
                 </td>
                 <td valign="middle" align="center">{{ habitatStat.name | titlecase }}</td>

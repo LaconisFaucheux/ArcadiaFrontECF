@@ -9,6 +9,7 @@ import {ISpecies} from "../../../../shared/interfaces/species.interface";
 import {IAnimalDTO} from "../../../../shared/interfaces/animalDTO.interface";
 import {FilesService} from "../../../../shared/services/files.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {ApiService} from "../../../../shared/services/api.service";
 
 
 //TODO: Fix gender radio button
@@ -38,6 +39,8 @@ export class AdminAnimalsFormComponent {
   deletedImages = new FormControl<number[]>([]);
 
   // PROPS
+  public apiUrl: string = '';
+  public imageApiUrl: string = '';
   private id: string | null = null;
   protected deletedImagesArray: number[] = [];
 
@@ -46,10 +49,14 @@ export class AdminAnimalsFormComponent {
   public speciess$: Observable<ISpecies[]> = new Observable<ISpecies[]>();
   public filesHolder$: Observable<File[]> = new Observable<File[]>();
 
+
   constructor(private animalService: AnimalService,
               private activatedRoute: ActivatedRoute,
               private fs: FilesService,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private apiService: ApiService,) {
+    this.apiUrl = this.apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.animal$ = animalService.animal$;
     this.speciess$ = this.animalService.species$
     this.filesHolder$ = this.fs.filesHolder$;

@@ -6,11 +6,14 @@ import {IAnimal} from "../interfaces/animal.interface";
 import {IRole} from "../interfaces/role.interface";
 import {INewUser} from "../interfaces/new-user.interface";
 import {Router} from "@angular/router";
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+  private apiUrl: string = '';
+
   private users: BehaviorSubject<IUser[]> = new BehaviorSubject<IUser[]>([]);
   public users$ = this.users.asObservable();
 
@@ -20,12 +23,14 @@ export class UsersService {
   private roles: BehaviorSubject<IRole[]> = new BehaviorSubject<IRole[]>([]);
   public roles$ = this.roles.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+  }
 
   //GET
   fetchRoles(){
     this.http.get<IRole[]>(
-      'https://localhost:7015/api/Auth/roles')
+      `${this.apiUrl}/Auth/roles`)
       .subscribe(roles => {
         this.roles.next(roles)
       });
@@ -33,14 +38,14 @@ export class UsersService {
 
   fetchAllData() {
     this.http.get<IUser[]>(
-      'https://localhost:7015/api/Auth')
+      `${this.apiUrl}/Auth`)
       .subscribe(users => {
         this.users.next(users)
       });
   }
 
   fetchUniqueEmployee(id: string) {
-    this.http.get<IUser>(`https://localhost:7015/api/Auth/${id}`)
+    this.http.get<IUser>(`${this.apiUrl}/Auth/${id}`)
       .subscribe(user => {
         this.user.next(user)
       });
@@ -48,7 +53,7 @@ export class UsersService {
 
   //PUT
   putUser(user: IUser){
-    this.http.put(`https://localhost:7015/api/Auth/${user.id}`, user)
+    this.http.put(`${this.apiUrl}/Auth/${user.id}`, user)
       .subscribe({
         next: (response) => {
           alert('Mise à jour réussie')
@@ -62,7 +67,7 @@ export class UsersService {
 
   //POST
   registerUser(user: INewUser){
-    this.http.post(`https://localhost:7015/api/Auth/register`, user)
+    this.http.post(`${this.apiUrl}/Auth/register`, user)
       .subscribe({
         next: (response) => {
           alert('Employé créé avec succès!')
@@ -76,7 +81,7 @@ export class UsersService {
 
   //DELETE
   deleteUser(id: string){
-    this.http.delete(`https://localhost:7015/api/Auth/${id}`, {responseType: "text"})
+    this.http.delete(`${this.apiUrl}/Auth/${id}`, {responseType: "text"})
       .subscribe({
         next: (response) => {
           this.fetchAllData()

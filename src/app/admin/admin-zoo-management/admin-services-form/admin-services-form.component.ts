@@ -7,6 +7,7 @@ import {FilesService} from "../../../../shared/services/files.service";
 import {ZooServiceService} from "../../../../shared/services/zoo-service.service";
 import {IZooServiceDTO} from "../../../../shared/interfaces/zoo-serviceDTO.interface";
 import {AsyncPipe, UpperCasePipe} from "@angular/common";
+import {ApiService} from "../../../../shared/services/api.service";
 
 @Component({
   selector: 'app-admin-services-form',
@@ -21,6 +22,9 @@ import {AsyncPipe, UpperCasePipe} from "@angular/common";
   styleUrl: './admin-services-form.component.css'
 })
 export class AdminServicesFormComponent {
+  public apiUrl: string = '';
+  public imageApiUrl: string = '';
+
   @ViewChild('fileinput', {static: true}) inputRef!: ElementRef;
   selectedFiles: File[] = [];
 
@@ -41,7 +45,10 @@ export class AdminServicesFormComponent {
 
   constructor(private activatedRoute: ActivatedRoute,
               private zooService: ZooServiceService,
-              private fs: FilesService) {
+              private fs: FilesService,
+              private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.service$ = this.zooService.zooService$;
     this.filesHolder$ = this.fs.filesHolder$;
   }

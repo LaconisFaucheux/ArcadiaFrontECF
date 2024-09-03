@@ -81,7 +81,7 @@
 
           @if (service$ | async; as service) {
             <div class="card my-4" style="width: 18rem;">
-              <img [src]="'https://localhost:7015/' + service.pic" class="card-img-top overflow-hidden">
+              <img [src]="imageApiUrl + service.pic" class="card-img-top overflow-hidden">
               <div class="card-body d-flex align-items-end justify-content-center">
                 <button type="button" href="#" class="btn btn-danger"
                         (click)="deleteImage(service.pic)">{{ deletedImageStr !== null ? 'Annuler' : 'Supprimer' }}

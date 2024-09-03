@@ -111,19 +111,6 @@ header {
   font-weight: bold;
 }
 
-/*#index-header {*/
-/*  background-image: url("Sans\ titre-1.jpg");*/
-/*  background-size: cover;*/
-/*  background-position: center;*/
-/*  background-attachment: fixed;*/
-/*  height: 75vh;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*  text-align: center;*/
-/*  font-size: larger;*/
-/*  font-weight: bold;*/
-/*}*/
-
 .dropdown-menu {
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -132,22 +119,6 @@ article {
   margin-bottom: 5vh;
   margin-top: 5vh;
 }
-
-/*#last-homepage-article {*/
-/*  margin-top: 5vh;*/
-/*  margin-bottom: 0;*/
-/*  background-image: url("../starbg.png");*/
-/*  background-size: cover;*/
-/*  background-position: center;*/
-/*  background-repeat: no-repeat;*/
-/*}*/
-
-/*#otter-separator {*/
-/*  height: 25vh;*/
-/*  background-image: url("../public/otters.jpg");*/
-/*  background-attachment: fixed;*/
-/*  background-size: cover;*/
-/*}*/
 
 .circle-container {
   width: 20vw;

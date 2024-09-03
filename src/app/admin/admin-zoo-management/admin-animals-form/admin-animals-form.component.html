@@ -84,7 +84,7 @@
           @if (animal$ | async; as animal) {
             @for (pic of animal.pics; track pic.id) {
               <div class="card my-4" style="width: 18rem;">
-                <img [src]="'https://localhost:7015/' + pic.miniSlug" class="card-img-top overflow-hidden">
+                <img [src]="imageApiUrl + pic.miniSlug" class="card-img-top overflow-hidden">
                 <div class="card-body d-flex align-items-end justify-content-center">
                   <button type="button" href="#" class="btn btn-danger"
                           (click)="deleteImage(pic.id)">{{ deletedImagesArray.includes(pic.id) ? 'Annuler' : 'Supprimer' }}

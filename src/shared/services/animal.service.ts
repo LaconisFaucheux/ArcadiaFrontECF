@@ -9,11 +9,13 @@ import {IWeightUnit} from "../interfaces/weightUnit.interface";
 import {IDiet} from "../interfaces/diet.interface";
 import {IHealth} from "../interfaces/health.interface";
 import {Router} from "@angular/router";
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnimalService {
+  apiUrl: string = '';
 
   private animals: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([]);
   public animals$ = this.animals.asObservable();
@@ -50,13 +52,15 @@ export class AnimalService {
 
   constructor(
     private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private apiService: ApiService,) {
+    this.apiUrl = this.apiService.getapiUrl();
   }
 
   //GET
   fetchDiets(){
     this.http.get<IDiet[]>(
-      'https://localhost:7015/api/Diets')
+      `${this.apiUrl}/Diets`)
       .subscribe(diets => {
         this.diets.next(diets)
       })
@@ -64,12 +68,12 @@ export class AnimalService {
 
   fetchUnits(){
     this.http.get<ISizeUnit[]>(
-      'https://localhost:7015/api/SizeUnits')
+      `${this.apiUrl}/SizeUnits`)
       .subscribe(sizeUnit => {
         this.sizeUnit.next(sizeUnit)
       });
     this.http.get<IWeightUnit[]>(
-      'https://localhost:7015/api/WeightUnits')
+      `${this.apiUrl}/WeightUnits`)
       .subscribe(weightUnit => {
         this.weightUnit.next(weightUnit)
       })
@@ -77,7 +81,7 @@ export class AnimalService {
 
   fetchSpecies() {
     this.http.get<ISpecies[]>(
-      'https://localhost:7015/api/Species')
+      `${this.apiUrl}/Species`)
       .subscribe(species => {
         this.species.next(species)
     });
@@ -85,7 +89,7 @@ export class AnimalService {
 
   fetchUniqueSpecies(id: number) {
     this.http.get<ISpecies>(
-      `https://localhost:7015/api/Species/${id}`)
+      `${this.apiUrl}/Species/${id}`)
       .subscribe(species => {
         this.uniqueSpecies.next(species)
     });
@@ -93,14 +97,14 @@ export class AnimalService {
 
   fetchAllData() {
     this.http.get<IAnimal[]>(
-      'https://localhost:7015/api/Animals')
+      `${this.apiUrl}/Animals`)
       .subscribe(animals => {
         this.animals.next(animals)
       });
   }
 
   fetchUniqueAnimal(id: number) {
-    this.http.get<IAnimal>(`https://localhost:7015/api/Animals/${id}`)
+    this.http.get<IAnimal>(`${this.apiUrl}/Animals/${id}`)
       .subscribe(animal => {
         this.animal.next(animal)
       });
@@ -108,11 +112,11 @@ export class AnimalService {
 
   fetchRandomAnimal() {
     let rnd;
-    this.http.get<number>(`https://localhost:7015/api/Animals/length`)
+    this.http.get<number>(`${this.apiUrl}/Animals/length`)
       .subscribe(length => {
         this.animalsListLength = length
         rnd = Math.floor(Math.random() * (this.animalsListLength + 1));
-        this.http.get<IAnimal>(`https://localhost:7015/api/Animals/${rnd}`)
+        this.http.get<IAnimal>(`${this.apiUrl}/Animals/${rnd}`)
           .subscribe(animal => {
             this.randomAnimal.next(animal)
           });
@@ -120,14 +124,14 @@ export class AnimalService {
   }
 
   fetchInhabitantsByHabitatId(habitatId: number) {
-    this.http.get<IAnimal[]>(`https://localhost:7015/api/Animals/byHabitat/${habitatId}`)
+    this.http.get<IAnimal[]>(`${this.apiUrl}/Animals/byHabitat/${habitatId}`)
       .subscribe(animals => {
         this.inhabitants.next(animals)
       });
   }
 
   fetchHealth() {
-    this.http.get<IHealth[]>(`https://localhost:7015/api/Healths`)
+    this.http.get<IHealth[]>(`${this.apiUrl}/Healths`)
       .subscribe(h => {
         this.health.next(h)
       });
@@ -135,7 +139,7 @@ export class AnimalService {
 
   //POST
   createAnimal(fd: FormData) {
-    this.http.post(`https://localhost:7015/api/Animals`, fd)
+    this.http.post(`${this.apiUrl}/Animals`, fd)
       .subscribe({
         next: (response) => {
           alert('Animal créé avec succès!')
@@ -148,7 +152,7 @@ export class AnimalService {
   }
 
   createSpecies(fd: FormData) {
-    this.http.post(`https://localhost:7015/api/Species`, fd)
+    this.http.post(`${this.apiUrl}/Species`, fd)
       .subscribe({
         next: (response) => {
           alert('Espèce créée avec succès!')
@@ -162,7 +166,7 @@ export class AnimalService {
 
   //PUT
   updateAnimal(animalId: string, fd: FormData) {
-    this.http.put(`https://localhost:7015/api/Animals/${animalId}/`, fd)
+    this.http.put(`${this.apiUrl}/Animals/${animalId}/`, fd)
       .subscribe({
         next: (response) => {
           alert('Mise à jour réussie!')
@@ -175,7 +179,7 @@ export class AnimalService {
   }
 
   updateSpecies(speciesId: string, fd: FormData) {
-    this.http.put(`https://localhost:7015/api/Species/${speciesId}/`, fd)
+    this.http.put(`${this.apiUrl}/Species/${speciesId}/`, fd)
       .subscribe({
         next: (response) => {
           alert('Mise à jour réussie!')
@@ -189,7 +193,7 @@ export class AnimalService {
 
   //DELETE
   deleteAnimal(id: number) {
-    this.http.delete(`https://localhost:7015/api/Animals/${id}`).subscribe({
+    this.http.delete(`${this.apiUrl}/Animals/${id}`).subscribe({
       next: (response) => {
         this.fetchAllData()
       },
@@ -200,7 +204,7 @@ export class AnimalService {
   }
 
   deleteSpecies(id: number) {
-    this.http.delete(`https://localhost:7015/api/Species/${id}`).subscribe({
+    this.http.delete(`${this.apiUrl}/Species/${id}`).subscribe({
       next: (response) => {
         this.fetchSpecies()
       },

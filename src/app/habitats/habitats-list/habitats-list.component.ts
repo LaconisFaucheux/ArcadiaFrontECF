@@ -6,6 +6,7 @@ import {Observable, Subscription} from "rxjs";
 import {RouterLink} from "@angular/router";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
 import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
+import {ApiService} from "../../../shared/services/api.service";
 
 @Component({
   selector: 'app-habitats-list',
@@ -21,9 +22,13 @@ import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.com
   styleUrl: './habitats-list.component.css'
 })
 export class HabitatsListComponent {
+  public apiUrl: string = '';
+  public imageApiUrl: string = '';
   public habitats$: Observable<IHabitat[]>;
 
-  constructor(private habitatService: HabitatService) {
+  constructor(private habitatService: HabitatService, private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.habitats$ = this.habitatService.getHabitats();
   }
 

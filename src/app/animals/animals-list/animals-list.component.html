@@ -36,7 +36,7 @@
             class="circle-container"
             [routerLink]="[a.id]"
           >
-            <img [src]=" 'https://localhost:7015/' + a.pics[0].miniSlug " class="img-fluid" alt=""/>
+            <img [src]=" imageApiUrl + a.pics[0].miniSlug " class="img-fluid" alt=""/>
           </div>
           <h5 class="neucha-regular">{{ a.name }}</h5>
           <h6 class="neucha-regular">{{ a.speciesData.name }}</h6>

@@ -5,6 +5,7 @@ import {AnimalService} from "../../../shared/services/animal.service";
 import {isEmpty, Observable, Subscription} from "rxjs";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
 import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
+import {ApiService} from "../../../shared/services/api.service";
 
 @Component({
   selector: 'app-animals-details',
@@ -18,11 +19,17 @@ import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.com
   styleUrl: './animals-details.component.css'
 })
 export class AnimalsDetailsComponent {
+
   private id: string | null = null;
+  public apiUrl = '';
+  public imageApiUrl: string = '';
   public animal$: Observable<IAnimal> = new Observable<IAnimal>();
 
   constructor(private activatedRoute: ActivatedRoute,
-              private animalService: AnimalService) {
+              private animalService: AnimalService,
+              private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.animal$ = this.animalService.getAnimal();
   }
 

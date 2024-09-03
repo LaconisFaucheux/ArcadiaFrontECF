@@ -5,12 +5,15 @@ import {HttpClient} from "@angular/common/http";
 import {IUser} from "../interfaces/user.interface";
 import {IHorairesDTO} from "../interfaces/horairesDTO.interface";
 import {Router} from "@angular/router";
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HoraireService {
   //PROPS
+  private apiUrl: string = '';
+
   private horaires: BehaviorSubject<IHoraires[]> = new BehaviorSubject<IHoraires[]>([])
   public horaires$: Observable<IHoraires[]> = this.horaires.asObservable();
 
@@ -24,13 +27,14 @@ export class HoraireService {
   public uniqueRawData$ = this.uniqueRawData.asObservable();
 
 //CTOR
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
     setInterval(this.isItOpen.bind(this), 6000);
   }
 
 //GET
   public fetchData() {
-    this.http.get<any[]>('https://localhost:7015/api/OpeningHours').pipe(
+    this.http.get<any[]>(`${this.apiUrl}/OpeningHours`).pipe(
       map(hours => hours.map(hour => ({
         id: hour.id,
         dayOfWeek: hour.dayOfWeek,
@@ -47,14 +51,14 @@ export class HoraireService {
 
 
   public fetchRawData() {
-    this.http.get<IHoraires[]>('https://localhost:7015/api/OpeningHours')
+    this.http.get<IHoraires[]>(`${this.apiUrl}/OpeningHours`)
       .subscribe( a => {
         this.rawData.next(a);
       });
   }
 
   public fetchUniqueRawData(id: number) {
-    this.http.get<IHorairesDTO>(`https://localhost:7015/api/OpeningHours/${id}`)
+    this.http.get<IHorairesDTO>(`${this.apiUrl}/OpeningHours/${id}`)
       .subscribe( a => {
         this.uniqueRawData.next(a);
       });
@@ -62,7 +66,7 @@ export class HoraireService {
 
   //PUT
   public updateHoraire(id: string, fd: FormData) {
-    this.http.put(`https://localhost:7015/api/OpeningHours/${id}`, fd)
+    this.http.put(`${this.apiUrl}/OpeningHours/${id}`, fd)
     .subscribe({
       next: (response) => {
         console.log('Request successful', response);

@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {IUser} from "../interfaces/user.interface";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import {Router} from "@angular/router";
 
 //TODO: changement de mdp apr le user et réinitialisation du mdp par l'Admin
 export class AuthService {
+  private apiUrl: string = '';
 
   private user: BehaviorSubject<IUser | undefined> = new BehaviorSubject<IUser | undefined>(undefined);
   public user$ = this.user.asObservable();
@@ -20,7 +22,9 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
-    private router: Router) {
+    private router: Router,
+    private apiService: ApiService,) {
+    this.apiUrl = this.apiService.getapiUrl();
     this.user.next(this.getUser());
   }
 
@@ -29,7 +33,7 @@ export class AuthService {
   }
 
   public login(request: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`https://localhost:7015/api/auth/login`, {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, {
       email: request.email,
       password: request.password,
     });
@@ -62,7 +66,7 @@ export class AuthService {
 
   public updatePassword(id: string, pwdUpdate: FormData): void {
     this.http.put(
-      `https://localhost:7015/api/Auth/password/${id}`
+      `${this.apiUrl}/Auth/password/${id}`
       , pwdUpdate
       , {responseType: "text"})
       .subscribe(({
@@ -79,7 +83,7 @@ export class AuthService {
 
   public resetPassword(id:string, fd: FormData): void {
     this.http.put(
-      `https://localhost:7015/api/Auth/forgotten-password/${id}`
+      `${this.apiUrl}/Auth/forgotten-password/${id}`
       , fd
       , {responseType: "text"})
       .subscribe(({

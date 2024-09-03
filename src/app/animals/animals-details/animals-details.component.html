@@ -34,7 +34,7 @@
               <!--            @if (animal !== null) {-->
               <!--              @for (pic of animal.pics; track pic.id; ) {-->
               <!--                <div class="carousel-item">-->
-              <!--                  <img [src]="'https://localhost:7015/' + pic.slug" class="d-block" alt="..."/>-->
+              <!--                  <img [src]="imageApiUrl + pic.slug" class="d-block" alt="..."/>-->
               <!--                </div>-->
               <!--              }-->
               <!--            }-->
@@ -42,14 +42,14 @@
 
               <div class="carousel-item active">
                 <img
-                  [src]="'https://localhost:7015/' + animal.pics[0].slug"
+                  [src]="imageApiUrl + animal.pics[0].slug"
                   class="d-block"
                   alt="..."
                 />
               </div>
               <div class="carousel-item">
                 <img
-                  [src]="'https://localhost:7015/' + animal.pics[0].slug"
+                  [src]="imageApiUrl + animal.pics[0].slug"
                   class="d-block"
                   alt="..."
                 />

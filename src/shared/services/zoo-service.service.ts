@@ -4,29 +4,34 @@ import {BehaviorSubject} from "rxjs";
 import {IAnimal} from "../interfaces/animal.interface";
 import {IZooService} from "../interfaces/zoo-service.interface";
 import {Router} from "@angular/router";
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ZooServiceService {
+  apiUrl: string = '';
+
   private zooServices: BehaviorSubject<IZooService[]> = new BehaviorSubject<IZooService[]>([]);
   public zooServices$ = this.zooServices.asObservable();
 
   private zooService: BehaviorSubject<IZooService | undefined> = new BehaviorSubject<IZooService | undefined>(undefined)
   public zooService$ = this.zooService.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+    this.apiUrl = this.apiService.getapiUrl();
+  }
 
   //GET
   public fetchAllData() {
-    this.http.get<IZooService[]>('https://localhost:7015/api/ZooServices')
+    this.http.get<IZooService[]>(`${this.apiUrl}/ZooServices`)
       .subscribe(zooServices => {
         this.zooServices.next(zooServices)
       });
   }
 
   public fetchUniqueService(id: number) {
-    this.http.get<IZooService>(`https://localhost:7015/api/ZooServices/${id}`)
+    this.http.get<IZooService>(`${this.apiUrl}/ZooServices/${id}`)
       .subscribe(zooService => {
         this.zooService.next(zooService)
       });
@@ -34,7 +39,7 @@ export class ZooServiceService {
 
   //POST
   public createService(fd: FormData){
-    this.http.post(`https://localhost:7015/api/ZooServices`, fd)
+    this.http.post(`${this.apiUrl}/ZooServices`, fd)
       .subscribe({
         next: (response) => {
           alert('Service créé avec succès!')
@@ -48,7 +53,7 @@ export class ZooServiceService {
 
   //PUT
   public updateService(id: string, fd: FormData){
-    this.http.put(`https://localhost:7015/api/ZooServices/${id}/`, fd)
+    this.http.put(`${this.apiUrl}/ZooServices/${id}/`, fd)
       .subscribe({
         next: (response) => {
           alert('Mise à jour réussie!')
@@ -62,7 +67,7 @@ export class ZooServiceService {
 
   //DELETE
   deleteService(id: number) {
-    this.http.delete(`https://localhost:7015/api/ZooServices/${id}`).subscribe(zs => {
+    this.http.delete(`${this.apiUrl}/ZooServices/${id}`).subscribe(zs => {
       this.fetchAllData();
     })
   }

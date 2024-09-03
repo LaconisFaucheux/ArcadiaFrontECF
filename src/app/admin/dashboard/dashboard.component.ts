@@ -4,6 +4,7 @@ import {AnimalStat} from "../../../shared/interfaces/animalStats.interface";
 import {HabitatStat} from "../../../shared/interfaces/habitatStats.interface";
 import {DashboardService} from "../../../shared/services/dashboard.service";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
+import {ApiService} from "../../../shared/services/api.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -16,12 +17,18 @@ import {AsyncPipe, TitleCasePipe} from "@angular/common";
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  public apiUrl: string = '';
+  public imageApiUrl: string = '';
+
   public animalStats$: Observable<AnimalStat[]>;
   public habitatStats$: Observable<HabitatStat[]>;
 
   constructor(
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private apiService: ApiService,
   ) {
+    this.apiUrl = apiService.getapiUrl();
+    this.imageApiUrl = this.apiService.getImageApiUrl();
     this.animalStats$ = dashboardService.animalsStats$;
     this.habitatStats$ = dashboardService.habitatsStats$;
   }

@@ -13,7 +13,7 @@
             class="circle-container"
             [routerLink]="[habitat.id]"
           >
-            <img [src]="'https://localhost:7015/' + habitat.pics[0].miniSlug" class="img-fluid" alt=""/>
+            <img [src]="imageApiUrl + habitat.pics[0].miniSlug" class="img-fluid" alt=""/>
           </div>
           <h3 class="neucha-regular">{{ habitat.name | titlecase }}</h3>
         </div>
