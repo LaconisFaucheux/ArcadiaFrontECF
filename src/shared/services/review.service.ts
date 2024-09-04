@@ -38,12 +38,10 @@ export class ReviewService {
     this.http.put(`${this.apiUrl}/Reviews/${id}`, review)
       .subscribe({
         next: (response) => {
-          console.log('Request successful', response);
           this.fetchUnvalidatedReviews();
           this.fetchValidatedReviews();
         },
         error: (error) => {
-          console.error('Request failed', error);
         }
       });
 

@@ -41,7 +41,6 @@ export class AuthService {
 
   public setUser(user: IUser): void {
     this.user.next(user)
-    console.log(user)
     if (user.id) {
       sessionStorage.setItem('user-id', user.id);
     }

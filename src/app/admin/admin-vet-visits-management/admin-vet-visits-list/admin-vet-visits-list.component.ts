@@ -44,9 +44,6 @@ export class AdminVetVisitsListComponent {
     this.animals$.subscribe(a => {
       this.animals = a
     })
-
-    console.log(this.reports$)
-    console.log(this.animals$)
   }
 
   public getAnimalSpecies(id: number | undefined): string {

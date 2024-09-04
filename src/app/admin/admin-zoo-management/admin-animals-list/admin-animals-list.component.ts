@@ -38,8 +38,6 @@ export class AdminAnimalsListComponent {
         this.filters.push(h.id)
       }
     })
-    console.log(this.filters)
-    console.log(this.habitats$)
   }
 
   ngOnInit(): void {

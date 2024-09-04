@@ -82,8 +82,6 @@ export class DashboardService {
   ////DELETE
   public deleteHabitatsStats(id: string){
 
-    console.log(`habitats ${id}`);
-
     this.http.delete(`${this.apiUrl}/Stats/habitats/${id}`).subscribe({
       next: (response) => {
         alert('Statistique supprimée avec succès')

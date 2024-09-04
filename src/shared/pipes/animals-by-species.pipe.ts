@@ -9,7 +9,6 @@ import {IAnimal} from "../interfaces/animal.interface";
 export class AnimalsBySpeciesPipe implements PipeTransform {
 
   transform(animals: IAnimal[], filter: number | null): IAnimal[] {
-console.log(`filter = ${filter}`);
     if (!filter) {
       return animals;
     } else {

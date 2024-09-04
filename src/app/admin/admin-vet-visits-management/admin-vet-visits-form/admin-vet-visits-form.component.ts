@@ -61,7 +61,6 @@ export class AdminVetVisitsFormComponent {
     this.animalService.fetchSpecies()
 
     this.user$.subscribe(u => {
-      console.log(u)
       if(u){
         if(u.email) this.IdVet.setValue(u.email)
       }
@@ -76,13 +75,6 @@ export class AdminVetVisitsFormComponent {
     else{
       return;
     }
-    // if(!id){
-    //   return;
-    // } else {
-    //   this.selectedSpecies = id;
-    // }
-
-    console.log(this.selectedSpecies)
   }
 
   public submit(){
@@ -96,8 +88,6 @@ export class AdminVetVisitsFormComponent {
       idVet: this.IdVet.value ?? '',
       healthId : this.IdHealth.value ?? 0
     }
-
-    console.log(vetReportDTO)
 
     const fd = new FormData();
 

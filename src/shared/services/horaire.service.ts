@@ -69,23 +69,14 @@ export class HoraireService {
     this.http.put(`${this.apiUrl}/OpeningHours/${id}`, fd)
     .subscribe({
       next: (response) => {
-        console.log('Request successful', response);
         this.router.navigateByUrl('admin/zoo-management/opening-hours');
       },
       error: (error) => {
-        console.error('Request failed', error);
       }
     });
   }
 
   public convertTimeToDate(timeString: string | null): Date | null {
-    //
-    // if (timeString === null) {
-    //   return null;
-    // }
-    // const [hours, minutes, seconds] = timeString.split(":");
-    // return new Date(0, 0, 0, parseInt(hours), parseInt(minutes));
-
     if (timeString === null) {
       return null;
     }
@@ -99,36 +90,6 @@ export class HoraireService {
   }
 
   public isItOpen() {
-    // console.log(this.isOpen)
-    // const now = new Date();
-    // const today = now.toLocaleString('fr-FR', {weekday: 'long'});
-    // const todayHours = this.horaires.value.find(h => h.dayOfWeek.toLowerCase() === today.toLowerCase());
-    //
-    // if (todayHours === null || todayHours === undefined) {
-    //   this.isOpen.next(false);
-    //   return;
-    // }
-    // if (todayHours.morningOpening === null
-    //   || todayHours.morningClosing === null
-    //   || todayHours.afternoonOpening === null
-    //   || todayHours.afternoonClosing === null) {
-    //   this.isOpen.next(false);
-    //   return;
-    // }
-    // const currentTime = this.convertTimeToDate(now.toTimeString().split(' ')[0]);
-    //
-    // if (currentTime === null || currentTime === undefined) {
-    //   this.isOpen.next(false);
-    //   return;
-    // }
-    //
-    // if (currentTime >= todayHours.morningOpening
-    //   && currentTime <= todayHours.morningClosing
-    //   || currentTime >= todayHours.afternoonOpening
-    //   && currentTime <= todayHours.afternoonClosing) {
-    //   this.isOpen.next(true);
-    //   return;
-    //}
 
     const now = new Date();
     const today = now.toLocaleString('fr-FR', { weekday: 'long' });

@@ -24,7 +24,6 @@ export class ReviewFormComponent {
   }
 
   public submit(): void {
-    console.log(this.reviewForm)
     this.reviewService.postReview(this.reviewForm.value)
   }
 

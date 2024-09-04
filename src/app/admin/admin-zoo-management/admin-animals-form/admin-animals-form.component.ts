@@ -166,7 +166,5 @@ export class AdminAnimalsFormComponent {
     } else {
       this.deletedImagesArray.splice(this.deletedImagesArray.indexOf(id), 1);
     }
-
-    console.log(this.deletedImagesArray)
   }
 }

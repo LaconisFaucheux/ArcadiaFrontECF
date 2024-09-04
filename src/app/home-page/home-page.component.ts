@@ -58,7 +58,6 @@ export class HomePageComponent {
     this.horairesService.fetchData()
     this.reviewService.fetchValidatedReviews()
     this.meteoService.fetchMeteo()
-    console.log(this.meteo$)
   }
 
   public getStars(note: number): any[] {

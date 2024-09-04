@@ -27,7 +27,6 @@ export class AdminOpeningHoursManagementComponent {
 
   ngOnInit() {
     this.horairesService.fetchRawData();
-    console.log(this.openingHours$)
   }
 
 }
