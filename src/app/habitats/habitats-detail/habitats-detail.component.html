@@ -88,7 +88,7 @@
                       class="circle-container-detail"
                       [routerLink]="['/','animaux', a.id]"
                     >
-                      <img [src]="apiUrl + a.pics[0].miniSlug" class="img-fluid" alt=""/>
+                      <img [src]="imageApiUrl + a.pics[0].miniSlug" class="img-fluid" alt=""/>
                     </div>
                     <p class="neucha-regular text-center">
                       {{ a.name }}<br/>{{ a.speciesData.name }}
