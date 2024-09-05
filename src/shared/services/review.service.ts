@@ -44,12 +44,11 @@ export class ReviewService {
         error: (error) => {
         }
       });
-
   }
 
   //POST
   public postReview(review: IReview) {
-    this.http.post<IReview>('${this.apiUrl}/Reviews', review).subscribe(r => {
+    this.http.post<IReview>(`${this.apiUrl}/Reviews`, review).subscribe(r => {
       this.router.navigateByUrl('/');
     })
   }
