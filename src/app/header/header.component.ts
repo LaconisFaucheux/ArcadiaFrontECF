@@ -40,7 +40,7 @@ export class HeaderComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(event => {
       const navEndEvent = event as NavigationEnd;
-      if(!this.routeArray.includes(navEndEvent.url.split('/')[0])){
+      if(!this.routeArray.includes(navEndEvent.url.split('/')[1])){
         navEndEvent.urlAfterRedirects = '/';
       }
       this.isHomePageActive = navEndEvent.urlAfterRedirects === '/';
@@ -56,5 +56,4 @@ export class HeaderComponent {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
 }
