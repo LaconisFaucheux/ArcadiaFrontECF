@@ -20,6 +20,7 @@ import {IUser} from "../../shared/interfaces/user.interface";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  private routeArray: string[] = ["animaux", "habitats", "activites", "philosophie", "auth", "admin"]
   public habitats: IHabitat[] = [];
   public sub: Subscription = new Subscription();
   public isHomePageActive: boolean = false;
@@ -39,15 +40,18 @@ export class HeaderComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(event => {
       const navEndEvent = event as NavigationEnd;
+      if(!this.routeArray.includes(navEndEvent.url.split('/')[0])){
+        navEndEvent.urlAfterRedirects = '/';
+      }
       this.isHomePageActive = navEndEvent.urlAfterRedirects === '/';
     }));
 
     this.user$ = this.authService.user$;
   }
 
-   onLogout() :void {
-      this.authService.logout();
-   }
+  onLogout() :void {
+    this.authService.logout();
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
