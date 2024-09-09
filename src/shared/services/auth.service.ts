@@ -11,8 +11,6 @@ import {ApiService} from "./api.service";
 @Injectable({
   providedIn: 'root'
 })
-
-//TODO: changement de mdp apr le user et réinitialisation du mdp par l'Admin
 export class AuthService {
   private apiUrl: string = '';
 

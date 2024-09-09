@@ -9,6 +9,7 @@ import {AnimalService} from "../../../../shared/services/animal.service";
 import {AnimalFilterPipe} from "../../../../shared/pipes/animal-filter.pipe";
 import {IHabitat} from "../../../../shared/interfaces/habitat.interface";
 import {HabitatService} from "../../../../shared/services/habitat.service";
+import {DashboardService} from "../../../../shared/services/dashboard.service";
 
 @Component({
   selector: 'app-admin-animals-list',
@@ -30,7 +31,7 @@ export class AdminAnimalsListComponent {
   public habitats$: Observable<IHabitat[]> = new Observable<IHabitat[]>();
   public filters: number[] = [];
 
-  constructor(private animalService: AnimalService, protected habitatService: HabitatService) {
+  constructor(private animalService: AnimalService, protected habitatService: HabitatService, private dashboardService: DashboardService) {
     this.animals$ = animalService.animals$;
     this.habitats$ = habitatService.habitats$
     this.habitats$.subscribe((habitats) => {
@@ -74,8 +75,11 @@ export class AdminAnimalsListComponent {
   }
 
   public deleteAnimal(id: number | undefined) {
-    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
-      if (id) this.animalService.deleteAnimal(id);
+    if (confirm('Voulez vous vraiment supprimer cette animal?')) {
+      if (id) {
+        this.animalService.deleteAnimal(id);
+        this.dashboardService.deleteAnimalStat(id);
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ import {IDiet} from "../interfaces/diet.interface";
 import {IHealth} from "../interfaces/health.interface";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {DashboardService} from "./dashboard.service";
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,8 @@ export class AnimalService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private apiService: ApiService,) {
+    private apiService: ApiService,
+    private dashboardService: DashboardService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -139,10 +141,20 @@ export class AnimalService {
 
   //POST
   createAnimal(fd: FormData) {
-    this.http.post(`${this.apiUrl}/Animals`, fd)
+    this.http.post<IAnimal>(`${this.apiUrl}/Animals`, fd)
       .subscribe({
         next: (response) => {
+          console.log(response)
           alert('Animal créé avec succès!')
+          this.fetchUniqueSpecies(response.idSpecies)
+          this.dashboardService.createAnimalStat({
+            id: null,
+            animalId: response.id!,
+            name: response.name,
+            speciesName: this.uniqueSpecies.value?.name ?? '',
+            miniSlug: response.pics[0].miniSlug,
+            nbClics: 0
+          })
           this.router.navigateByUrl('/admin/zoo-management/animals')
         },
         error: (error) => {

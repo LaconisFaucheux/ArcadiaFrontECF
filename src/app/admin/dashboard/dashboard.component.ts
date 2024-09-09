@@ -38,18 +38,18 @@ export class DashboardComponent {
     this.dashboardService.fetchHabitatsStats();
   }
 
-  public deleteAnimalStat(id: string | null): void {
-    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
-      if (id)
-        this.dashboardService.deleteAnimalStat(id);
-    }
-  }
+  // public deleteAnimalStat(id: string | null): void {
+  //   if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
+  //     if (id)
+  //       this.dashboardService.deleteAnimalStat(id);
+  //   }
+  // }
 
-  public deleteHabitatStat(id: string | null): void {
-    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
-      if (id)
-        this.dashboardService.deleteHabitatsStats(id);
-    }
-  }
+  // public deleteHabitatStat(id: string | null): void {
+  //   if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
+  //     if (id)
+  //       this.dashboardService.deleteHabitatsStats(id);
+  //   }
+  // }
 
 }

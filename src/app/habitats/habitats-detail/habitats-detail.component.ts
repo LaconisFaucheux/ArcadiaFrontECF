@@ -8,6 +8,7 @@ import {ActivatedRoute, ParamMap, RouterLink} from "@angular/router";
 import {AsyncPipe, TitleCasePipe} from "@angular/common";
 import {LoadingSpinnerComponent} from "../../loading-spinner/loading-spinner.component";
 import {ApiService} from "../../../shared/services/api.service";
+import {DashboardService} from "../../../shared/services/dashboard.service";
 
 @Component({
   selector: 'app-habitats-detail',
@@ -32,7 +33,8 @@ export class HabitatsDetailComponent {
   constructor(private habitatService: HabitatService,
               protected animalService: AnimalService,
               private activatedRoute: ActivatedRoute,
-              private apiService: ApiService) {
+              private apiService: ApiService,
+              private dashboardService: DashboardService) {
     this.apiUrl = this.apiService.getapiUrl();
     this.imageApiUrl = this.apiService.getImageApiUrl();
     this.habitat$ = this.habitatService.getHabitat();
@@ -50,6 +52,7 @@ export class HabitatsDetailComponent {
 
       this.habitatService.fetchUniqueHabitat(parseInt(this.id));
       this.animalService.fetchInhabitantsByHabitatId(parseInt(this.id));
+      this.dashboardService.updateHabitatsStats(parseInt(this.id));
     }
   }
 }

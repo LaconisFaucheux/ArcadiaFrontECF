@@ -10,6 +10,8 @@ import {IAnimalDTO} from "../../../../shared/interfaces/animalDTO.interface";
 import {FilesService} from "../../../../shared/services/files.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ApiService} from "../../../../shared/services/api.service";
+import {DashboardService} from "../../../../shared/services/dashboard.service";
+import {AnimalStat} from "../../../../shared/interfaces/animalStats.interface";
 
 
 //TODO: Fix gender radio button
@@ -53,8 +55,8 @@ export class AdminAnimalsFormComponent {
   constructor(private animalService: AnimalService,
               private activatedRoute: ActivatedRoute,
               private fs: FilesService,
-              private http: HttpClient,
-              private apiService: ApiService,) {
+              private apiService: ApiService,
+              private dashboardService:DashboardService) {
     this.apiUrl = this.apiService.getapiUrl();
     this.imageApiUrl = this.apiService.getImageApiUrl();
     this.animal$ = animalService.animal$;

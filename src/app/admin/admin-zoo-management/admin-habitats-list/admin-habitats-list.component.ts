@@ -6,6 +6,7 @@ import {RouterLink} from "@angular/router";
 import {Observable} from "rxjs";
 import {IHabitat} from '../../../../shared/interfaces/habitat.interface';
 import {HabitatService} from "../../../../shared/services/habitat.service";
+import {DashboardService} from "../../../../shared/services/dashboard.service";
 
 @Component({
   selector: 'app-admin-habitats-list',
@@ -24,7 +25,7 @@ export class AdminHabitatsListComponent {
 
   public habitats$: Observable<IHabitat[]> = new Observable<IHabitat[]>();
 
-  constructor(private habitatsService: HabitatService) {
+  constructor(private habitatsService: HabitatService, private dashboardService: DashboardService) {
     this.habitats$ = habitatsService.habitats$;
   }
 
@@ -41,8 +42,11 @@ export class AdminHabitatsListComponent {
   }
 
   public deleteHabitat(id: number | undefined) {
-    if (confirm('Voulez vous vraiment supprimer cette statistique?')) {
-      if (id) this.habitatsService.deleteHabitat(id)
+    if (confirm('Voulez vous vraiment supprimer cet habitat?')) {
+      if (id){
+        this.habitatsService.deleteHabitat(id);
+        this.dashboardService.deleteHabitatsStats(id);
+      }
     }
   }
 

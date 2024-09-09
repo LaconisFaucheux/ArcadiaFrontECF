@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {IHabitatDTO} from "../interfaces/habitatDTO.interface";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {DashboardService} from "./dashboard.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class HabitatService {
   private habitat: BehaviorSubject<IHabitat> = new BehaviorSubject(this.habitats.value[0]);
   public habitat$ = this.habitat.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+  constructor(private http: HttpClient, private router: Router, private apiService: ApiService, private dashboardService: DashboardService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -36,10 +37,17 @@ export class HabitatService {
 
   //POST
   createHabitat(fd: FormData){
-    this.http.post(`${this.apiUrl}/Habitats`, fd)
+    this.http.post<IHabitat>(`${this.apiUrl}/Habitats`, fd)
       .subscribe({
         next: (response) => {
           alert('Habitat créé avec succès!')
+          this.dashboardService.createHabitatsStats({
+            id: null,
+            habitatId: response.id!,
+            name: response.name,
+            miniSlug: response.pics[0].miniSlug,
+            nbClics: 0
+          })
           this.router.navigateByUrl('/admin/zoo-management/habitats')
         },
         error: (error) => {
