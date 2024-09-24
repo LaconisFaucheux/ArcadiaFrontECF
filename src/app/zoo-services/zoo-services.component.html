@@ -9,7 +9,7 @@
 
     @for (zs of zooServices; track zs.id) {
 
-      @if (zs.id % 2 !== 0) {
+      @if ($index % 2 !== 0) {
 
         <article
           class="d-flex flex-column flex-md-row justify-content-center align-items-center"
