@@ -10,8 +10,8 @@
       <label>Filtrer par espèce: </label>
       <select class="mx-2" (change)="setSelectedSpecies($event)">
         <option [value]="0">Toutes</option>
-        @if(species$ | async; as species){
-          @for (s of species; track s.id){
+        @if (species$ | async; as species) {
+          @for (s of species; track s.id) {
             <option [value]="s.id">{{ s.name }}</option>
           }
         }
@@ -20,8 +20,8 @@
       <label class="mx-1">Filtrer par nom d'animal: </label>
       <select class="mx-2" (change)="setSelectedName($event)">
         <option>Tous</option>
-        @if(animals$ | async; as animals){
-          @for (a of animals | animalsBySpecies : selectedSpecies; track a.id){
+        @if (animals$ | async; as animals) {
+          @for (a of animals | animalsBySpecies : selectedSpecies; track a.id) {
             <option>{{ a.name }}</option>
           }
         }
@@ -31,41 +31,46 @@
 
   </div>
   <div class="d-flex flex-row justify-content-around">
-      <div class="d-flex flex-row justify-content-center">
-        <div class="col-12 m-2 d-flex justify-content-center table-responsive flex-wrap" style="height: 60vh">
-          <table class="table mx-2 table-striped">
-            <thead>
-            <tr class="table-dark">
-              <th scope="col">Animal</th>
-              <th scope="col">Employé</th>
-              <th scope="col">Nourriture proposée</th>
-              <th scope="col">Date</th>
-              <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-              @if (feedings$ | async; as feedings) {
-                @for (f of feedings | feedingFilter : selectedSpecies : selectedName; track f.id) {
-                  <tr>
-                    <td>{{ f.relatedAnimal.name}}</td>
-                    <td>{{ f.employeeEmail }}</td>
-                    <td>{{ f.weight + f.weightUnit.abbr + ' de ' + f.food }}</td>
-                    <td>{{ f.date | date :'E dd LLL yyyy hh:mm' }}</td>
-                    <td>
-                      @if(user$ | async; as user){
-                        @if(user.roles.includes('Admin')){
-                          <button type="button" class="btn btn-danger ms-2">Supprimer</button>
-                        }
-                      }
-                    </td>
-                  </tr>
-                }
-              } @else {
-                <app-loading-spinner></app-loading-spinner>
+    <div class="d-flex flex-row justify-content-center">
+      <div class="col-12 m-2 d-flex justify-content-center table-responsive flex-wrap" style="height: 60vh">
+        <table class="table mx-2 table-striped">
+          <thead>
+          <tr class="table-dark">
+            <th scope="col">Animal</th>
+            <th scope="col">Employé</th>
+            <th scope="col">Nourriture proposée</th>
+            <th scope="col">Date</th>
+            @if (user$ | async; as user) {
+              @if (user.roles.includes('Admin')) {
+                <th scope="col">Actions</th>
               }
-            </tbody>
-          </table>
-        </div>
+            }
+          </tr>
+          </thead>
+          <tbody>
+            @if (feedings$ | async; as feedings) {
+              @for (f of feedings | feedingFilter : selectedSpecies : selectedName; track f.id) {
+                <tr>
+                  <td>{{ f.relatedAnimal.name }}</td>
+                  <td>{{ f.employeeEmail }}</td>
+                  <td>{{ f.weight + f.weightUnit.abbr + ' de ' + f.food }}</td>
+                  <td>{{ f.date | date :'E dd LLL yyyy hh:mm' }}</td>
+                  @if (user$ | async; as user) {
+                    @if (user.roles.includes('Admin')) {
+                      <td>
+                        <button type="button" class="btn btn-danger ms-2" (click)="deleteFeeding(f.id)">Supprimer
+                        </button>
+                      </td>
+                    }
+                  }
+                </tr>
+              }
+            } @else {
+              <app-loading-spinner></app-loading-spinner>
+            }
+          </tbody>
+        </table>
       </div>
+    </div>
   </div>
 </main>

@@ -70,6 +70,11 @@ export class AdminAnimalFeedingComponent {
     }
   }
 
+  public deleteFeeding(id: number | null) {
+    if(!id) return;
+    this.feedingService.deleteFeeding(id)
+  }
+
 
 
 

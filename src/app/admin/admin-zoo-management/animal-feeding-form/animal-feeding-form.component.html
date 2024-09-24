@@ -1,0 +1,52 @@
+<main class="d-flex flex-column align-items-center">
+  <h1 class="text-center">Nouveau Rapport</h1>
+  <h6 class="text-center mb-5">RAPPEL: Pour garantir une meilleurs traçabilité des soins les rapports ne sont pas
+    modifiables</h6>
+
+
+  <form (ngSubmit)="submit()" class="custom-form mb-5 col-7">
+    <h6 class="mt-3">Animal Concerné</h6>
+    <label class="form-label" for="Species">Espèce</label>
+    <select class="form-control" id="Species" (change)="setSelectedSpecies($event)">
+      @if (species$ | async; as species) {
+        @for (sp of species; track sp.id) {
+          <option [value]="sp.id">{{ sp.name }}</option>
+        }
+      }
+    </select>
+
+    <label class="form-label" for="Animal">Animal</label>
+    <select id="Animal" class="form-control" [formControl]="IdAnimal" >
+      @if (animals$ | async; as animals) {
+        @for (a of animals | animalsBySpecies : selectedSpecies; track a.id) {
+          <option [value]="a.id">{{ a.name }}</option>
+        }
+      }
+    </select>
+
+    <h6 class="mt-3">Date</h6>
+    <label class="me-2 form-label">Date et heure de l'action</label>
+    <input type="datetime-local" class="form-control" [formControl]="Date">
+
+    <h6 class="mt-3">Repas</h6>
+    <label class="form-label">Aliments proposé</label>
+    <input type="text" class="form-control" [formControl]="Food"/>
+
+    <label class="form-label">Quantité</label>
+    <div class="d-flex flex-row">
+      <input type="number" class="form-control mx-1" [formControl]="Weight"/>
+      <select class="mx-1" [formControl]="IdWeightUnit">
+        @if (weightUnits$ | async; as weightUnits) {
+          @for (wu of weightUnits; track wu.id) {
+            <option [value]="wu.id">{{ wu.name }}</option>
+          }
+        }
+      </select>
+    </div>
+
+    <div class="d-flex justify-content-center mt-5">
+      <button class="btn btn-success mx-1">Enregistrer</button>
+    </div>
+
+  </form>
+</main>
