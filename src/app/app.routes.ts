@@ -61,6 +61,11 @@ import {AdminResetPasswordComponent} from "./admin/admin-reset-password/admin-re
 import {authGuard} from "../shared/guards/auth.guard";
 import {adminGuard} from "../shared/guards/admin.guard";
 import {employeeGuard} from "../shared/guards/employee.guard";
+import {vetGuard} from "../shared/guards/vet.guard";
+import {
+  AdminAnimalFeedingComponent
+} from "./admin/admin-zoo-management/admin-animal-feeding/admin-animal-feeding.component";
+import {employeeOrVetGuard} from "../shared/guards/employee-or-vet.guard";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -105,6 +110,8 @@ export const routes: Routes = [
           {path: 'animals', component: AdminAnimalsListComponent, canActivate: [authGuard]},
           {path: 'animals/detailed/:id', component: AdminAnimalsFormComponent , canActivate: [employeeGuard]},
           {path: 'animals/new', component: AdminAnimalsFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
+          {path: 'feedings', component: AdminAnimalFeedingComponent, pathMatch: "full", canActivate: [employeeOrVetGuard]},
+
           {path: 'species', component: AdminSpeciesListComponent, canActivate: [authGuard]},
           {path: 'species/detailed/:id', component: AdminSpeciesFormComponent , canActivate: [employeeGuard]},
           {path: 'species/new', component: AdminSpeciesFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
@@ -118,8 +125,8 @@ export const routes: Routes = [
           {path: 'opening-hours/:id', component: AdminOpeningHoursFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
         ]
       },
-      {path: 'reviews', component: AdminReviewsManagementComponent, canActivate: [employeeGuard]},
-      {path: 'vet-reports', component:AdminVetVisitsManagementComponent, canActivate: [employeeGuard],
+      {path: 'reviews', component: AdminReviewsManagementComponent, canActivate: [vetGuard]},
+      {path: 'vet-reports', component:AdminVetVisitsManagementComponent, canActivate: [vetGuard],
         children: [
           {path: '', component:AdminVetVisitsListComponent, pathMatch: "full"},
           {path: 'new', component:AdminVetVisitsFormComponent, pathMatch: "full"},

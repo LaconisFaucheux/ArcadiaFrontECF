@@ -41,7 +41,7 @@ export class VetReportsService {
     this.http.post(`${this.apiUrl}/VetVisits`, report)
       .subscribe({
       next: (response) => {
-        alert('Raport créé avec succès');
+        alert('Rapport créé avec succès');
         this.router.navigateByUrl('/admin/vet-reports')
       },
       error: (error) => {

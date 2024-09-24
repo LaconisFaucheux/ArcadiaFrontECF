@@ -1,0 +1,71 @@
+<main class="mb-5">
+  <div class="d-flex flex-column justify-content-center">
+    <h1 class="text-center">Alimentation des animaux</h1>
+
+    <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center">
+      <a class="btn btn-outline-success m-2 m-lg-5" routerLink="new">Rédiger un nouveau rapport</a>
+    </div>
+
+    <div class="flex flex-row mx-auto mt-3">
+      <label>Filtrer par espèce: </label>
+      <select class="mx-2" (change)="setSelectedSpecies($event)">
+        <option [value]="0">Toutes</option>
+        @if(species$ | async; as species){
+          @for (s of species; track s.id){
+            <option [value]="s.id">{{ s.name }}</option>
+          }
+        }
+      </select>
+
+      <label class="mx-1">Filtrer par nom d'animal: </label>
+      <select class="mx-2" (change)="setSelectedName($event)">
+        <option>Tous</option>
+        @if(animals$ | async; as animals){
+          @for (a of animals | animalsBySpecies : selectedSpecies; track a.id){
+            <option>{{ a.name }}</option>
+          }
+        }
+      </select>
+    </div>
+
+
+  </div>
+  <div class="d-flex flex-row justify-content-around">
+      <div class="d-flex flex-row justify-content-center">
+        <div class="col-12 m-2 d-flex justify-content-center table-responsive flex-wrap" style="height: 60vh">
+          <table class="table mx-2 table-striped">
+            <thead>
+            <tr class="table-dark">
+              <th scope="col">Animal</th>
+              <th scope="col">Employé</th>
+              <th scope="col">Nourriture proposée</th>
+              <th scope="col">Date</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              @if (feedings$ | async; as feedings) {
+                @for (f of feedings | feedingFilter : selectedSpecies : selectedName; track f.id) {
+                  <tr>
+                    <td>{{ f.relatedAnimal.name}}</td>
+                    <td>{{ f.employeeEmail }}</td>
+                    <td>{{ f.weight + f.weightUnit.abbr + ' de ' + f.food }}</td>
+                    <td>{{ f.date | date :'E dd LLL yyyy hh:mm' }}</td>
+                    <td>
+                      @if(user$ | async; as user){
+                        @if(user.roles.includes('Admin')){
+                          <button type="button" class="btn btn-danger ms-2">Supprimer</button>
+                        }
+                      }
+                    </td>
+                  </tr>
+                }
+              } @else {
+                <app-loading-spinner></app-loading-spinner>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</main>

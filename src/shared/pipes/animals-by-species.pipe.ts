@@ -9,7 +9,7 @@ import {IAnimal} from "../interfaces/animal.interface";
 export class AnimalsBySpeciesPipe implements PipeTransform {
 
   transform(animals: IAnimal[], filter: number | null): IAnimal[] {
-    if (!filter) {
+    if (!filter || filter == 0) {
       return animals;
     } else {
       return animals.filter(animal =>
