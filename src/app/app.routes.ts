@@ -66,6 +66,9 @@ import {
   AdminAnimalFeedingComponent
 } from "./admin/admin-zoo-management/admin-animal-feeding/admin-animal-feeding.component";
 import {employeeOrVetGuard} from "../shared/guards/employee-or-vet.guard";
+import {
+  AnimalFeedingFormComponent
+} from "./admin/admin-zoo-management/animal-feeding-form/animal-feeding-form.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -111,7 +114,7 @@ export const routes: Routes = [
           {path: 'animals/detailed/:id', component: AdminAnimalsFormComponent , canActivate: [employeeGuard]},
           {path: 'animals/new', component: AdminAnimalsFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},
           {path: 'feedings', component: AdminAnimalFeedingComponent, pathMatch: "full", canActivate: [employeeOrVetGuard]},
-
+          {path: 'feedings/new', component: AnimalFeedingFormComponent, pathMatch: "full", canActivate: [employeeOrVetGuard]},
           {path: 'species', component: AdminSpeciesListComponent, canActivate: [authGuard]},
           {path: 'species/detailed/:id', component: AdminSpeciesFormComponent , canActivate: [employeeGuard]},
           {path: 'species/new', component: AdminSpeciesFormComponent, pathMatch: "full" , canActivate: [employeeGuard]},

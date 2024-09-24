@@ -6,7 +6,7 @@ export const employeeOrVetGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const currentUser = authService.getUser()
-  const requiredRoles = ["Admin", "Vet"];
+  const requiredRoles = ["Employee", "Vet"];
 
   if(!currentUser){
     router.navigateByUrl('/auth');

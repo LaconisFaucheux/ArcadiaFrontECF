@@ -4,6 +4,7 @@ import {IFeeding} from "../interfaces/feeding.interface";
 import {HttpClient} from "@angular/common/http";
 import {ApiService} from "./api.service";
 import {Router} from "@angular/router";
+import {IFeedingDTO} from "../interfaces/feedingDTO.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class FeedingService {
       .subscribe(feedings => this.feedings.next(feedings));
   }
 
-  postFeeding(feeding: IFeeding){
+  postFeeding(feeding: IFeedingDTO){
     this.http.post(`${this.apiUrl}/EmployeeFeedings`, feeding)
       .subscribe({
         next: (response) => {
