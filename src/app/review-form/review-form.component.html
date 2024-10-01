@@ -7,21 +7,6 @@
     <form class="col-10 d-flex flex-column align-items m-5"
           [formGroup]="reviewForm"
           (ngSubmit)="submit()">
-      <div class="mb-3">
-        <label for="Email" class="form-label"
-        >Adresse Mail</label
-        >
-        <input
-          type="email"
-          class="form-control"
-          id="Email"
-          formControlName="Email"
-          aria-describedby="emailHelp"
-        />
-        <div id="emailHelp" class="form-text">
-          Nous ne partagerons pas votre email à d'autres partenaires.
-        </div>
-      </div>
 
       <div class="mb-3">
         <label for="Pseudo">Pseudo</label>

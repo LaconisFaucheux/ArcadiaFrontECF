@@ -13,7 +13,6 @@ import {ReviewService} from "../../shared/services/review.service";
 })
 export class ReviewFormComponent {
   public reviewForm: FormGroup = new FormGroup({
-    Email: new FormControl(''),
     Pseudo: new FormControl(''),
     Note: new FormControl(''),
     Content: new FormControl(''),
