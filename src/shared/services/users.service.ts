@@ -7,6 +7,8 @@ import {IRole} from "../interfaces/role.interface";
 import {INewUser} from "../interfaces/new-user.interface";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {EmailSenderService} from "./email-sender.service";
+import {IEmail} from "../interfaces/email.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,10 @@ export class UsersService {
   private roles: BehaviorSubject<IRole[]> = new BehaviorSubject<IRole[]>([]);
   public roles$ = this.roles.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private apiService: ApiService,
+              private emailSender: EmailSenderService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -71,6 +76,23 @@ export class UsersService {
       .subscribe({
         next: (response) => {
           alert('Employé créé avec succès!')
+
+          let message: string = `<h4 style="text-align: center">Bienvenue dans l'équipe Arcadia ${user.email.split('@')[0]}!</h4>
+                                <br><p style="text-align: center">Votre identifiant de connexion est:</p>
+                                <br><p style="text-align: center; font-weight: bold; font-size: large">${user.email}</p>
+                                <br><p style="text-align: center">Rapprochez vous de votre administrateur pour obtenir votre mot de passe.</p>
+                                <br><p style="text-align: center"><span style="font-weight: bolder;">RAPPEL</span>: il est fortement recommandé de changer ce mot de passe à la première
+                                connexion. Ne le partagez jamais. En cas de perte contactez votre administrateur.</p>
+                                <br><p style="text-align: center">Cordialement</p><br>
+                                <p style="text-align: center">L'équipe Arcadia</p>`
+          let mail: IEmail = {
+            body: message,
+            to: user.email,
+            subject: "Bienvenue dans l'équipe Arcadia!",
+          }
+          console.log(mail);
+          this.emailSender.sendMailAsAdmin(mail);
+
           this.router.navigateByUrl('admin/employees')
         },
         error: (error) => {
