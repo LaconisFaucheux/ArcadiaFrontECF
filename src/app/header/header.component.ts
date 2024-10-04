@@ -20,7 +20,7 @@ import {IUser} from "../../shared/interfaces/user.interface";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  private routeArray: string[] = ["animaux", "habitats", "activites", "philosophie", "auth", "admin"]
+  private routeArray: string[] = ["animaux", "habitats", "activites", "philosophie", "auth", "admin", "contact", "review-creation"]
   public habitats: IHabitat[] = [];
   public sub: Subscription = new Subscription();
   public isHomePageActive: boolean = false;

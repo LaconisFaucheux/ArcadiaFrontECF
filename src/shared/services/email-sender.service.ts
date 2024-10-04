@@ -54,8 +54,8 @@ export class EmailSenderService {
 
   public sendMailAsVisitor(mail: IEmail) : void{
     if(this.user) return;
-
-    this.http.post<IEmail>(`${this.apiUrl}/Email/mail-as-admin`, mail)
+console.log(mail);
+    this.http.post<IEmail>(`${this.apiUrl}/Email/mail-as-visitor`, mail)
       .subscribe({
         next: (response) => {
           alert('Email envoyé avec succès')//faire un toaster

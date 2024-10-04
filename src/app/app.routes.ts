@@ -69,6 +69,7 @@ import {employeeOrVetGuard} from "../shared/guards/employee-or-vet.guard";
 import {
   AnimalFeedingFormComponent
 } from "./admin/admin-zoo-management/animal-feeding-form/animal-feeding-form.component";
+import {ContactFormComponent} from "./contact-form/contact-form.component";
 
 export const routes: Routes = [
   {path: "", component: HomePageComponent, pathMatch: "full"},
@@ -92,6 +93,7 @@ export const routes: Routes = [
   {path: "philosophie", component: PhilosophieComponent},
   {path: "review-creation", component: ReviewFormComponent},
   {path: "auth", component: AuthComponent},
+  {path: "contact", component: ContactFormComponent},
   {
     path: "admin",
     component: AdminComponent,
