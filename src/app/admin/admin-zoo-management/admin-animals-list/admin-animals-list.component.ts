@@ -31,10 +31,13 @@ export class AdminAnimalsListComponent {
   public habitats$: Observable<IHabitat[]> = new Observable<IHabitat[]>();
   public filters: number[] = [];
 
-  constructor(private animalService: AnimalService, protected habitatService: HabitatService, private dashboardService: DashboardService) {
+  constructor(private animalService: AnimalService,
+              protected habitatService: HabitatService,
+              private dashboardService: DashboardService) {
     this.animals$ = animalService.animals$;
     this.habitats$ = habitatService.habitats$
     this.habitats$.subscribe((habitats) => {
+      this.filters = [];
       for (let h of habitats) {
         this.filters.push(h.id)
       }
