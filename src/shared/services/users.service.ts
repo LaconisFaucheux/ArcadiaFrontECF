@@ -9,6 +9,8 @@ import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
 import {EmailSenderService} from "./email-sender.service";
 import {IEmail} from "../interfaces/email.interface";
+import {ToastrService} from "ngx-toastr";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +30,9 @@ export class UsersService {
   constructor(private http: HttpClient,
               private router: Router,
               private apiService: ApiService,
-              private emailSender: EmailSenderService) {
+              private emailSender: EmailSenderService,
+              private toast: ToastNotifService
+              ) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -61,11 +65,11 @@ export class UsersService {
     this.http.put(`${this.apiUrl}/Auth/${user.id}`, user)
       .subscribe({
         next: (response) => {
-          alert('Mise à jour réussie')
+          this.toast.showToast('Mise à jour réussie', true)
           this.router.navigateByUrl('/admin/employees')
         },
         error: (error) => {
-          alert('Échec de la mise à jour')
+          this.toast.showToast('Échec de la mise à jour', false)
         }
       });
   }
@@ -75,7 +79,8 @@ export class UsersService {
     this.http.post(`${this.apiUrl}/Auth/register`, user)
       .subscribe({
         next: (response) => {
-          alert('Employé créé avec succès!')
+          //alert('Employé créé avec succès!')
+          this.toast.showToast('Employé créé avec succès!', true);
 
           let message: string = `<h4 style="text-align: center">Bienvenue dans l'équipe Arcadia ${user.email.split('@')[0]}!</h4>
                                 <br><p style="text-align: center">Votre identifiant de connexion est:</p>
@@ -96,7 +101,7 @@ export class UsersService {
           this.router.navigateByUrl('admin/employees')
         },
         error: (error) => {
-         alert('Échec de la création de l\'employé');
+         this.toast.showToast('Échec de la création de l\'employé', false);
         }
     });
   }

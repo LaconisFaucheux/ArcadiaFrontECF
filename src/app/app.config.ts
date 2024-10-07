@@ -4,6 +4,8 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {AuthInterceptor} from "../shared/interceptors/auth.interceptor";
+import {provideToastr} from "ngx-toastr";
+import {provideAnimations} from "@angular/platform-browser/animations";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     },
     provideHttpClient(
       withInterceptors([AuthInterceptor]),
-    )
+    ),
+    provideToastr(), provideAnimations()
   ]
 };

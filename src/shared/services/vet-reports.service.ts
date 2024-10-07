@@ -4,6 +4,7 @@ import {IVetReport} from "../interfaces/vet-reports.interface";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,10 @@ export class VetReportsService {
   private report: BehaviorSubject<IVetReport | null> = new BehaviorSubject<IVetReport | null>(null);
   public report$: Observable<IVetReport | null> = this.report.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private apiService: ApiService,
+              private toast: ToastNotifService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -41,11 +45,11 @@ export class VetReportsService {
     this.http.post(`${this.apiUrl}/VetVisits`, report)
       .subscribe({
       next: (response) => {
-        alert('Rapport créé avec succès');
+        this.toast.showToast('Rapport créé avec succès', true);
         this.router.navigateByUrl('/admin/vet-reports')
       },
       error: (error) => {
-        alert('Échec de la création du rapport')
+        this.toast.showToast('Échec de la création du rapport', false)
       }
     });
   }

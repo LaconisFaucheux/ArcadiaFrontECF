@@ -5,6 +5,7 @@ import {IAnimal} from "../interfaces/animal.interface";
 import {IZooService} from "../interfaces/zoo-service.interface";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class ZooServiceService {
   private zooService: BehaviorSubject<IZooService | undefined> = new BehaviorSubject<IZooService | undefined>(undefined)
   public zooService$ = this.zooService.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private apiService: ApiService,
+              private toast: ToastNotifService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -42,11 +46,11 @@ export class ZooServiceService {
     this.http.post(`${this.apiUrl}/ZooServices`, fd)
       .subscribe({
         next: (response) => {
-          alert('Service créé avec succès!')
+          this.toast.showToast('Service créé avec succès!', true)
           this.router.navigateByUrl('/admin/zoo-management/services')
         },
         error: (error) => {
-          alert('Échec de la création du service')
+          this.toast.showToast('Échec de la création du service', false)
         }
       });
   }
@@ -56,11 +60,11 @@ export class ZooServiceService {
     this.http.put(`${this.apiUrl}/ZooServices/${id}/`, fd)
       .subscribe({
         next: (response) => {
-          alert('Mise à jour réussie!')
+          this.toast.showToast('Mise à jour réussie!', true)
           this.router.navigateByUrl('/admin/zoo-management/services')
         },
         error: (error) => {
-          alert('Échec de la mise à jour')
+          this.toast.showToast('Échec de la mise à jour', false)
         }
       });
   }

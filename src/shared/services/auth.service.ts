@@ -7,6 +7,7 @@ import {IUser} from "../interfaces/user.interface";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,9 @@ export class AuthService {
     private http: HttpClient,
     private cookieService: CookieService,
     private router: Router,
-    private apiService: ApiService,) {
+    private apiService: ApiService,
+    private toast: ToastNotifService) {
+
     this.apiUrl = this.apiService.getapiUrl();
     this.user.next(this.getUser());
   }
@@ -70,15 +73,15 @@ export class AuthService {
         next: (response) => {
           this.router.navigateByUrl('auth');
           this.logout()
-          alert("Mot de passe mis à jour avec succès. Merci de vous reconnecter.")
+          this.toast.showToast("Mot de passe mis à jour avec succès. Merci de vous reconnecter.", true)
         },
         error: (error) => {
-          alert("Echec de la mise à jour du mot de passe")
+          this.toast.showToast("Echec de la mise à jour du mot de passe", false)
         }
       }));
   }
 
-  public resetPassword(id:string, fd: FormData): void {
+  public resetPassword(id: string, fd: FormData): void {
     this.http.put(
       `${this.apiUrl}/Auth/forgotten-password/${id}`
       , fd
@@ -86,10 +89,10 @@ export class AuthService {
       .subscribe(({
         next: (response) => {
           this.router.navigateByUrl('/admin/employees');
-          alert("Mot de passe mis à jour avec succès.")
+          this.toast.showToast("Mot de passe mis à jour avec succès.", true)
         },
         error: (error) => {
-          alert("Echec de la mise à jour du mot de passe")
+          this.toast.showToast("Echec de la mise à jour du mot de passe", false)
         }
       }));
   }

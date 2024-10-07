@@ -5,6 +5,8 @@ import {IEmail} from "../interfaces/email.interface";
 import {AuthService} from "./auth.service";
 import {IUser} from "../interfaces/user.interface";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class EmailSenderService {
   constructor(private http: HttpClient,
               private apiService: ApiService,
               private auth: AuthService,
-              private router: Router) {
+              private router: Router,
+              private toast: ToastNotifService,) {
     this.apiUrl = this.apiService.getapiUrl();
     this.user = this.auth.getUser();
   }
@@ -30,10 +33,10 @@ export class EmailSenderService {
     this.http.post<IEmail>(`${this.apiUrl}/Email/mail-as-admin`, mail)
       .subscribe({
         next: (response) => {
-          alert('Email envoyé avec succès')//faire un toaster
+          this.toast.showToast('Email envoyé avec succès', true)
         },
         error: (error) => {
-          alert('Echec de l\'envoi du mail');
+          this.toast.showToast('Echec de l\'envoi du mail', false);
         }
       });
   }
@@ -44,10 +47,10 @@ export class EmailSenderService {
     this.http.post<IEmail>(`${this.apiUrl}/Email/mail-as-employee`, mail)
       .subscribe({
         next: (response) => {
-          alert('Email envoyé avec succès')//faire un toaster
+          this.toast.showToast('Email envoyé avec succès', true)
         },
         error: (error) => {
-          alert('Echec de l\'envoi du mail');
+          this.toast.showToast('Echec de l\'envoi du mail', false);
         }
       });
   }
@@ -58,10 +61,10 @@ console.log(mail);
     this.http.post<IEmail>(`${this.apiUrl}/Email/mail-as-visitor`, mail)
       .subscribe({
         next: (response) => {
-          alert('Email envoyé avec succès')//faire un toaster
+          this.toast.showToast('Email envoyé avec succès', true)
         },
         error: (error) => {
-          alert('Echec de l\'envoi du mail');
+          this.toast.showToast('Echec de l\'envoi du mail', false);
         }
       });
   }

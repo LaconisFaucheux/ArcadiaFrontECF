@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiService} from "./api.service";
 import {Router} from "@angular/router";
 import {IFeedingDTO} from "../interfaces/feedingDTO.interface";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class FeedingService {
   constructor(
     private http: HttpClient,
     private apiService: ApiService,
-    private router: Router,) {
+    private router: Router,
+    private toast: ToastNotifService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -32,11 +34,11 @@ export class FeedingService {
     this.http.post(`${this.apiUrl}/EmployeeFeedings`, feeding)
       .subscribe({
         next: (response) => {
-          alert('Rapport créé avec succès');
+          this.toast.showToast('Rapport créé avec succès', true);
           this.router.navigateByUrl('/admin/zoo-management/feedings')
         },
         error: (error) => {
-          alert('Échec de la création du rapport')
+          this.toast.showToast('Échec de la création du rapport', false)
         }
       });
   }

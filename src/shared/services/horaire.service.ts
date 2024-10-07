@@ -6,6 +6,7 @@ import {IUser} from "../interfaces/user.interface";
 import {IHorairesDTO} from "../interfaces/horairesDTO.interface";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,10 @@ export class HoraireService {
   public uniqueRawData$ = this.uniqueRawData.asObservable();
 
 //CTOR
-  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private apiService: ApiService,
+              private toast: ToastNotifService) {
     this.apiUrl = this.apiService.getapiUrl();
     setInterval(this.isItOpen.bind(this), 6000);
   }
@@ -69,9 +73,11 @@ export class HoraireService {
     this.http.put(`${this.apiUrl}/OpeningHours/${id}`, fd)
     .subscribe({
       next: (response) => {
+        this.toast.showToast("Horaires mis à jour", true)
         this.router.navigateByUrl('admin/zoo-management/opening-hours');
       },
       error: (error) => {
+        this.toast.showToast("Échec de la mise à jour", false)
       }
     });
   }

@@ -11,6 +11,8 @@ import {IHealth} from "../interfaces/health.interface";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
 import {DashboardService} from "./dashboard.service";
+import {ToastrService} from "ngx-toastr";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +57,8 @@ export class AnimalService {
     private http: HttpClient,
     private router: Router,
     private apiService: ApiService,
-    private dashboardService: DashboardService) {
+    private dashboardService: DashboardService,
+    private toast: ToastNotifService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -144,8 +147,7 @@ export class AnimalService {
     this.http.post<IAnimal>(`${this.apiUrl}/Animals`, fd)
       .subscribe({
         next: (response) => {
-          console.log(response)
-          alert('Animal créé avec succès!')
+          this.toast.showToast('Animal créé avec succès!', true)
           this.fetchUniqueSpecies(response.idSpecies)
           this.dashboardService.createAnimalStat({
             id: null,
@@ -158,7 +160,7 @@ export class AnimalService {
           this.router.navigateByUrl('/admin/zoo-management/animals')
         },
         error: (error) => {
-          alert('Echec de la création de l\'animal')
+          this.toast.showToast('Echec de la création de l\'animal', false)
         }
       });
   }
@@ -167,11 +169,11 @@ export class AnimalService {
     this.http.post(`${this.apiUrl}/Species`, fd)
       .subscribe({
         next: (response) => {
-          alert('Espèce créée avec succès!')
+          this.toast.showToast('Espèce créée avec succès!', true)
           this.router.navigateByUrl('/admin/zoo-management/species')
         },
         error: (error) => {
-          alert('Echec de la création de l\'espèce');
+          this.toast.showToast('Echec de la création de l\'espèce', false);
         }
       });
   }
@@ -181,11 +183,11 @@ export class AnimalService {
     this.http.put(`${this.apiUrl}/Animals/${animalId}/`, fd)
       .subscribe({
         next: (response) => {
-          alert('Mise à jour réussie!')
+          this.toast.showToast('Mise à jour réussie!', true)
           this.router.navigateByUrl('/admin/zoo-management/animals')
         },
         error: (error) => {
-          alert('Échec de la mise à jour')
+          this.toast.showToast('Échec de la mise à jour', false)
         }
       });
   }
@@ -194,11 +196,11 @@ export class AnimalService {
     this.http.put(`${this.apiUrl}/Species/${speciesId}/`, fd)
       .subscribe({
         next: (response) => {
-          alert('Mise à jour réussie!')
+          this.toast.showToast('Mise à jour réussie!', true)
           this.router.navigateByUrl('/admin/zoo-management/species')
         },
         error: (error) => {
-          alert('Échec de la mise à jour')
+          this.toast.showToast('Échec de la mise à jour', false)
         }
       });
   }

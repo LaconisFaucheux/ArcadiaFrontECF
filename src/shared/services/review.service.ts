@@ -4,6 +4,7 @@ import {IReview} from "../interfaces/review.interface";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {ApiService} from "./api.service";
+import {ToastNotifService} from "./toast-notif.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class ReviewService {
   public unvalidatedReviews$ = this.unvalidatedReviews.asObservable();
 
 
-  constructor(private http: HttpClient, private router: Router, private apiService: ApiService) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private apiService: ApiService,
+              private toast: ToastNotifService) {
     this.apiUrl = this.apiService.getapiUrl();
   }
 
@@ -48,9 +52,16 @@ export class ReviewService {
 
   //POST
   public postReview(review: IReview) {
-    this.http.post<IReview>(`${this.apiUrl}/Reviews`, review).subscribe(r => {
-      this.router.navigateByUrl('/');
-    })
+    this.http.post<IReview>(`${this.apiUrl}/Reviews`, review)
+      .subscribe({
+        next: (r) => {
+          this.toast.showToast("Avis en attente de validation. Merci!", true)
+          this.router.navigateByUrl('/')
+        },
+        error: (e) => {
+          this.toast.showToast("Échec de l'envoi de l'avis", false)
+        }
+      })
   }
 
   //DELETE
