@@ -31,7 +31,7 @@ export class AnimalFeedingFormComponent {
   public weightUnits$: Observable<IWeightUnit[]> = new Observable<IWeightUnit[]>();
 
   public user: IUser | undefined;
-  public selectedSpecies: number = 0;
+  public selectedSpecies: number = 1;
 
   //FORM CONTROLS
   public IdAnimal = new FormControl<number>(0, Validators.required);
@@ -47,6 +47,7 @@ export class AnimalFeedingFormComponent {
     this.species$ = this.animalService.species$;
     this.weightUnits$ = this.animalService.weightUnit$;
     this.user = this.authService.getUser();
+
   }
 
   ngOnInit() {
