@@ -78,7 +78,7 @@ export class AdminSpeciesFormComponent {
             this.Id.setValue(species.id);
           }
           this.Name.setValue(species.name);
-          this.ScientificName.setValue(species.name);
+          this.ScientificName.setValue(species.scientificName);
           this.Description.setValue(species.description);
           this.MaleMaxSize.setValue(species.maleMaxSize);
           this.FemaleMaxSize.setValue(species.femaleMaxSize);
@@ -137,13 +137,13 @@ export class AdminSpeciesFormComponent {
     fd.append("name", species.name);
     fd.append("scientificName", species.scientificName);
     fd.append("description", species.description);
-    fd.append("maleMaxSize", species.maleMaxSize.toString());
-    fd.append("maleMaxWeight", species.maleMaxWeight.toString());
+    fd.append("maleMaxSize", species.maleMaxSize.toString().replace('.', ','));
+    fd.append("maleMaxWeight", species.maleMaxWeight.toString().replace('.', ','));
     if(species.femaleMaxSize) {
-      fd.append("femaleMaxSize", species.femaleMaxSize.toString());
+      fd.append("femaleMaxSize", species.femaleMaxSize.toString().replace('.', ','));
     }
     if(species.femaleMaxWeight) {
-      fd.append("femaleMaxWeight", species.femaleMaxWeight.toString());
+      fd.append("femaleMaxWeight", species.femaleMaxWeight.toString().replace('.', ','));
     }
     fd.append("idSizeUnit", species.idSizeUnit.toString());
     fd.append("idWeightUnit", species.idWeightUnit.toString());
@@ -154,6 +154,8 @@ export class AdminSpeciesFormComponent {
     })
 
     if(this.id){
+      console.log(species)
+      console.log(this.id)
       this.animalService.updateSpecies(this.id, fd)
     } else {
       this.animalService.createSpecies(fd);

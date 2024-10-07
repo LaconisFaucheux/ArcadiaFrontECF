@@ -105,10 +105,10 @@ export class AdminServicesFormComponent {
       fd.append("id", serviceDTO.id.toString());
     }
     if (serviceDTO.fullPrice !== null) {
-      fd.append("fullPrice", serviceDTO.fullPrice.toString());
+      fd.append("fullPrice", serviceDTO.fullPrice.toString().replace('.', ','));
     }
     if (serviceDTO.childPrice !== null) {
-      fd.append("childPrice", serviceDTO.childPrice.toString());
+      fd.append("childPrice", serviceDTO.childPrice.toString().replace('.', ','));
     }
     if (serviceDTO.deletedImage !== null && this.Id) {
       fd.append("deletedImage", serviceDTO.deletedImage.toString());
