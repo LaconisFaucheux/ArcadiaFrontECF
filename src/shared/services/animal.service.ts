@@ -29,7 +29,8 @@ export class AnimalService {
   private inhabitants: BehaviorSubject<IAnimal[]> = new BehaviorSubject<IAnimal[]>([]);
   public inhabitants$ = this.inhabitants.asObservable();
 
-  private animalsListLength: number = 0;
+  private animalsListLength: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public animalsListLength$ = this.animalsListLength.asObservable();
 
   private randomAnimal: BehaviorSubject<IAnimal | null> = new BehaviorSubject<IAnimal | null>(null);
   public randomAnimal$ = this.randomAnimal.asObservable();
@@ -119,8 +120,8 @@ export class AnimalService {
     let rnd;
     this.http.get<number>(`${this.apiUrl}/Animals/length`)
       .subscribe(length => {
-        this.animalsListLength = length
-        rnd = Math.floor(Math.random() * (this.animalsListLength + 1));
+        this.animalsListLength.next(length);
+        rnd = Math.floor(Math.random() * (this.animalsListLength.value + 1));
         this.http.get<IAnimal>(`${this.apiUrl}/Animals/${rnd}`)
           .subscribe(animal => {
             this.randomAnimal.next(animal)
@@ -238,6 +239,10 @@ export class AnimalService {
 
   getAnimal(): Observable<IAnimal> {
     return this.animal$;
+  }
+
+  getAnimalListLength(){
+    return this.animalsListLength$
   }
 
   getInhabitants(): Observable<IAnimal[]> {

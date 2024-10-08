@@ -10,7 +10,22 @@
           Arcadia est la réalisation de la vision de José, désireux depuis l'enfance de partager sa passion des animaux
           avec le public. Attachant une importance de premier plan au bien être de nos pensionnaires, nous vous proposons
           une expérience unique dans un cadre idyllique, dans les pas de Merlin, Viviane et Arthur, pour vous
-          émerveiller de la diversité animale de notre monde. <br><br>
+          émerveiller de la diversité animale de notre monde
+          @if(habitats$ | async; as habitats){
+            <span>au gré de nos {{habitats.length}} habitats (</span>
+            @for(h of habitats; track h.id){
+            <span>{{h.name}}</span>
+            @if(!$last){
+              <span>, </span>
+            }
+          }
+            <span>) </span>
+          }
+          @if(animalListLength$ | async; as animalListLength){
+            <span>qui regroupent {{animalListLength}} merveilleux animaux</span>
+          }!
+          <br>
+          <br>
           <span class="fs-5"> Comme nos 450 000 visiteurs annuels, venez passer une escapade inoubliable en famille au<br>
             <span class="neucha-regular fw-bold">Parc Zoologique Arcadia</span> !</span>
         </p>
