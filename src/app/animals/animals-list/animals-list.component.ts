@@ -41,6 +41,7 @@ export class AnimalsListComponent {
     this.animals$ = this.animalService.getAnimals();
     this.habitats$ = this.habitatService.getHabitats();
     this.habitats$.subscribe((habitats) => {
+      this.filters = [];
       for (let h of habitats) {
         this.filters.push(h.id)
       }
