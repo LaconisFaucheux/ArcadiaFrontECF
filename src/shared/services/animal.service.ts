@@ -121,7 +121,7 @@ export class AnimalService {
     this.http.get<number>(`${this.apiUrl}/Animals/length`)
       .subscribe(length => {
         this.animalsListLength.next(length);
-        rnd = Math.floor(Math.random() * (this.animalsListLength.value + 1));
+        rnd = Math.floor(Math.random() * (this.animalsListLength.value) + 1);
         this.http.get<IAnimal>(`${this.apiUrl}/Animals/${rnd}`)
           .subscribe(animal => {
             this.randomAnimal.next(animal)
@@ -239,10 +239,6 @@ export class AnimalService {
 
   getAnimal(): Observable<IAnimal> {
     return this.animal$;
-  }
-
-  getAnimalListLength(){
-    return this.animalsListLength$
   }
 
   getInhabitants(): Observable<IAnimal[]> {
