@@ -16,14 +16,15 @@ import {IEmail} from "../../shared/interfaces/email.interface";
 export class ContactFormComponent {
  public email: FormControl<string | null> = new FormControl('', [Validators.required, Validators.email]);
  public body: FormControl<string | null> = new FormControl('', [Validators.required]);
+ public subject: FormControl<string | null> = new FormControl('', [Validators.required]);
 
  constructor(private emailService: EmailSenderService) {
  }
 
  submit(){
-  if(this.email.value && this.body.value){
+  if(this.email.value && this.body.value && this.subject.value){
     let mail: IEmail = {
-      subject: this.email.value,
+      subject: `${this.subject.value} - ${this.email.value}`,
       body: this.body.value,
       to: null
     }

@@ -154,8 +154,8 @@ export class AdminSpeciesFormComponent {
     })
 
     if(this.id){
-      console.log(species)
-      console.log(this.id)
+      //console.log(species)
+      //console.log(this.id)
       this.animalService.updateSpecies(this.id, fd)
     } else {
       this.animalService.createSpecies(fd);

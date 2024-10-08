@@ -26,14 +26,12 @@ export class EmailSenderService {
 
   public sendMailAsAdmin(mail: IEmail) : void{
     if(!this.user?.roles?.includes("Admin")) return;
-    console.log(this.user);
-
-    console.log(`${this.apiUrl}/Email/mail-as-admin`);
 
     this.http.post<IEmail>(`${this.apiUrl}/Email/mail-as-admin`, mail)
       .subscribe({
         next: (response) => {
           this.toast.showToast('Email envoyé avec succès', true)
+          this.router.navigateByUrl('/')
         },
         error: (error) => {
           this.toast.showToast('Echec de l\'envoi du mail', false);
@@ -48,6 +46,7 @@ export class EmailSenderService {
       .subscribe({
         next: (response) => {
           this.toast.showToast('Email envoyé avec succès', true)
+          this.router.navigateByUrl('/')
         },
         error: (error) => {
           this.toast.showToast('Echec de l\'envoi du mail', false);
@@ -57,11 +56,11 @@ export class EmailSenderService {
 
   public sendMailAsVisitor(mail: IEmail) : void{
     if(this.user) return;
-console.log(mail);
     this.http.post<IEmail>(`${this.apiUrl}/Email/mail-as-visitor`, mail)
       .subscribe({
         next: (response) => {
           this.toast.showToast('Email envoyé avec succès', true)
+          this.router.navigateByUrl('/')
         },
         error: (error) => {
           this.toast.showToast('Echec de l\'envoi du mail', false);
